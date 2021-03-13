@@ -4,5 +4,6 @@ Diogo Francisco - 87596;<br>
 Erica Évora - 87571;<br>
 Renato Rosa - 82836;<br>
 Rui Gomes - 88068;<br>
+<hr>
 
 [Trello](https://trello.com/dozeteam/home)<br/>
