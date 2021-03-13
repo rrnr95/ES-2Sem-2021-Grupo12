@@ -8,6 +8,6 @@ Renato Rosa|82836|rrnr95
 Rui Gomes|88068|ruifogomes
 
 - [Scrum planning](https://trello.com/dozeteam/home)
-<hr>
+
 > Para efeitos de entrega do projeto, deve ser associada a tag **_CodeQualityAssessor-1.0_** ao último commit feito no
 branch master
