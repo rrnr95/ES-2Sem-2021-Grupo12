@@ -8,7 +8,7 @@ public class LineCounter {
 
 	 public static void main(String[] args) {
 	 try{
-		 System.out.println( getNumberOfLines(new BufferedReader(new FileReader(args[0]))));
+		 System.out.println( getNumberOfLines(new BufferedReader(new FileReader("C:\\LineCounter.java"))));
 		 }catch (Exception e){
 		    System.out.println("file not found");
 		 }

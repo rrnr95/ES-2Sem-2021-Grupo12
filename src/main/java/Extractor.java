@@ -18,6 +18,7 @@ public final class Extractor {
 			FileReader freader = new FileReader(path);
 			int num_lines = LineCounter.getNumberOfLines(new BufferedReader(freader));
 			System.out.println(num_lines);
+			
 		}
 
 	}
@@ -42,6 +43,8 @@ public final class Extractor {
 					target_list.add(file_path);
 					System.out.println("Added ->  " + file_path);
 				}
+				else
+					System.out.println("Not added ->  " + file_path);
 			}
 		}
 
