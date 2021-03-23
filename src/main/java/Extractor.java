@@ -7,15 +7,16 @@ import java.util.ArrayList;
 
 public final class Extractor {
 
-	private final static File EXTRACTION_FOLDER = new File("extracted_project");
+	private final static File EXTRACTION_FOLDER = new File("imported_project");
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
 		ArrayList<String> cls_path_list = new ArrayList<String>();
-		cls_path_list = getAllClassNames(EXTRACTION_FOLDER, new ArrayList<String>());
+		cls_path_list = getAllClassNames(EXTRACTION_FOLDER, cls_path_list);
 
 		for(String path: cls_path_list) {
-			int num_lines = LineCounter.getNumberOfLines(new BufferedReader(new FileReader(path)));
+			FileReader freader = new FileReader(path);
+			int num_lines = LineCounter.getNumberOfLines(new BufferedReader(freader));
 			System.out.println(num_lines);
 		}
 
@@ -23,7 +24,7 @@ public final class Extractor {
 
 	//Vai buscar todos os ficheiros ".java" dentro de uma pasta,
 	//caso encontre subpastas, chama o método recursivamente nessas subpastas.
-	public static ArrayList<String> getAllClassNames(File root, ArrayList<String> list) {
+	public static ArrayList<String> getAllClassNames(File root, ArrayList<String> target_list) {
 
 		File[] file_list = root.listFiles();
 		if(file_list == null)
@@ -32,21 +33,25 @@ public final class Extractor {
 		for (File file : file_list) {
 
 			if (file.isDirectory())
-				getAllClassNames(file, list); //chamada recursiva
+				getAllClassNames(file, target_list); //chamada recursiva
 
 			else {
 				final String file_path = file.getAbsolutePath();
 
-				if(file_path.endsWith(".java")) {
-					list.add(file_path);
+				if(isClass(file_path)) {
+					target_list.add(file_path);
 					System.out.println("Added ->  " + file_path);
 				}
 			}
 		}
 
-		if(list.isEmpty()) 
+		if(target_list.isEmpty()) 
 			throw new IllegalStateException("Lista de classes vazia");
 
-		return list;
+		return target_list;
+	}
+	
+	private static boolean isClass(String path) {
+		return path.endsWith(".java");
 	}
 }
