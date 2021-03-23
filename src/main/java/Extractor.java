@@ -12,7 +12,7 @@ public final class Extractor {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
 		ArrayList<String> cls_path_list = new ArrayList<String>();
-		cls_path_list = getAllClassNames(EXTRACTION_FOLDER, cls_path_list);
+		cls_path_list = getAllClassNames(EXTRACTION_FOLDER, new ArrayList<String>());
 
 		for(String path: cls_path_list) {
 			int num_lines = LineCounter.getNumberOfLines(new BufferedReader(new FileReader(path)));
