@@ -16,9 +16,13 @@ public final class Extractor {
 
 		for(String path: cls_path_list) {
 			FileReader freader = new FileReader(path);
-			int num_lines = LineCounter.getNumberOfLines(new BufferedReader(freader));
-			System.out.println(num_lines);
-			
+			LineCounter ln = new LineCounter(new BufferedReader(freader));
+			int num_lines = ln.getLinesCount();
+			System.out.println("number of lines: " + num_lines);
+			System.out.println("number of methods: " + ln.getMethodCount());
+//			for (Method m : ln.getMethodList()) {
+//				System.out.println(m.toString());
+//			}
 		}
 
 	}
