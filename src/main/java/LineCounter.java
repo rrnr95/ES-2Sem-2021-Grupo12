@@ -5,17 +5,19 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LineCounter {
+	
+	private static int methodCount;
 
 	 public static void main(String[] args) {
 	 try{
-		 System.out.println( getNumberOfLines(new BufferedReader(new FileReader("C:\\LineCounter.java"))));
-		 }catch (Exception e){
+		 System.out.println( getNumberOfLines(new BufferedReader(new FileReader("C:\\Users\\Utilizador\\eclipse-workspace\\ES-2Sem-2021-Grupo12\\src\\main\\java\\LineCounter.java"))));
+		 System.out.println("Number of methods: " + methodCount);
+	 }catch (Exception e){
 		    System.out.println("file not found");
 		 }
 	 }
 
-	public static int getNumberOfLines(BufferedReader bReader)
-			throws IOException {
+	public static int getNumberOfLines(BufferedReader bReader) throws IOException {
 		int count = 0;
 		boolean commentBegan = false;
 		String line = null;
@@ -23,7 +25,12 @@ public class LineCounter {
 		while ((line = bReader.readLine()) != null) {
 			line = line.trim();
 			if ("".equals(line) || line.startsWith("//")) {
-				continue;
+				continue;		
+			}
+			// find start of method
+			if (line.matches(".+(public|private|protected|static).+")  && line.matches(".+[\\(\\)].+")) {
+				//System.out.println("Method: " + line);
+				methodCount++;
 			}
 			if (commentBegan) {
 				if (commentEnded(line)) {
@@ -49,7 +56,7 @@ public class LineCounter {
 	 * @param line
 	 * @return This method checks if in the given line a comment has begun and has not ended
 	 */
-	private static boolean commentBegan(String line) {
+	protected static boolean commentBegan(String line) {
 		// If line = /* */, this method will return false
 		// If line = /* */ /*, this method will return true
 		int index = line.indexOf("/*");
@@ -73,7 +80,7 @@ public class LineCounter {
 	 * @param line
 	 * @return This method checks if in the given line a comment has ended and no new comment has not begun
 	 */
-	private static boolean commentEnded(String line) {
+	protected static boolean commentEnded(String line) {
 		// If line = */ /* , this method will return false
 		// If line = */ /* */, this method will return true
 		int index = line.indexOf("*/");
@@ -93,7 +100,7 @@ public class LineCounter {
 	 * @return This method returns true if there is any valid source code in the given input line. It does not worry if comment has begun or not.
 	 * This method will work only if we are sure that comment has not already begun previously. Hence, this method should be called only after {@link #commentBegan(String)} is called
 	 */
-	private static boolean isSourceCodeLine(String line) {
+	protected static boolean isSourceCodeLine(String line) {
 		boolean isSourceCodeLine = false;
 		line = line.trim();
 		if ("".equals(line) || line.startsWith("//")) {
