@@ -4,17 +4,20 @@ import java.util.ArrayList;
 
 
 public final class Extractor {
-
-	//TODO: ARRANJAR MANEIRA DE FORNECER O CAMINHO PARA O PACKAGE DE MANEIRA GENÉRICA
+	private static ArrayList<String> fjava_path_list = new ArrayList<String>();
+	private static int total_number_classes;
+	private static int total_number_methods;
 	
 	//Alterar para o caminho do package "imported_project_test"
 	private final static File EXTRACTION_FOLDER = new File("C:\\Users\\renat\\Documents\\GitHub_repository\\ES-2Sem-2021-Grupo12\\src\\main\\java\\imported_project_test");
-
+	//TODO: ARRANJAR MANEIRA DE FORNECER O CAMINHO PARA O PACKAGE DE MANEIRA GENÉRICA
+	
 	public static void main(String[] args) {
-
-		ArrayList<String> fjava_path_list = new ArrayList<String>();
+		
 		fjava_path_list = getAllJavaFiles(EXTRACTION_FOLDER, fjava_path_list);
-
+		total_number_classes = fjava_path_list.size();
+		total_number_methods = 0;
+		
 		for(String path: fjava_path_list) {
 
 			try {
@@ -27,12 +30,15 @@ public final class Extractor {
 				System.out.println("----------------------------");
 				System.out.println("number of lines: " + num_lines);
 				System.out.println("number of methods: " + num_methods);
-
+				
+				total_number_methods += num_methods;
 
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("\nTotal number of classes: " + total_number_classes);
+		System.out.println("Total number of methods: " + total_number_methods);
 	}
 
 	//Vai buscar todos os ficheiros ".java" dentro de uma pasta,
