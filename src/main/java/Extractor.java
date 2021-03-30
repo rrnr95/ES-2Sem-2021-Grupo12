@@ -51,7 +51,7 @@ public final class Extractor {
 			else {
 				final String file_path = file.getAbsolutePath();
 
-				if(isClass(file_path)) {
+				if(isJavaFile(file_path)) {
 					target_list.add(file_path);
 					System.out.println("Added ->  " + file_path);
 				}
@@ -66,7 +66,7 @@ public final class Extractor {
 		return target_list;
 	}
 
-	private static boolean isClass(String path) {
+	private static boolean isJavaFile(String path) {
 		return path.endsWith(".java");
 	}
 }

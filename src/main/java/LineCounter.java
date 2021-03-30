@@ -18,6 +18,7 @@ public class LineCounter {
 			
 			bfreader.close();
 			freader.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
