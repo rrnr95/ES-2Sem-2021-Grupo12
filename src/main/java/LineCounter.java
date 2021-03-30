@@ -1,34 +1,27 @@
-
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Method;
 
 public class LineCounter {
-	
+
 	private int methodCount;
 	private int linesCount;
-//	private List<Method> methodList = new ArrayList<Method>();
-	
-	public LineCounter(BufferedReader bReader) {
+	//	private List<Method> methodList = new ArrayList<Method>();
+
+	public LineCounter(String path) {
 		try {
-			counter(bReader);
+			FileReader freader = new FileReader(path);
+			BufferedReader bfreader = new BufferedReader(freader);
+
+			counter(bfreader);
+			
+			bfreader.close();
+			freader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	 public static void main(String[] args) {
-	 try{
-		 LineCounter ln = new LineCounter(new BufferedReader(new FileReader("C:\\Users\\Utilizador\\eclipse-workspace\\ES-2Sem-2021-Grupo12\\src\\main\\java\\LineCounter.java")));
-		 System.out.println("Number of methods: " + ln.getMethodCount());
-		 System.out.println("Number of lines: " + ln.getLinesCount());
-	 }catch (Exception e){
-		    System.out.println("file not found");
-		 }
-	 }
+	}	
 
 	public void counter(BufferedReader bReader) throws IOException {
 		//int count = 0;
@@ -46,13 +39,13 @@ public class LineCounter {
 			// find start of method
 			if (line.matches(".*(public|private|protected|static).*") && line.matches(".+[\\(\\)].+")) {
 				methodCount++;
-//				if (methodBegan) {
-//					m.setLines(methodLinesCount);
-//					methodList.add(m);
-//					methodLinesCount = 0;
-//				}
-//				methodBegan = true;
-//				m = new Method(line);
+				//				if (methodBegan) {
+				//					m.setLines(methodLinesCount);
+				//					methodList.add(m);
+				//					methodLinesCount = 0;
+				//				}
+				//				methodBegan = true;
+				//				m = new Method(line);
 			}
 			if (commentBegan) {
 				if (commentEnded(line)) {
@@ -67,8 +60,8 @@ public class LineCounter {
 			if (isSourceCodeLine(line)) {
 				//count++;
 				linesCount++;
-//				if (methodBegan)
-//					methodLinesCount++;
+				//				if (methodBegan)
+				//					methodLinesCount++;
 			}
 			if (commentBegan(line)) {
 				commentBegan = true;
@@ -163,16 +156,16 @@ public class LineCounter {
 		}
 		return isSourceCodeLine;
 	}
-	
+
 	public int getMethodCount() {
 		return methodCount;
 	}
-	
+
 	public int getLinesCount() {
 		return linesCount;
 	}
-	
-//	public List<Method> getMethodList() {
-//		return methodList;
-//	}
+
+	//	public List<Method> getMethodList() {
+	//		return methodList;
+	//	}
 }
