@@ -26,7 +26,7 @@ public class NumberOfClassesPerFile {
 				if (currentLine.contains("*/")) {
 					isValid = true;
 				}
-				if(isValid && !currentLine.startsWith("//") && currentLine.contains("class") && !currentLine.contains("(")) {
+				if(isValid && !currentLine.contains("//") && currentLine.contains("class") && !currentLine.contains("(")) {
 					count++;
 				}
 				
@@ -44,9 +44,7 @@ public class NumberOfClassesPerFile {
 	
 	public static void main (String[] args) {
 		NumberOfClassesPerFile n = new NumberOfClassesPerFile("C:\\Users\\mrfur\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
-//		NumberOfClassesPerFile n = new NumberOfClassesPerFile("NumberOfClassesPerFile.java");
 		System.out.println(n.getNumClasses());
 
 	}
-		
 }
