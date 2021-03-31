@@ -9,10 +9,12 @@ public final class Extractor {
 	private static int total_number_methods;
 	
 	//Alterar para o caminho do package "imported_project_test"
-	private final static File EXTRACTION_FOLDER = new File("C:\\Users\\renat\\Documents\\GitHub_repository\\ES-2Sem-2021-Grupo12\\src\\main\\java\\imported_project_test");
+	//private final static File EXTRACTION_FOLDER = new File("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\src\\main\\java\\imported_project_test");
 	//TODO: ARRANJAR MANEIRA DE FORNECER O CAMINHO PARA O PACKAGE DE MANEIRA GENÉRICA
-	
+		
+	//Se for passado o caminho como argumento, o TODO acima fica resolvido, vejam lá se faz sentido
 	public static void main(String[] args) {
+		final File EXTRACTION_FOLDER = new File(args[0]);
 		
 		fjava_path_list = getAllJavaFiles(EXTRACTION_FOLDER, fjava_path_list);
 		total_number_classes = fjava_path_list.size();
