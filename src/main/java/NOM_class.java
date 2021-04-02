@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 
 public final class NOM_class {
 	
@@ -18,6 +19,14 @@ public final class NOM_class {
 		String tmp_str = tmp_array[1].replace("\\", "");
 		
 		return tmp_str.split("[.]")[0];
+	}
+	
+	
+	protected static Method[] getMethods(String path) throws ClassNotFoundException {
+		String cls_name = getClassName(path);	
+		Class<?> cls = Class.forName("imported_project_test." + cls_name);
+	
+		return cls.getDeclaredMethods();
 	}
 	
 }
