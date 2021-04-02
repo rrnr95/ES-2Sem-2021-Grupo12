@@ -86,7 +86,6 @@ public class PackageCounter {
 //		PackageCounter pc = new PackageCounter("Caminho\\Invalido");
 		
 
-
 		try {
 			System.out.println(pc.packagesCount());
 		}

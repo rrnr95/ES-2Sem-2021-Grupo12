@@ -13,7 +13,7 @@ public class NumberOfClassesPerFile {
 	public int getNumClasses() {
 		String currentLine;
 		int count = 0;
-		boolean isValid = true;
+		int comment = 0;
 		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
@@ -21,12 +21,13 @@ public class NumberOfClassesPerFile {
 			
 			while (currentLine != null) {
 				if (currentLine.contains("/*")) {
-					isValid = false;
+					comment++;
 				}
 				if (currentLine.contains("*/")) {
-					isValid = true;
+					if (comment != 0)
+						comment--;
 				}
-				if(isValid && !currentLine.contains("//") && currentLine.contains("class") && !currentLine.contains("(")) {
+				if(comment == 0 && !currentLine.contains("//") && currentLine.contains("class") && !currentLine.contains("(")) {
 					count++;
 				}
 				
