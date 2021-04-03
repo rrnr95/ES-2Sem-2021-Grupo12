@@ -96,7 +96,7 @@ public class LineCounter {
 							methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and count to list 
 							methodLinesCount = 0;
 							
-							if (methodsArray.length > methodCount+1)
+							if (methodsArray.length > methodCount)
 								m = methodsArray[methodCount].getName();
 							
 							//System.out.println("method ended!!");
