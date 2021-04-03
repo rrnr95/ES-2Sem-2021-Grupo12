@@ -51,7 +51,6 @@ public class LineCounter {
 
 		while ((line = bReader.readLine()) != null) {
 			line = line.trim();
-			//System.out.println(line);
 			if ("".equals(line) || line.startsWith("//")) {
 				continue;		
 			}
@@ -83,25 +82,23 @@ public class LineCounter {
 					methodLinesCount++;
 				
 					// if there is a '{' then push to stack
-					if (line.matches("\\{"))
-						curlyBracketStack.push(line);			
-					else {				
+					if (line.contains("{")) 
+						curlyBracketStack.push(line);
+					
+					else {
+						// if there is a '}' the pop from stack
+						if (line.contains("}")) 
+							curlyBracketStack.pop();						
+					}
+
+					// if stack is empty then method is over
+					if (curlyBracketStack.isEmpty()) {
+						methodBegan = false;
+						methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and line count to list 
+						methodLinesCount = 0;
 						
-						// if stack is empty then method is over
-						if (curlyBracketStack.isEmpty()) {
-							methodBegan = false;
-							methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and line count to list 
-							methodLinesCount = 0;
-							
-							if (methodsArray.length > methodCount+1)
-								m = methodsArray[methodCount].getName();
-						}
-						
-						else {
-							// if there is a '}' the pop from stack
-							if (line.matches("\\}"))
-								curlyBracketStack.pop();
-						}
+						if (methodsArray.length > methodCount)
+							m = methodsArray[methodCount].getName();
 					}
 				}
 			}
@@ -203,7 +200,7 @@ public class LineCounter {
 		return linesCount;
 	}
 
-		public List<String> getMethodList() {
-			return methodCountList;
-		}
+	public List<String> getMethodList() {
+		return methodCountList;
+	}
 }
