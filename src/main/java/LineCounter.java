@@ -93,7 +93,7 @@ public class LineCounter {
 							methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and line count to list 
 							methodLinesCount = 0;
 							
-							if (methodsArray.length > methodCount)
+							if (methodsArray.length > methodCount+1)
 								m = methodsArray[methodCount].getName();
 						}
 						
