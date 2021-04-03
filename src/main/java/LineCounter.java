@@ -45,7 +45,7 @@ public class LineCounter {
 		String m = "";
 		
 		if (methodsArray.length != 0)
-			m = methodsArray[methodCount].getName();
+			m = methodsArray[methodCount].getName();	// method's name (string)
 	
 		Stack<String> curlyBracketStack = new Stack<String>();
 
@@ -71,14 +71,10 @@ public class LineCounter {
 				linesCount++;
 				
 				// find start of method
-				//System.out.println("m = " + m);
 				if (!"".equals(m)) {
 					if (line.matches(".*\\b" + m  + "\\b.*")) {
-						//System.out.println("MATCH");
 						methodCount++;
 						methodBegan = true;
-						//System.out.println("method began!!");
-						//curlyBracketStack.push(line);
 					}
 				}
 				
@@ -86,6 +82,7 @@ public class LineCounter {
 				if (methodBegan) {
 					methodLinesCount++;
 				
+					// if there is a '{' then push to stack
 					if (line.matches("\\{"))
 						curlyBracketStack.push(line);			
 					else {				
@@ -93,16 +90,15 @@ public class LineCounter {
 						// if stack is empty then method is over
 						if (curlyBracketStack.isEmpty()) {
 							methodBegan = false;
-							methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and count to list 
+							methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and line count to list 
 							methodLinesCount = 0;
 							
 							if (methodsArray.length > methodCount)
 								m = methodsArray[methodCount].getName();
-							
-							//System.out.println("method ended!!");
 						}
 						
 						else {
+							// if there is a '}' the pop from stack
 							if (line.matches("\\}"))
 								curlyBracketStack.pop();
 						}
