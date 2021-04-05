@@ -19,13 +19,21 @@ public class NumberOfClassesPerFile {
 			BufferedReader br = new BufferedReader(new FileReader(fileName));
 			currentLine = br.readLine();
 			
+			//enquanto existirem linhas para serem lidas
 			while (currentLine != null) {
+				
+				//inicio de comentario
 				if (currentLine.contains("/*")) {
 					isValid = false;
 				}
+				
+				//fim de comentario
 				if (currentLine.contains("*/")) {
 					isValid = true;
 				}
+				
+				//caso a linha nao seja um comentario
+				//caso a linha contenha a keyword 'class'
 				if(isValid && !currentLine.contains("//") && currentLine.contains("class") && !currentLine.contains("(")) {
 					count++;
 				}
@@ -42,9 +50,12 @@ public class NumberOfClassesPerFile {
 		return count;
 	}
 	
+	
+	
 	public static void main (String[] args) {
 		NumberOfClassesPerFile n = new NumberOfClassesPerFile("C:\\Users\\mrfur\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
 		System.out.println(n.getNumClasses());
 
 	}
+	
 }

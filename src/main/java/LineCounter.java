@@ -2,17 +2,27 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 public class LineCounter {
 
-	private int methodCount;
 	private int linesCount;
-	//	private List<Method> methodList = new ArrayList<Method>();
+	private Method[] methodsArray;
+	private List<String> methodCountList = new ArrayList<String>();
 
 	public LineCounter(String path) {
 		try {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
+			
+			try {
+				methodsArray = NOM_class.getMethods(path);
+				
+			} catch (ClassNotFoundException e) {
+				System.err.println("ERRO: getMethods() -> class not found!");
+			}
 
 			counter(bfreader);
 			
@@ -27,27 +37,24 @@ public class LineCounter {
 	public void counter(BufferedReader bReader) throws IOException {
 		//int count = 0;
 		boolean commentBegan = false;
-		boolean methodBegan = false;
 		String line = null;
+		
+		boolean methodBegan = false;
 		int methodLinesCount = 0;
-		Method m = null;
+		int methodCount = 0;
+		String m = "";
+		
+		if (methodsArray.length != 0)
+			m = methodsArray[methodCount].getName();	// method's name (string)
+	
+		Stack<String> curlyBracketStack = new Stack<String>();
 
 		while ((line = bReader.readLine()) != null) {
 			line = line.trim();
 			if ("".equals(line) || line.startsWith("//")) {
 				continue;		
 			}
-			// find start of method
-			if (line.matches(".*(public|private|protected|static).*") && line.matches(".+[\\(\\)].+")) {
-				methodCount++;
-				//				if (methodBegan) {
-				//					m.setLines(methodLinesCount);
-				//					methodList.add(m);
-				//					methodLinesCount = 0;
-				//				}
-				//				methodBegan = true;
-				//				m = new Method(line);
-			}
+			
 			if (commentBegan) {
 				if (commentEnded(line)) {
 					line = line.substring(line.indexOf("*/") + 2).trim();
@@ -58,17 +65,47 @@ public class LineCounter {
 				} else
 					continue;
 			}
+			
 			if (isSourceCodeLine(line)) {
-				//count++;
 				linesCount++;
-				//				if (methodBegan)
-				//					methodLinesCount++;
+				
+				// find start of method
+				if (!"".equals(m)) {
+					if (line.matches(".*\\b" + m  + "\\b.*")) {
+						methodCount++;
+						methodBegan = true;
+					}
+				}
+				
+				// increase method's line count
+				if (methodBegan) {
+					methodLinesCount++;
+				
+					// if there is a '{' then push to stack
+					if (line.contains("{")) 
+						curlyBracketStack.push(line);
+					
+					else {
+						// if there is a '}' the pop from stack
+						if (line.contains("}")) 
+							curlyBracketStack.pop();						
+					}
+
+					// if stack is empty then method is over
+					if (curlyBracketStack.isEmpty()) {
+						methodBegan = false;
+						methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and line count to list 
+						methodLinesCount = 0;
+						
+						if (methodsArray.length > methodCount)
+							m = methodsArray[methodCount].getName();
+					}
+				}
 			}
 			if (commentBegan(line)) {
 				commentBegan = true;
 			}
 		}
-		//return count;
 	}
 
 	/**
@@ -158,15 +195,12 @@ public class LineCounter {
 		return isSourceCodeLine;
 	}
 
-	public int getMethodCount() {
-		return methodCount;
-	}
 
 	public int getLinesCount() {
 		return linesCount;
 	}
 
-	//	public List<Method> getMethodList() {
-	//		return methodList;
-	//	}
+	public List<String> getMethodList() {
+		return methodCountList;
+	}
 }
