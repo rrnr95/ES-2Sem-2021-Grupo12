@@ -9,10 +9,6 @@ import java.util.regex.Pattern;
 
 public class CycloMethod {
 
-	private int complexity;
-	
-	
-	
 	
 	/**
 	 * Verificar:
@@ -40,9 +36,6 @@ public class CycloMethod {
 		 
 		 for(String str : tests)
 			 System.out.println(sourceCodeExtrator(str) + " -> complexidade da linha: " + lineCycloCounter(sourceCodeExtrator(str)));
-		
-		
-		
 	}
 	
 	public static boolean isEmptyOrLineCommentary(String line) {
@@ -124,9 +117,7 @@ public class CycloMethod {
 		int count=0;
 		while(countMatchs.find())
 			count++;		
-		return count;
-
-		
+		return count;		
 	}
 	
 	
