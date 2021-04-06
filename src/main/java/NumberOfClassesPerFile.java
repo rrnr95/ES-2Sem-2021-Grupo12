@@ -2,17 +2,20 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NumberOfClassesPerFile {
 	private String fileName;
+	private List<String> classes;
 	
 	public NumberOfClassesPerFile(String file) {
 		this.fileName = file;
+		this.classes = new ArrayList<String>();
 	}
 	
-	public int getNumClasses() {
+	public List<String> getClasses() {
 		String currentLine;
-		int count = 0;
 		boolean isValid = true;
 		
 		try {
@@ -34,8 +37,8 @@ public class NumberOfClassesPerFile {
 				
 				//caso a linha nao seja um comentario
 				//caso a linha contenha a keyword 'class'
-				if(isValid && !currentLine.contains("//") && currentLine.contains("class") && !currentLine.contains("(")) {
-					count++;
+				if(isValid && !currentLine.contains("//") && currentLine.contains(" class ") && !currentLine.contains("(")) {
+					classes.add(currentLine);
 				}
 				
 				currentLine = br.readLine();
@@ -47,15 +50,17 @@ public class NumberOfClassesPerFile {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return count;
+		return classes;
 	}
 	
 	
 	
 	public static void main (String[] args) {
 		NumberOfClassesPerFile n = new NumberOfClassesPerFile("C:\\Users\\mrfur\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
-		System.out.println(n.getNumClasses());
-
+		
+		for (String s : n.getClasses()) {
+			System.out.println(s);
+		}
 	}
 	
 }
