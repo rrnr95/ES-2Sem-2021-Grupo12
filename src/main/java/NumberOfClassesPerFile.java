@@ -53,13 +53,21 @@ public class NumberOfClassesPerFile {
 		return classes;
 	}
 	
+	private static String trimClass(String line) {
+		String s1 = line.split("class")[1].split(" ")[1];
+		if (s1.contains("{")) {
+			s1.replace("{", "");
+		}
+		return s1;
+	}
+	
 	
 	
 	public static void main (String[] args) {
 		NumberOfClassesPerFile n = new NumberOfClassesPerFile("C:\\Users\\mrfur\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
 		
 		for (String s : n.getClasses()) {
-			System.out.println(s);
+			System.out.println(trimClass(s));
 		}
 	}
 	
