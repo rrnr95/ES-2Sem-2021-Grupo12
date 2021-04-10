@@ -1,13 +1,17 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class PackageCounter {
 	private Stack<File> pilha;
+	private List<String> packages;
 	private String root;
 	
 	public PackageCounter (String path) {
 		this.pilha = new Stack<File>();
 		this.root = path;
+		this.packages = new ArrayList<String>();
 	}
 	
 	public int packagesCount() throws NullPointerException {
@@ -24,9 +28,10 @@ public class PackageCounter {
 		while (!pilha.empty()) {
 			File f = pilha.pop();
 			
-			//caso contenha um ficheiro java, é um package
+			//caso contenha um ficheiro java, é um package!
 			if(containsJavaFiles(f)) {
 				cnt++;
+				packages.add(f.getName());
 			}
 			
 			//procurar mais diretorias
@@ -38,6 +43,10 @@ public class PackageCounter {
 		}
 		
 		return cnt;
+	}
+	
+	public List<String> getPackages() {
+		return packages;
 	}
 	
 	private String newRoot(String path) {
@@ -88,6 +97,9 @@ public class PackageCounter {
 
 		try {
 			System.out.println(pc.packagesCount());
+			for (String pck : pc.getPackages()) {
+				System.out.println(pck);
+			}
 		}
 		catch (NullPointerException e) {
 			System.err.println("ERRO!!! Nao estamos na root do projeto");
