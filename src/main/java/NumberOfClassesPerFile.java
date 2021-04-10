@@ -54,6 +54,7 @@ public class NumberOfClassesPerFile {
 	}
 	
 	private static String trimClass(String line) {
+		//jn
 		String s1 = line.split("class")[1].split(" ")[1];
 		if (s1.contains("{")) {
 			s1.replace("{", "");
