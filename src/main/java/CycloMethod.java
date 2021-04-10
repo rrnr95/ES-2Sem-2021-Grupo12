@@ -29,8 +29,8 @@ public class CycloMethod {
 	 * @throws FileNotFoundException 
 	 * 
 	 */
-	public static List<String> methodCode = new ArrayList<String>();
-	public static List<String> methodName = new ArrayList<String>();
+	public static List<String> methodCode;
+	public static List<String> methodName;
 
 	
 	public static void main(String[] args) throws FileNotFoundException {
@@ -46,8 +46,9 @@ public class CycloMethod {
 //		 for(String str : tests)
 //			 System.out.println(sourceCodeExtrator(str) + " -> complexidade da linha: " + lineCycloCounter(sourceCodeExtrator(str)));
 //		 
-		 extractMethodSourceCode("C:\\Users\\Diogo\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
-		 
+		 String path = ("C:\\Users\\Utilizador\\eclipse-workspace\\ES-2Sem-2021-Grupo12\\src\\main\\java\\imported_project_test\\test.java");
+		 methodCode = new MethodUtils(path).getMethodCode();
+		 methodName = new MethodUtils(path).getMethodName();
 		 
 		 for(String s : methodCode) {
 			System.out.println(methodName.get(methodCode.indexOf(s)) +": " +  cycloMethodValue(s.split("\n")));
@@ -142,25 +143,25 @@ public class CycloMethod {
 	
 	
 	
-	public static void extractMethodSourceCode(String path) throws FileNotFoundException{
-		 
-	
-		
-		
-		new VoidVisitorAdapter<Object>() {
-            @Override
-            public void visit(MethodDeclaration n, Object arg) {
-                super.visit(n, arg);
-             //   System.out.println(" * " + n);
-                methodCode.add(n.toString());
-                methodName.add(n.getName().toString());
-                
-                
-            }
-        }.visit(StaticJavaParser.parse(new File(path)), null);
-	
-        
-	}
+//	public static void extractMethodSourceCode(String path) throws FileNotFoundException{
+//		 
+//	
+//		
+//		
+//		new VoidVisitorAdapter<Object>() {
+//            @Override
+//            public void visit(MethodDeclaration n, Object arg) {
+//                super.visit(n, arg);
+//             //   System.out.println(" * " + n);
+//                methodCode.add(n.toString());
+//                methodName.add(n.getName().toString());
+//                
+//                
+//            }
+//        }.visit(StaticJavaParser.parse(new File(path)), null);
+//	
+//        
+//	}
 		
 	public static int cycloMethodValue(String[] method) {
 		

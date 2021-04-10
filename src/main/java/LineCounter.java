@@ -9,7 +9,7 @@ import java.util.Stack;
 public class LineCounter {
 
 	private int linesCount;
-	private Method[] methodsArray;
+	private List<String> methodsNames;
 	private List<String> methodCountList = new ArrayList<String>();
 
 	public LineCounter(String path) {
@@ -17,12 +17,7 @@ public class LineCounter {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
 			
-			try {
-				methodsArray = NOM_class.getMethods(path);
-				
-			} catch (ClassNotFoundException e) {
-				System.err.println("ERRO: getMethods() -> class not found!");
-			}
+			methodsNames = new MethodUtils(path).getMethodName();
 
 			counter(bfreader);
 			
@@ -44,8 +39,8 @@ public class LineCounter {
 		int methodCount = 0;
 		String m = "";
 		
-		if (methodsArray.length != 0)
-			m = methodsArray[methodCount].getName();	// method's name (string)
+		if (methodsNames.size() != 0)
+			m = methodsNames.get(methodCount);	// method's name (string)
 	
 		Stack<String> curlyBracketStack = new Stack<String>();
 
@@ -97,8 +92,8 @@ public class LineCounter {
 						methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and line count to list 
 						methodLinesCount = 0;
 						
-						if (methodsArray.length > methodCount)
-							m = methodsArray[methodCount].getName();
+						if (methodsNames.size() > methodCount)
+							m = methodsNames.get(methodCount);
 					}
 				}
 			}

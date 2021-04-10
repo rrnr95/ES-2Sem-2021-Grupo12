@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +27,13 @@ public final class Extractor {
 		total_number_lines = 0;
 		
 		for(String path: fjava_path_list) {
-
-			try {
-			
+				
+				MethodUtils mu = new MethodUtils(path);
+				final int num_methods = mu.getMethodName().size();
+				
 				LineCounter ln = new LineCounter(path);
 				final int num_lines = ln.getLinesCount();
 				final List<String> method_lines_list = ln.getMethodList();
-			
-				final int num_methods = NOM_class.get_NOM(path);
 				
 				System.out.println("---------------//--------------");
 				System.out.println("number of lines: " + num_lines);
@@ -48,11 +48,8 @@ public final class Extractor {
 				
 //				for (Method m : NOM_class.getMethods(path))
 //					System.out.println("METHODDD:" + m.toString());
-
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
 		}
+		
 		System.out.println("\nTotal number of classes: " + total_number_classes);
 		System.out.println("Total number of lines: " + total_number_lines);
 		System.out.println("Total number of methods: " + total_number_methods);
