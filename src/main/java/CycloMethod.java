@@ -3,9 +3,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.github.javaparser.*;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+
 
 public class CycloMethod {
 
@@ -19,23 +26,36 @@ public class CycloMethod {
 	 * 	2 Verificar se é código ou comentário comentário 
 	 * 	3 Verificar se existe uma string na linha "string"
 	 * 	4 Verificar se existe mais do que uma keyword.
+	 * @throws FileNotFoundException 
 	 * 
 	 */
-	
+	public static List<String> methodCode = new ArrayList<String>();
+	public static List<String> methodName = new ArrayList<String>();
 
 	
-	public static void main(String[] args) {
-		ArrayList<String> tests = new ArrayList<String>();
-		 tests.add("private int a = 3;");
-		 tests.add("/* comentario */");
-		 tests.add("/* comentario */ if manel do isto");
-		 tests.add("/* comentario */ if manelito do isto entao /* outro if{} comentario*/");
-		 tests.add("/* comentario */ if{} do isto //coment de linha");
-		 tests.add("algum codigo e /* um comentario */");
-		 tests.add("algum String = \"aroz doce\" codigo while() /* um comentario */ e mais algum codigo if() \"emais uma string\" mais codigo2");
+	public static void main(String[] args) throws FileNotFoundException {
+//		ArrayList<String> tests = new ArrayList<String>();
+//		 tests.add("private int a = 3;");
+//		 tests.add("/* comentario */");
+//		 tests.add("/* comentario */ if manel do isto");
+//		 tests.add("/* comentario */ if manelito do isto entao /* outro if{} comentario*/");
+//		 tests.add("/* comentario */ if{} do isto //coment de linha");
+//		 tests.add("algum codigo e /* um comentario */");
+//		 tests.add("algum String = \"aroz doce\" codigo while() /* um comentario */ e mais algum codigo if() \"emais uma string\" mais codigo2");
+//		 
+//		 for(String str : tests)
+//			 System.out.println(sourceCodeExtrator(str) + " -> complexidade da linha: " + lineCycloCounter(sourceCodeExtrator(str)));
+//		 
+		 extractMethodSourceCode("C:\\Users\\Diogo\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
 		 
-		 for(String str : tests)
-			 System.out.println(sourceCodeExtrator(str) + " -> complexidade da linha: " + lineCycloCounter(sourceCodeExtrator(str)));
+		 
+		 for(String s : methodCode) {
+			System.out.println(methodName.get(methodCode.indexOf(s)) +": " +  cycloMethodValue(s.split("\n")));
+		 }
+		
+		 
+		 
+		 
 	}
 	
 	public static boolean isEmptyOrLineCommentary(String line) {
@@ -119,6 +139,43 @@ public class CycloMethod {
 			count++;		
 		return count;		
 	}
+	
+	
+	
+	public static void extractMethodSourceCode(String path) throws FileNotFoundException{
+		 
+	
+		
+		
+		new VoidVisitorAdapter<Object>() {
+            @Override
+            public void visit(MethodDeclaration n, Object arg) {
+                super.visit(n, arg);
+             //   System.out.println(" * " + n);
+                methodCode.add(n.toString());
+                methodName.add(n.getName().toString());
+                
+                
+            }
+        }.visit(StaticJavaParser.parse(new File(path)), null);
+	
+        
+	}
+		
+	public static int cycloMethodValue(String[] method) {
+		
+		int res = 1;
+		
+		for(String s : method) {
+			res+=lineCycloCounter(s);
+		}
+		
+		return res;
+		
+	}
+		
+		
+	
 	
 	
 	
