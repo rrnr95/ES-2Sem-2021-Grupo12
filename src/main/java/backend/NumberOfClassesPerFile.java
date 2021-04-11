@@ -61,28 +61,15 @@ public class NumberOfClassesPerFile {
 	}
 	
 	private static String trimClass(String line) {
-		//jn
-		String s1;
-		line = line.trim();
+		String str_temp;
+		str_temp = line.trim()
+				 .split("class ")[1]
+				 .replace("{", "")
+				 .replace("}", "")
+				 .trim();
 		
-		s1 = line.split("class ")[1];
-	
-		s1 = s1.replace("{", "");
-		s1 = s1.replace("}", "").trim();
-		
-		return s1;
+		return str_temp;
 		
 	}
-	
-	
-	
-	public static void main (String[] args) {
-		NumberOfClassesPerFile n = new NumberOfClassesPerFile("C:\\Users\\renat\\Documents\\GitHub_repository\\ES-2Sem-2021-Grupo12\\imported_project\\not_source\\src\\pckg2\\HelloWorld.java");
-		
-		for (String s : n.getClasses()) {
-			System.out.println(s);
-		}
-	}
-	
 	
 }
