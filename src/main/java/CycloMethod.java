@@ -16,55 +16,31 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 public class CycloMethod {
 
-	
-	/**
-	 * Verificar:
-	 * 
-	 * 	- Existencia de If, for, while, case, (...)
-	 * 	
-	 * 	1 Checkar linha a linha x
-	 * 	2 Verificar se é código ou comentário comentário 
-	 * 	3 Verificar se existe uma string na linha "string"
-	 * 	4 Verificar se existe mais do que uma keyword.
-	 * @throws FileNotFoundException 
-	 * 
-	 */
-	public static List<String> methodCode;
-	public static List<String> methodName;
+
 
 	
 	public static void main(String[] args) throws FileNotFoundException {
-//		ArrayList<String> tests = new ArrayList<String>();
-//		 tests.add("private int a = 3;");
-//		 tests.add("/* comentario */");
-//		 tests.add("/* comentario */ if manel do isto");
-//		 tests.add("/* comentario */ if manelito do isto entao /* outro if{} comentario*/");
-//		 tests.add("/* comentario */ if{} do isto //coment de linha");
-//		 tests.add("algum codigo e /* um comentario */");
-//		 tests.add("algum String = \"aroz doce\" codigo while() /* um comentario */ e mais algum codigo if() \"emais uma string\" mais codigo2");
-//		 
-//		 for(String str : tests)
-//			 System.out.println(sourceCodeExtrator(str) + " -> complexidade da linha: " + lineCycloCounter(sourceCodeExtrator(str)));
-//		 
-		 String path = ("C:\\Users\\Utilizador\\eclipse-workspace\\ES-2Sem-2021-Grupo12\\src\\main\\java\\imported_project_test\\test.java");
-		 methodCode = new MethodUtils(path).getMethodCode();
-		 methodName = new MethodUtils(path).getMethodName();
+ 
+		List<String> methodCode;
+		List<String> methodName;
+		String path = ("C:\\Users\\Diogo\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
+		methodCode = new MethodUtils(path).getMethodCode();
+		methodName = new MethodUtils(path).getMethodName();
+		List<Integer> methodsCycloValue = allMethodsCycloValue(methodCode);
 		 
-		 for(String s : methodCode) {
-			System.out.println(methodName.get(methodCode.indexOf(s)) +": " +  cycloMethodValue(s.split("\n")));
-		 }
-		
+		for(String s : methodCode) {
+			System.out.println(methodName.get(methodCode.indexOf(s)) +": " +  methodsCycloValue.get(methodCode.indexOf(s)));
+		}
 		 
-		 
-		 
+		System.out.println("Class wmc value: " + wmcCalculator(methodsCycloValue));			 
 	}
 	
-	public static boolean isEmptyOrLineCommentary(String line) {
-		
+	
+	
+	private static boolean isEmptyOrLineCommentary(String line) {		
 		line.trim();
 		// verificar se existe comentário de uma só linha ou se linha está vazia
 		return line.startsWith("//") || "".equals(line);		
-		
 	}
 	
 	
@@ -72,10 +48,10 @@ public class CycloMethod {
 	 * 
 	 * @param line
 	 * @return String representing the given line without any comments or text strings. 
-	 * 			If there's no code in the given line the method returns an empty String
+	 * 			If there's no code in the given line returns an empty String
 	 */
 	
-	public static String sourceCodeExtrator(String line) {
+	private static String sourceCodeExtrator(String line) {
 		
 			// começa por descartar linhas comentadas ou vazias
 			if(!isEmptyOrLineCommentary(line)) {
@@ -130,7 +106,14 @@ public class CycloMethod {
 			}
 	}
 	
-	public static int lineCycloCounter(String line) {
+	/**
+	 * 
+	 * @param line of code. Should be filtered previously with sourceCodeExtrator(String line) function.
+	 * @return returns the number of keywords (if|while|for|case) present in the given line.
+	 */
+	
+	
+	private static int lineCycloCounter(String line) {
 		
 		Pattern cyclofinder = Pattern.compile("\\b(if|while|for|case)\\b");
 		Matcher countMatchs = cyclofinder.matcher(line);
@@ -141,39 +124,33 @@ public class CycloMethod {
 		return count;		
 	}
 	
-	
-	
-//	public static void extractMethodSourceCode(String path) throws FileNotFoundException{
-//		 
-//	
-//		
-//		
-//		new VoidVisitorAdapter<Object>() {
-//            @Override
-//            public void visit(MethodDeclaration n, Object arg) {
-//                super.visit(n, arg);
-//             //   System.out.println(" * " + n);
-//                methodCode.add(n.toString());
-//                methodName.add(n.getName().toString());
-//                
-//                
-//            }
-//        }.visit(StaticJavaParser.parse(new File(path)), null);
-//	
-//        
-//	}
-		
-	public static int cycloMethodValue(String[] method) {
-		
-		int res = 1;
-		
-		for(String s : method) {
+	private static int cycloMethodValue(String[] method) {
+		int res = 1;	
+		for(String s : method)
 			res+=lineCycloCounter(s);
+		return res;
+	}
+	
+	
+	public static List<Integer> allMethodsCycloValue(List<String> methods){
+		
+		List<Integer> result = new ArrayList<Integer>();
+		
+		for(String method : methods) {
+			result.add(cycloMethodValue(method.split("\n"))); 
 		}
 		
-		return res;
-		
+		return result;
 	}
+	
+	
+	public static int wmcCalculator(List<Integer> methodsCycloValue) {
+		int res = 0;
+		for(Integer value : methodsCycloValue)
+			res+=value;
+		return res;	
+	}
+		
 		
 		
 	
