@@ -36,8 +36,10 @@ public final class Extractor {
 				final List<String> method_lines_list = ln.getMethodList();
 				
 				System.out.println("---------------//--------------");
-				System.out.println("number of lines: " + num_lines);
+				System.out.println("Linhas do ficheiro: " + num_lines);
 				System.out.println("number of methods: " + num_methods + "\n");
+				
+				
 				
 				total_number_methods += num_methods;
 				total_number_lines += num_lines;
@@ -71,9 +73,15 @@ public final class Extractor {
 			else {
 				final String file_path = file.getAbsolutePath();
 
+				
 				if(isJavaFile(file_path)) {
+					
+					
 					target_list.add(file_path);
-					System.out.println("Added ->  " + file_path);
+//					System.out.println("Added ->  " + file_path);
+					NumberOfClassesPerFile nClass = new NumberOfClassesPerFile(file_path);
+					System.out.println( "Filename: " + nClass.getFileName() );
+					System.out.println( "Number of classes: " + nClass.getClasses() );
 				}
 				else
 					System.out.println("Not added ->  " + file_path);
