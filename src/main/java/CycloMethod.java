@@ -1,17 +1,9 @@
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.github.javaparser.*;
-import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+
 
 
 public class CycloMethod {
@@ -31,14 +23,18 @@ public class CycloMethod {
 		for(String s : methodCode) {
 			System.out.println(methodName.get(methodCode.indexOf(s)) +": " +  methodsCycloValue.get(methodCode.indexOf(s)));
 		}
-		 
-		System.out.println("Class wmc value: " + wmcCalculator(methodsCycloValue));			 
+		
+		
+		System.out.println("Class wmc value: " + wmcCalculator(methodsCycloValue));
+		System.out.println("Treated Class wmc value: " + wmcCalculator(methodsCycloValue));
+		
+		
 	}
 	
 	
 	
 	private static boolean isEmptyOrLineCommentary(String line) {		
-		line.trim();
+		line = line.trim();
 		// verificar se existe comentário de uma só linha ou se linha está vazia
 		return line.startsWith("//") || "".equals(line);		
 	}
@@ -53,6 +49,7 @@ public class CycloMethod {
 	
 	private static String sourceCodeExtrator(String line) {
 		
+			line = line.trim();
 			// começa por descartar linhas comentadas ou vazias
 			if(!isEmptyOrLineCommentary(line)) {
 					
@@ -127,7 +124,7 @@ public class CycloMethod {
 	private static int cycloMethodValue(String[] method) {
 		int res = 1;	
 		for(String s : method)
-			res+=lineCycloCounter(s);
+			res+=lineCycloCounter(sourceCodeExtrator(s));
 		return res;
 	}
 	
@@ -149,12 +146,6 @@ public class CycloMethod {
 		for(Integer value : methodsCycloValue)
 			res+=value;
 		return res;	
-	}
-		
-		
-		
-	
-	
-	
+	}	
 	
 }
