@@ -30,6 +30,7 @@ public class MethodStats {
 	}
 	
 	public MethodStats() {
+		innerClasses = new ArrayList<>();
 	}
 	
 	public int getMethodId() {
