@@ -1,5 +1,4 @@
 package backend;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -111,7 +110,7 @@ public class CycloMethod {
 	 */
 	
 	
-	private static int lineCycloCounter(String line) {
+	private synchronized  static int lineCycloCounter(String line) {
 		
 		Pattern cyclofinder = Pattern.compile("\\b(if|while|for|case)\\b");
 		Matcher countMatchs = cyclofinder.matcher(line);
@@ -122,7 +121,7 @@ public class CycloMethod {
 		return count;		
 	}
 	
-	private static int cycloMethodValue(String[] method) {
+	private synchronized static int cycloMethodValue(String[] method) {
 		int res = 1;	
 		for(String s : method)
 			res+=lineCycloCounter(sourceCodeExtrator(s));
@@ -130,19 +129,26 @@ public class CycloMethod {
 	}
 	
 	
-	public static List<Integer> allMethodsCycloValue(List<String> methods){
+	public synchronized static List<Integer> allMethodsCycloValue(List<String> methods){
+		
+		String[] methodsArray = new String[methods.size()];
+		methods.toArray(methodsArray);
 		
 		List<Integer> result = new ArrayList<Integer>();
 		
-		for(String method : methods) {
-			result.add(cycloMethodValue(method.split("\n"))); 
+//		for(String method : methods) {
+//			result.add(cycloMethodValue(method.split("\n"))); 
+//		}
+		
+		for(int i=0; i < methodsArray.length; i++){ 
+			result.add(cycloMethodValue(methodsArray[i].split("\n"))); 
 		}
 		
 		return result;
 	}
 	
 	
-	public static int wmcCalculator(List<Integer> methodsCycloValue) {
+	public synchronized static int wmcCalculator(List<Integer> methodsCycloValue) {
 		int res = 0;
 		for(Integer value : methodsCycloValue)
 			res+=value;
