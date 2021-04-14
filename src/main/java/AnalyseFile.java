@@ -38,7 +38,7 @@ public class AnalyseFile extends Thread {
 			MethodStats ms = new MethodStats(i+1, parentPackage, pathToFile, classes, m.getKey(), m.getValue(), 0, 0, ln.getLinesCount(), 0);
 			
 			ms.setNOM_class(methodCode.size());
-			ms.setCYCLO_method(cyclo_method_list.indexOf(i));
+			ms.setCYCLO_method(cyclo_method_list.get(i));
 			ms.setWMC_class(CycloMethod.wmcCalculator(cyclo_method_list));
 			
 			metodos.addMetodo(ms);
