@@ -15,9 +15,10 @@ public class NumberOfClassesPerFile {
 	public NumberOfClassesPerFile(String file) {
 		this.fileName = file;
 		this.classes = new ArrayList<String>();
+		searchClasses();
 	}
 	
-	public List<String> getClasses() {
+	public void searchClasses() {
 		String currentLine;
 		boolean isValid = true;
 		
@@ -40,11 +41,9 @@ public class NumberOfClassesPerFile {
 				
 				//caso a linha nao seja um comentario
 				//caso a linha contenha a keyword 'class'
-				Pattern cyclofinder = Pattern.compile("\\b(class)\\b");
-				Matcher matcher = cyclofinder.matcher(currentLine);
-				
-				if(isValid && !currentLine.contains("//") && matcher.find() && !currentLine.contains("(")){
-					classes.add(trimClass(currentLine));
+				if(isValid && !currentLine.contains("//") && currentLine.contains(" class ") && !currentLine.contains("(")) {
+					
+					classes.add( trimClass(currentLine));
 				}
 				
 				currentLine = br.readLine();
@@ -56,20 +55,33 @@ public class NumberOfClassesPerFile {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return classes;
 	}
 	
 	private static String trimClass(String line) {
-		String str_temp;
-		str_temp = line.trim()
-				 .split("class ")[1]
-				 .replace("{", "")
-				 .replace("}", "")
-				 .trim();
+		return	 line.trim()
+					 .split("class ")[1]
+					 .replace("{", "")
+					 .replace("}", "")
+					 .trim();
+	}
+	
+	public List<String> getClasses() {
+		return classes;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+	
+	public static void main (String[] args) {
+		NumberOfClassesPerFile n = new NumberOfClassesPerFile("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project\\src\\pckg\\HelloWorld.java");
+		System.out.println(n.getClasses().size());
 		
-		return str_temp;
-		
+		System.out.println(n.getClasses());
+		System.out.println(n.getFileName());
+//		for (String s : n.getClasses()) {
+//			System.out.println(s);
+//		}
 	}
 	
 }
