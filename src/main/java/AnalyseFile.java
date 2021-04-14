@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class AnalyseFile extends Thread {
 	}
 	
 	public void run() {
-
+/*
 		//1 - encontrar cada classe dentro do ficheiro .java;	
 		NumberOfClassesPerFile noc = new NumberOfClassesPerFile(pathToFile);
 		final List<String> classes = noc.getClasses();
@@ -44,11 +43,50 @@ public class AnalyseFile extends Thread {
 			metodos.addMetodo(ms);
 			i++;
 		}
+*/
 		
-		//exemplo:
-//		MethodStats ms = new MethodStats(0, parentPackage, pathToFile, null, "metodo", 0, 0, 0, 10, 10);
-//		metodos.addMetodo(ms);
-	
+		NumberOfClassesPerFile noc = new NumberOfClassesPerFile(pathToFile);
+		List<String> innerClasses = noc.getClasses();
+		MethodUtils methods = new MethodUtils(pathToFile);
+		
+		List<String> methodCodeList = methods.getMethodCode();
+		List<String> methodNameList = methods.getMethodName();
+		
+		LineCounter ln = new LineCounter(pathToFile);
+		//int nom = new MethodUtils(pathToFile).getMethodName().size();
+		int nom = methodNameList.size();
+		int loc = ln.getLinesCount();
+		int wmc = CycloMethod.wmcCalculator(CycloMethod.allMethodsCycloValue(methodCodeList));
+		
+		Map<String, Integer> loc_method_hash = ln.getMethodNameLines();
+		
+		for (String methodName : methodNameList) {
+			
+			int lineNum = metodos.getMethodStats().size();
+			
+			MethodStats meth = new MethodStats();
+			meth.setMethodId(lineNum + 1);
+			meth.setPack(parentPackage);
+			meth.setCls(pathToFile);
+			meth.setInnerClasses(innerClasses);
+			
+			meth.setMeth(methodName);
+			for(String k : loc_method_hash.keySet()) {
+				if (k.equals(methodName)) {
+					meth.setLOC_method(loc_method_hash.get(k));
+				}
+			}
+			List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
+			int ind = methodNameList.indexOf(methodName);
+			int cyc = cycLst.get(ind);
+			meth.setCYCLO_method(cyc);
+			
+			meth.setNOM_class(nom);
+			meth.setLOC_class(loc);
+			meth.setWMC_class(wmc);
+			
+			metodos.addMetodo(meth);
+			
+		}
 	}
-
 }
