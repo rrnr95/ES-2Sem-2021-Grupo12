@@ -7,12 +7,31 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * Class used to count lines of file and methods
+ * @author ES-2Sem-2021-Grupo12
+ *
+ */
 public class LineCounter {
-
+	
+	/**
+	 * 	Total number of lines
+	 */
 	private int linesCount;
+	/**
+	 *	List of methods names
+	 */
 	private List<String> methodsNames;
+	/**
+	 *	
+	 */
 	private List<String> methodCountList = new ArrayList<String>();
-
+	
+	/**
+	 * 			Count lines of a java file located at a given path
+	 * @param 	path
+	 * 			the name of the file to read
+	 */
 	public LineCounter(String path) {
 		try {
 			FileReader freader = new FileReader(path);
@@ -29,7 +48,13 @@ public class LineCounter {
 			e.printStackTrace();
 		}
 	}	
-
+	
+	/**
+	 * 			Counts total of lines of file passed line by line as a BufferedReader, and populates methodCountList 
+	 * 			with: " MethodName: Number_of_Lines"
+	 * @param 	bReader
+	 * @throws 	IOException
+	 */
 	public void counter(BufferedReader bReader) throws IOException {
 		//int count = 0;
 		boolean commentBegan = false;
@@ -105,99 +130,113 @@ public class LineCounter {
 	}
 	
 	
-	  /**
-		 * @param line
-		 * @return This method checks if in the given line a comment has begun and has not ended
-		 */
-		protected static boolean commentBegan(String line) {
-			// If line = /* */, this method will return false
-			// If line = /* */ /*, this method will return true
-			int index = line.indexOf("/*");
-			if (index < 0) {
-				return false;
-			}
-			int quoteStartIndex = line.indexOf("\"");
-			if (quoteStartIndex != -1 && quoteStartIndex < index) {
-				while (quoteStartIndex > -1) {
-					line = line.substring(quoteStartIndex + 1);
-					int quoteEndIndex = line.indexOf("\"");
-					line = line.substring(quoteEndIndex + 1);
-					quoteStartIndex = line.indexOf("\"");
-				}
-				return commentBegan(line);
-			}
-			return !commentEnded(line.substring(index + 2));
+	/**
+	 * 			Checks if a given line has a comment start
+	 * @param 	line
+	 * @return 	true or false
+	 */
+	protected static boolean commentBegan(String line) {
+		// If line = /* */, this method will return false
+		// If line = /* */ /*, this method will return true
+		int index = line.indexOf("/*");
+		if (index < 0) {
+			return false;
 		}
-
-		/**
-		 * @param line
-		 * @return This method checks if in the given line a comment has ended and no new comment has not begun
-		 */
-		protected static boolean commentEnded(String line) {
-			// If line = */ /* , this method will return false
-			// If line = */ /* */, this method will return true
-			int index = line.indexOf("*/");
-			if (index < 0) {
-				return false;
-			} else {
-				String subString = line.substring(index + 2).trim();
-				if ("".equals(subString) || subString.startsWith("//")) {
-					return true;
-				}
-				return !commentBegan(subString);
+		int quoteStartIndex = line.indexOf("\"");
+		if (quoteStartIndex != -1 && quoteStartIndex < index) {
+			while (quoteStartIndex > -1) {
+				line = line.substring(quoteStartIndex + 1);
+				int quoteEndIndex = line.indexOf("\"");
+				line = line.substring(quoteEndIndex + 1);
+				quoteStartIndex = line.indexOf("\"");
 			}
+			return commentBegan(line);
 		}
+		return !commentEnded(line.substring(index + 2));
+	}
 
-		/**
-		 * @param line
-		 * @return This method returns true if there is any valid source code in the given input line. It does not worry if comment has begun or not.
-		 * This method will work only if we are sure that comment has not already begun previously. Hence, this method should be called only after {@link #commentBegan(String)} is called
-		 */
-		protected static boolean isSourceCodeLine(String line) {
-			boolean isSourceCodeLine = false;
-			line = line.trim();
-			if ("".equals(line) || line.startsWith("//")) {
-				return isSourceCodeLine;
-			}
-			if (line.length() == 1) {
+	/**
+	 * 			Checks if in the given line a comment has ended and no new comment has begun
+	 * @param 	line 
+	 * 			string that represents a line of code
+	 * @return 	true of false
+	 */
+	protected static boolean commentEnded(String line) {
+		// If line = */ /* , this method will return false
+		// If line = */ /* */, this method will return true
+		int index = line.indexOf("*/");
+		if (index < 0) {
+			return false;
+		} else {
+			String subString = line.substring(index + 2).trim();
+			if ("".equals(subString) || subString.startsWith("//")) {
 				return true;
 			}
-			int index = line.indexOf("/*");
-			if (index != 0) {
-				return true;
-			} else {
-				while (line.length() > 0) {
-					line = line.substring(index + 2);
-					int endCommentPosition = line.indexOf("*/");
-					if (endCommentPosition < 0) {
-						return false;
-					}
-					if (endCommentPosition == line.length() - 2) {
-						return false;
-					} else {
-						String subString = line.substring(endCommentPosition + 2)
-								.trim();
-						if ("".equals(subString) || subString.indexOf("//") == 0) {
-							return false;
-						} else {
-							if (subString.startsWith("/*")) {
-								line = subString;
-								continue;
-							}
-							return true;
-						}
-					}
-				}
-			}
-			return isSourceCodeLine;
-		}
-
-
-		public int getLinesCount() {
-			return linesCount;
-		}
-
-		public List<String> getMethodList() {
-			return methodCountList;
+			return !commentBegan(subString);
 		}
 	}
+
+	/**
+	 * 			This method returns true if there is any valid source code in the given input line. 
+	 * 			It does not worry if comment has begun or not.
+	 * 			This method will work only if we are sure that comment has not already begun previously. 
+	 * 			Hence, this method should be called only after {@link #commentBegan(String)} is called
+	 * @param 	line 
+	 * 			string that represents a line of code
+	 * @return 	true or false
+	 */
+	protected static boolean isSourceCodeLine(String line) {
+		boolean isSourceCodeLine = false;
+		line = line.trim();
+		if ("".equals(line) || line.startsWith("//")) {
+			return isSourceCodeLine;
+		}
+		if (line.length() == 1) {
+			return true;
+		}
+		int index = line.indexOf("/*");
+		if (index != 0) {
+			return true;
+		} else {
+			while (line.length() > 0) {
+				line = line.substring(index + 2);
+				int endCommentPosition = line.indexOf("*/");
+				if (endCommentPosition < 0) {
+					return false;
+				}
+				if (endCommentPosition == line.length() - 2) {
+					return false;
+				} else {
+					String subString = line.substring(endCommentPosition + 2)
+							.trim();
+					if ("".equals(subString) || subString.indexOf("//") == 0) {
+						return false;
+					} else {
+						if (subString.startsWith("/*")) {
+							line = subString;
+							continue;
+						}
+						return true;
+					}
+				}
+			}
+		}
+		return isSourceCodeLine;
+	}
+
+	/**
+	 * getter 
+	 * @return total of lines
+	 */
+	public int getLinesCount() {
+		return linesCount;
+	}
+	
+	/**
+	 * getter 
+	 * @return list of methods and number of lines e.g.: List("Method: 12","MethodB: 15")
+	 */
+	public List<String> getMethodList() {
+		return methodCountList;
+	}
+}
