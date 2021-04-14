@@ -27,13 +27,13 @@ public class MethodUtils {
 	private static List<String> methodName;
 
 	/**	
-	 * Constructor
+	 * 			Constructor
 	 * @param 	path 
 	 * 			a pathname of the java file to parse
 	 */
 	public MethodUtils(String path) {
-		this.methodCode = new ArrayList<String>();
-		this.methodName = new ArrayList<String>();
+		methodCode = new ArrayList<String>();
+		methodName = new ArrayList<String>();
 		try {
 			extractMethodSourceCode(path);
 		} catch (FileNotFoundException e) {

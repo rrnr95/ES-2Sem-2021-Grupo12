@@ -226,7 +226,11 @@ public class LineCounter {
 		return isSourceCodeLine;
 	}
 
-
+	
+	/**
+	 * 		
+	 * @return Map with method's name and number of line of method
+	 */
 	public Map<String, Integer> getMethodNameLines() {
 		return methodNameLines;
 	}

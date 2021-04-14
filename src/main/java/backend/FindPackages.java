@@ -72,19 +72,19 @@ public class FindPackages {
 	}
 	
 
-	//TODO checkar
+	
 	/**
 	 * 			Returns the first found filepath of a file that is a directory not hidden, from the given folder
 	 * @return	The absolute pathname string 
 	 */
 	private String newRoot(String path) {
 
-		for (File f : new File(root).listFiles()) {
+		for (File f : new File(path).listFiles()) {
 			if (f.isDirectory() && !f.isHidden()) {
 				return f.getAbsolutePath();
 			}
 		}
-		return root;
+		return path;
 	}
 	
 	/**
