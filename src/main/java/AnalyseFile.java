@@ -35,7 +35,7 @@ public class AnalyseFile extends Thread {
 		//		3 - para cada metodo, criar um Objeto MethodStats e colocar no RecursoPartilhado
 		int i = 0;
 		for (Map.Entry<String, Integer> m : loc_method_hash.entrySet()) {
-			MethodStats ms = new MethodStats(i+1, parentPackage, pathToFile, classes, m.getKey(), m.getValue(), 0, 0, ln.getLinesCount(), 0);
+			MethodStats ms = new MethodStats(i+1, parentPackage, pathToFile.replace(".java", ""), classes, m.getKey(), m.getValue(), 0, 0, ln.getLinesCount(), 0);
 			
 			ms.setNOM_class(methodCode.size());
 			ms.setCYCLO_method(cyclo_method_list.get(i));
