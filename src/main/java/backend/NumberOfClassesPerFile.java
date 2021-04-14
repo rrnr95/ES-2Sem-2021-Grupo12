@@ -8,15 +8,35 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 			Class used to extract the number of classes from a file
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class NumberOfClassesPerFile {
+	/**
+	 * 	Filename
+	 */
 	private String fileName;
+	/**
+	 * 	List of classes
+	 */
 	private List<String> classes;
 	
+	/**
+	 * 			Constructor
+	 * @param 	file
+	 * 			filename
+	 */
 	public NumberOfClassesPerFile(String file) {
 		this.fileName = file;
 		this.classes = new ArrayList<String>();
 	}
 	
+	/**
+	 * 			Reads the file line by line, and extract the classes found to a list.
+	 * @return	list of classes found
+	 */
 	public List<String> getClasses() {
 		String currentLine;
 		boolean isValid = true;
@@ -40,8 +60,8 @@ public class NumberOfClassesPerFile {
 				
 				//caso a linha nao seja um comentario
 				//caso a linha contenha a keyword 'class'
-				Pattern cyclofinder = Pattern.compile("\\b(class)\\b");
-				Matcher matcher = cyclofinder.matcher(currentLine);
+				Pattern classfinder = Pattern.compile("\\b(class)\\b");
+				Matcher matcher = classfinder.matcher(currentLine);
 				
 				if(isValid && !currentLine.contains("//") && matcher.find() && !currentLine.contains("(")){
 					classes.add(trimClass(currentLine));
@@ -60,6 +80,11 @@ public class NumberOfClassesPerFile {
 		return classes;
 	}
 	
+	/**
+	 * 			Get the name of the class in a given line, which was previously identified as a line with class declaration.
+	 * @param 	line
+	 * @return	name of the class
+	 */
 	private static String trimClass(String line) {
 		String str_temp;
 		str_temp = line.trim()
