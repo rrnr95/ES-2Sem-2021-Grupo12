@@ -3,15 +3,17 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 public class LineCounter {
 
 	private int linesCount;
 	private List<String> methodsNames;
-	private List<String> methodCountList = new ArrayList<String>();
+	private Map<String, Integer> methodNameLines = new HashMap<String, Integer>();
 
 	public LineCounter(String path) {
 		try {
@@ -90,7 +92,7 @@ public class LineCounter {
 					// if stack is empty then method is over
 					if (curlyBracketStack.isEmpty()) {
 						methodBegan = false;
-						methodCountList.add(m + ": " + methodLinesCount); 	// add method's name and line count to list 
+						methodNameLines.put(m, methodLinesCount); 	// add method's name and line count to list 
 						methodLinesCount = 0;
 						
 						if (methodsNames.size() > methodCount)
@@ -197,7 +199,7 @@ public class LineCounter {
 			return linesCount;
 		}
 
-		public List<String> getMethodList() {
-			return methodCountList;
+		public Map<String, Integer> getMethodNameLines() {
+			return methodNameLines;
 		}
 	}
