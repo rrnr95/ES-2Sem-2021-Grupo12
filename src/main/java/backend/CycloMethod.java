@@ -39,7 +39,6 @@ public class CycloMethod {
 	
 	/**
 	 * 			Receives a String and checks if it corresponds to an empty line or commentary
-	 * @author 	Grupo 12
 	 * @param 	line
 	 * 			String to evaluate
 	 * @return 	a boolean

@@ -27,6 +27,7 @@ public class MethodUtils {
 	private static List<String> methodName;
 
 	/**	
+	 * Constructor
 	 * @param 	path 
 	 * 			a pathname of the java file to parse
 	 */
