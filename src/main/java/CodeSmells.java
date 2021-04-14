@@ -2,6 +2,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import backend.FindPackages;
 
 public class CodeSmells {
 	private String rootPath;
@@ -33,6 +34,7 @@ public class CodeSmells {
 				AnalyseFile af = new AnalyseFile(pck, file, metodos);
 				threads.add(af);
 				//af.start();
+
 				af.run();
 			}
 		}	
@@ -63,10 +65,7 @@ public class CodeSmells {
 	}
 	
 	public static void main (String[] args) {
-//		CodeSmells cs = new CodeSmells("C:\\Users\\mrfur\\git\\BattleshipCodeCoverage");
-		CodeSmells cs = new CodeSmells("C:\\Users\\mrfur\\git\\ES-2Sem-2021-Grupo12");
-//		CodeSmells cs = new CodeSmells("C:\\Users\\mrfur\\eclipse-workspace\\Matrix");
-
+		CodeSmells cs = new CodeSmells("C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship");
 		try {
 			cs.init();
 		} catch (InterruptedException e) {
