@@ -67,7 +67,7 @@ public class AnalyseFile extends Thread {
 			MethodStats meth = new MethodStats();
 			meth.setMethodId(lineNum + 1);
 			meth.setPack(parentPackage);
-			meth.setCls(pathToFile);
+			meth.setCls(pathToFile.replace(".java", ""));
 			meth.setInnerClasses(innerClasses);
 			
 			meth.setMeth(methodName);
