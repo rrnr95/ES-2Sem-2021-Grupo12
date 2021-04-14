@@ -53,7 +53,6 @@ public class AnalyseFile extends Thread {
 		List<String> methodNameList = methods.getMethodName();
 		
 		LineCounter ln = new LineCounter(pathToFile);
-		//int nom = new MethodUtils(pathToFile).getMethodName().size();
 		int nom = methodNameList.size();
 		int loc = ln.getLinesCount();
 		int wmc = CycloMethod.wmcCalculator(CycloMethod.allMethodsCycloValue(methodCodeList));

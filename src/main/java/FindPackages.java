@@ -30,7 +30,12 @@ public class FindPackages {
 			if(containsJavaFiles(f)) {
 				String pckname = f.getName();
 				String pckpath = f.getAbsolutePath();
-				tuplo.put(pckname, pckpath);
+				if(containsDirectory(f)) {
+					tuplo.put("(default package)", pckpath);
+				}
+				else {
+					tuplo.put(pckname, pckpath);
+				}
 			}
 			
 			//procurar mais diretorias
@@ -60,6 +65,15 @@ public class FindPackages {
 			}
 		}
 		
+		return false;
+	}
+	
+	private boolean containsDirectory(File file) {
+		for (File f : file.listFiles()) {
+			if(f.isDirectory()) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
