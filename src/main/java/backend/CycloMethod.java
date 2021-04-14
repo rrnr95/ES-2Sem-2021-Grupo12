@@ -5,7 +5,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-
+/**
+ * Class with methods used to calculate number of cycles
+ * @author ES-2Sem-2021-Grupo12
+ *
+ */
 public class CycloMethod {
 
 
@@ -32,7 +36,12 @@ public class CycloMethod {
 //	}
 	
 	
-	
+	/**
+	 * 			Receives a String and checks if it corresponds to an empty line or commentary
+	 * @param 	line
+	 * 			String to evaluate
+	 * @return 	a boolean
+	 */
 	private static boolean isEmptyOrLineCommentary(String line) {		
 		line = line.trim();
 		// verificar se existe comentário de uma só linha ou se linha está vazia
@@ -41,12 +50,12 @@ public class CycloMethod {
 	
 	
 	/**
-	 * 
-	 * @param line
-	 * @return String representing the given line without any comments or text strings. 
+	 * 			Removes comments from String of code
+	 * @param	line
+	 * 			String to evaluate
+	 * @return 	string representing the given line without any comments or text strings. 
 	 * 			If there's no code in the given line returns an empty String
 	 */
-	
 	private static String sourceCodeExtrator(String line) {
 		
 			line = line.trim();
@@ -104,13 +113,13 @@ public class CycloMethod {
 	}
 	
 	/**
-	 * 
-	 * @param line of code. Should be filtered previously with sourceCodeExtrator(String line) function.
-	 * @return returns the number of keywords (if|while|for|case) present in the given line.
+	 * Checks the number of keywords (if|while|for|case) present in the given line.
+	 * @param 	line 
+	 * 			String of code. Should be filtered previously with sourceCodeExtrator(String line) function.
+	 * @return 	number of keywords (if|while|for|case) present in the given line.
 	 */
-	
-	
 	private synchronized  static int lineCycloCounter(String line) {
+
 		
 		Pattern cyclofinder = Pattern.compile("\\b(if|while|for|case)\\b");
 		Matcher countMatchs = cyclofinder.matcher(line);
@@ -121,19 +130,34 @@ public class CycloMethod {
 		return count;		
 	}
 	
-	private synchronized static int cycloMethodValue(String[] method) {
+
+	/**
+	 * 			Counts the number of cycles on a String array representing lines of code on each index. 
+	 * 			The array represents a method. 
+	 * @param 	method
+	 * 			String array representing a method's code
+	 * @return	number of cycles found
+	 */
+	private  synchronized static int cycloMethodValue(String[] method) {
 		int res = 1;	
 		for(String s : method)
 			res+=lineCycloCounter(sourceCodeExtrator(s));
 		return res;
 	}
 	
-	
+
+	/**
+	 * 			Counts the number of cycles on list of Strings. Each String represents a method.
+	 * @param 	methods
+	 * 			List of Strings. Each String represents a method.
+	 * @return	an integers List with the number of cycles found in the 
+	 * 			Each index's List, has the number of cycles found in the same list index of the received list 
+	 */
 	public synchronized static List<Integer> allMethodsCycloValue(List<String> methods){
 		
 		String[] methodsArray = new String[methods.size()];
 		methods.toArray(methodsArray);
-		
+
 		List<Integer> result = new ArrayList<Integer>();
 		
 //		for(String method : methods) {
@@ -147,8 +171,15 @@ public class CycloMethod {
 		return result;
 	}
 	
-	
-	public synchronized static int wmcCalculator(List<Integer> methodsCycloValue) {
+
+	/**
+	 * 			Sum all integers of an Integer List.
+	 * 			In this project, this is used for sum all cycles found for a given list.
+	 * @param 	methodsCycloValue
+	 * 			List containing the number of cycles found in previous calculation.
+	 * @return	sum of all integers in a given list. 
+	 */
+	public  synchronized static int wmcCalculator(List<Integer> methodsCycloValue) {
 		int res = 0;
 		for(Integer value : methodsCycloValue)
 			res+=value;

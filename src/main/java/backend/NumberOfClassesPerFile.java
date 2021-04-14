@@ -5,20 +5,39 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+/**
+ * 			Class used to extract the number of classes from a file
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class NumberOfClassesPerFile {
+	/**
+	 * 	Filename
+	 */
 	private String fileName;
+	/**
+	 * 	List of classes
+	 */
 	private List<String> classes;
 	
+	/**
+	 * 			Constructor
+	 * @param 	file
+	 * 			filename
+	 */
 	public NumberOfClassesPerFile(String file) {
 		this.fileName = file;
 		this.classes = new ArrayList<String>();
 		searchClasses();
 	}
 	
+	/**
+	 * 			Reads the file line by line, and extract the classes found to a list.
+	 * @return	list of classes found
+	 */
 	public void searchClasses() {
+
 		String currentLine;
 		boolean isValid = true;
 		
@@ -41,9 +60,11 @@ public class NumberOfClassesPerFile {
 				
 				//caso a linha nao seja um comentario
 				//caso a linha contenha a keyword 'class'
+
 				if(isValid && !currentLine.contains("//") && currentLine.contains(" class ") && !currentLine.contains("(")) {
 					
 					classes.add( trimClass(currentLine));
+
 				}
 				
 				currentLine = br.readLine();
@@ -57,6 +78,11 @@ public class NumberOfClassesPerFile {
 		}
 	}
 	
+	/**
+	 * 			Get the name of the class in a given line, which was previously identified as a line with class declaration.
+	 * @param 	line
+	 * @return	name of the class
+	 */
 	private static String trimClass(String line) {
 		return	 line.trim()
 					 .split("class ")[1]

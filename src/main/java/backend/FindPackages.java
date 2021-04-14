@@ -3,18 +3,39 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Stack;
 
+
+/**
+ * 			Class used to count packages
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class FindPackages {
+
 	private Stack<File> pilha;
 	private String root;
 	
+
+	/**
+	 * 			Constructor
+	 * @param 	path
+	 * 			pathname of project's root
+	 */
 	public FindPackages (String path) {
+
 		this.pilha = new Stack<File>();
 		this.root = path;
 	}
 	
+
+	/**
+	 * 			Counts number of packages
+	 * @return	number of packages
+	 * @throws 	NullPointerException
+	 */
 	public HashMap<String, String> getPackages() throws NullPointerException {
 		//nome-path
 		HashMap<String, String> tuplo = new HashMap<>();
+
 		
 		//se a root nao tem o src
 		if (! containsSrc(new File(root))) {
@@ -50,7 +71,14 @@ public class FindPackages {
 		return tuplo;
 	}
 	
+
+	//TODO checkar
+	/**
+	 * 			Returns the first found filepath of a file that is a directory not hidden, from the given folder
+	 * @return	The absolute pathname string 
+	 */
 	private String newRoot(String path) {
+
 		for (File f : new File(root).listFiles()) {
 			if (f.isDirectory() && !f.isHidden()) {
 				return f.getAbsolutePath();
@@ -59,6 +87,12 @@ public class FindPackages {
 		return root;
 	}
 	
+	/**
+	 * 			Checks if a given folder has any java files
+	 * @param 	file
+	 * 			folder file
+	 * @return	true or false
+	 */
 	private boolean containsJavaFiles(File file) {
 		for (File f : file.listFiles()) {
 			if (f.getName().contains(".java")) {
@@ -69,6 +103,7 @@ public class FindPackages {
 		return false;
 	}
 	
+
 	private boolean containsDirectory(File file) {
 		for (File f : file.listFiles()) {
 			if(f.isDirectory()) {
@@ -78,6 +113,12 @@ public class FindPackages {
 		return false;
 	}
 	
+
+	/**
+	 * 			Checks if a folder has a subfolder named src
+	 * @param 	file
+	 * @return	true or false
+	 */
 	private boolean containsSrc (File file) {
 		if (file.isDirectory()) {
 			for (File f : file.listFiles()) {
@@ -89,6 +130,12 @@ public class FindPackages {
 		return false;
 	}
 	
+	/**
+	 * 			Returns a file located on a given path
+	 * @param 	path
+	 * 			file path
+	 * @return	a File located on a given path
+	 */
 	private File getFile(String path) {
 		File f = new File(path);
 		return f;
