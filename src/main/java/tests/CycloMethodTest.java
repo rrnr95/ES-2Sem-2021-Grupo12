@@ -11,24 +11,25 @@ import backend.CycloMethod;
 
 public class CycloMethodTest {
 	
-	private static final String FILE = "C:\\Users\\Utilizador\\eclipse-workspace\\ES-2Sem-2021-Grupo12\\imported_project\\not_source\\src\\pckg\\TestForCycloMethod.java";
-	private static final List<String> methodCode = new MethodUtils(FILE).getMethodCode();
+	private final String FILE = "C:\\Users\\Utilizador\\eclipse-workspace\\ES-2Sem-2021-Grupo12\\imported_project\\not_source\\src\\pckg\\TestForCycloMethod.java";
+	private final List<String> methodCode = new MethodUtils(FILE).getMethodCode();
+	private List<Integer> methodsCycloValue = CycloMethod.allMethodsCycloValue(methodCode);
 	
 	@Test
-
-	public void test() {	
+	public void testAllMethodsCycloValue() {	
 		
-		List<Integer> methodsCycloValue = CycloMethod.allMethodsCycloValue(methodCode);
 		List<Integer> expected_methodsCycloValue = new ArrayList<Integer>();
 		expected_methodsCycloValue.add(3);
 		expected_methodsCycloValue.add(3);
 		expected_methodsCycloValue.add(1);
 		
 		assertEquals(expected_methodsCycloValue, methodsCycloValue);
-		
+	}
+	
+	@Test
+	public void testWmcCalculator() {
 		int valueWMC = CycloMethod.wmcCalculator(methodsCycloValue);
 		assertEquals(7, valueWMC);
-		 
 	}
 
 }
