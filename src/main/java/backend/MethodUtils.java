@@ -20,11 +20,11 @@ public class MethodUtils {
 	/**
 	 * List of code for each method
 	 */
-	private static List<String> methodCode;
+	private List<String> methodCode;
 	/**
 	 * List of method's names
 	 */
-	private static List<String> methodName;
+	private List<String> methodName;
 
 	/**	
 	 * 			Constructor
@@ -48,7 +48,7 @@ public class MethodUtils {
 	 * 			a pathname string
 	 * @throws 	FileNotFoundException
 	 */
-	public static void extractMethodSourceCode(String path) throws FileNotFoundException{
+	public void extractMethodSourceCode(String path) throws FileNotFoundException{
 		 
 		new VoidVisitorAdapter<Object>() {
             @Override
