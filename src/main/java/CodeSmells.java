@@ -20,6 +20,10 @@ public class CodeSmells {
 		createExcellDoc();
 	}
 	
+	/**
+	 *	Analyzes the file on the specified path and creates the arraylist
+	 * 	
+	 */
 	private void analyse() {
 		//par nome-path dos packages
 		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
@@ -40,6 +44,11 @@ public class CodeSmells {
 		}	
 	}
 	
+	/**
+	 * 			creates a string list with the 
+	 * @param 	directoryPath
+	 * @return
+	 */
 	private List<String> getPathToJavaFiles (String directoryPath) {
 		List<String> ficheiros = new ArrayList<>();
 		 
@@ -53,6 +62,10 @@ public class CodeSmells {
 		return ficheiros;
 	}
 	
+	/**
+	 * 	Creates the excel file
+	 * 	@throws InterruptedException
+	 */
 	private void createExcellDoc() throws InterruptedException {
 		for (Thread thread : threads) {
 			thread.join();
@@ -64,6 +77,7 @@ public class CodeSmells {
 		//System.out.println("ESCRITO!!!");
 	}
 	
+
 	public static void main (String[] args) {
 		CodeSmells cs = new CodeSmells("C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship");
 		try {

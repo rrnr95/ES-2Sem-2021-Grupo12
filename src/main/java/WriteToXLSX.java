@@ -14,6 +14,11 @@ public class WriteToXLSX {
 	private RecursoPartilhado rec;
 	private int numOfCol;
 	
+	/**
+	 * 			Constructor
+	 * @param 	path
+	 * @param 	rec
+	 */
 	public WriteToXLSX(String path, RecursoPartilhado rec) {
 		this.path = path;
 		this.wb = new XSSFWorkbook();
@@ -21,6 +26,9 @@ public class WriteToXLSX {
 		this.rec = rec;
 	}
 	
+	/**
+	 *	Export file
+	 */
 	public void init() {
 		createHeader();
 		populate();
@@ -28,6 +36,9 @@ public class WriteToXLSX {
 		write();
 	}
 	
+	/**
+	 * 	Create header excel header
+	 */
 	private void createHeader() {
 		String[] columns = {"Method Id", "package", "class", "inner classes", "method", "NOM_class", "LOC_class", "WMC_class", "is_God_class", "LOC_method", "CYCLO_method", "is_long_method"};
 		numOfCol = columns.length;
@@ -47,6 +58,9 @@ public class WriteToXLSX {
 		}
 	}
 	
+	/**
+	 * Populate the excel file
+	 */
 	private void populate() {
 		int l = 1;
 		for(MethodStats stat : rec.getMethodStats()) {
@@ -59,12 +73,18 @@ public class WriteToXLSX {
 		}
 	}
 	
+	/**
+	 * Recize all cells
+	 */
 	private void resizeCell() {
 		for (int i = 0; i < numOfCol; i++) {
 			sh.autoSizeColumn(i);
 		}
 	}
 	
+	/**
+	 * Write the XSSFWorkbook to file
+	 */
 	private void write() {
 		try {			
 			FileOutputStream out = new FileOutputStream(path);

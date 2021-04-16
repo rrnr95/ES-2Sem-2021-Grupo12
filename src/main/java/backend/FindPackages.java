@@ -103,7 +103,11 @@ public class FindPackages {
 		return false;
 	}
 	
-
+	/**
+	 * 			Checks if file contains directory
+	 * @param 	file Receives file and check if it has directory
+	 * @return	
+	 */
 	private boolean containsDirectory(File file) {
 		for (File f : file.listFiles()) {
 			if(f.isDirectory()) {

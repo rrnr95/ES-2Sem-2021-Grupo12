@@ -15,7 +15,29 @@ public class MethodStats {
 	private int LOC_class;
 	private int WMC_class;
 	
-	
+	/**
+	 * 			
+	 * @param 	methodId
+	 * 			MethodID
+	 * @param 	pack
+	 * 			Package
+	 * @param 	cls
+	 * 			Class
+	 * @param 	innerClasses
+	 * 			List of inner classes
+	 * @param 	meth
+	 * 			Method
+	 * @param 	lOC_method
+	 * 			Lines of code
+	 * @param 	cYCLO_method
+	 * 			Number of cycles
+	 * @param 	nOM_class
+	 * 			Number of methods
+	 * @param 	lOC_class
+	 * 			Lines of code
+	 * @param 	wMC_class
+	 * 			
+	 */
 	public MethodStats(int methodId, String pack, String cls, List<String> innerClasses, String meth, int lOC_method, int cYCLO_method, int nOM_class, int lOC_class, int wMC_class) {
 		this.methodId = methodId;
 		this.pack = pack;

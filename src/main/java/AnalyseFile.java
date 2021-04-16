@@ -6,6 +6,11 @@ import backend.LineCounter;
 import backend.MethodUtils;
 import backend.NumberOfClassesPerFile;
 
+/**
+ * 			Class used to analyse 
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;

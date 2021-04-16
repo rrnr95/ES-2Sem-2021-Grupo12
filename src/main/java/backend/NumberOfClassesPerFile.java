@@ -91,10 +91,18 @@ public class NumberOfClassesPerFile {
 					 .trim();
 	}
 	
+	/**
+	 * 			Get classes
+	 * @return	List classes
+	 */
 	public List<String> getClasses() {
 		return classes;
 	}
 	
+	/**
+	 * 			Get filename
+	 * @return	filename
+	 */
 	public String getFileName() {
 		return fileName;
 	}

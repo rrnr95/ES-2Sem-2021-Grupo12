@@ -229,7 +229,7 @@ public class LineCounter {
 	
 	/**
 	 * 		
-	 * @return Map with method's name and number of line of method
+	 * @return Map with method's name and number of lines of method
 	 */
 	public Map<String, Integer> getMethodNameLines() {
 		return methodNameLines;
