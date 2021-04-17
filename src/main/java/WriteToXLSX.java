@@ -17,6 +17,7 @@ public class WriteToXLSX {
 	/**
 	 * 			Constructor
 	 * @param 	path
+	 * 			
 	 * @param 	rec
 	 */
 	public WriteToXLSX(String path, RecursoPartilhado rec) {
@@ -26,9 +27,6 @@ public class WriteToXLSX {
 		this.rec = rec;
 	}
 	
-	/**
-	 *	Export file
-	 */
 	public void init() {
 		createHeader();
 		populate();
@@ -60,6 +58,7 @@ public class WriteToXLSX {
 	
 	/**
 	 * Populate the excel file
+	 * It uses a MethodStats as a list for each row, iterates over it and write each value to a cell
 	 */
 	private void populate() {
 		int l = 1;
@@ -74,7 +73,7 @@ public class WriteToXLSX {
 	}
 	
 	/**
-	 * Recize all cells
+	 * Resize all cells
 	 */
 	private void resizeCell() {
 		for (int i = 0; i < numOfCol; i++) {

@@ -45,9 +45,10 @@ public class CodeSmells {
 	}
 	
 	/**
-	 * 			creates a string list with the 
+	 * 			creates a list of absolutepath of the java files found on a given directory
 	 * @param 	directoryPath
-	 * @return
+	 * 			path to get files from
+	 * @return	list of absolutepath of java files on a given directory 
 	 */
 	private List<String> getPathToJavaFiles (String directoryPath) {
 		List<String> ficheiros = new ArrayList<>();

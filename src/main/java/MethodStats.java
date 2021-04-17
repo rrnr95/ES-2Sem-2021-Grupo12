@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 			Object that represents each row of excel file
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class MethodStats {
 	private int methodId;
 	private String pack;
@@ -16,7 +21,7 @@ public class MethodStats {
 	private int WMC_class;
 	
 	/**
-	 * 			
+	 * 			Constructor
 	 * @param 	methodId
 	 * 			MethodID
 	 * @param 	pack
@@ -153,6 +158,11 @@ public class MethodStats {
 		WMC_class = wMC_class;
 	}
 	
+	/**
+	 * 
+	 * @param list
+	 * @return
+	 */
 	private String listAsString(List<String> list) {
 		if (list == null || list.size() < 2) {
 			return "";
@@ -162,12 +172,22 @@ public class MethodStats {
 		}
 	}
 	
+	/**
+	 * 			Gets a filename from a given fullpath
+	 * @param 	p
+	 * 			fullpath from a file
+	 * @return	filename from a given fullpath
+	 */
 	private String fileName(String p) {
 		String fileName = p.replace("\\", "/");
 		String[] splitted = fileName.split("/");
 		return splitted[splitted.length - 1];
 	}
 	
+	/**
+	 * 			Creates a list of the field values of MethodStats object, used to iterate over, and fill each cell in a row
+	 * @return	a String list with all MethodStats's field 
+	 */
 	public List<String> getMethodAsList() {
 		List<String> list = new ArrayList<>();
 		
