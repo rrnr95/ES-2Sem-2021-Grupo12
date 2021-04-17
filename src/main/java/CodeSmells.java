@@ -7,17 +7,17 @@ import backend.FindPackages;
 public class CodeSmells {
 	private String rootPath;
 	private RecursoPartilhado metodos;
-	private List<Thread> threads;
+//	private List<Thread> threads;
 		
 	public CodeSmells (String path) {
 		this.rootPath = path;
 		this.metodos = new RecursoPartilhado();
-		this.threads = new ArrayList<>();
+//		this.threads = new ArrayList<>();
 	}
 	
-	public void init() throws InterruptedException {
+	public void init() /*throws InterruptedException*/ {
 		analyse();
-		createExcellDoc();
+		WriteToXLSX.exportToExcel(rootPath + "\\smells.xlsx", metodos);
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class CodeSmells {
 			//iterar cada ficheiro, e lançar uma thread para analisar
 			for (String file : pathToFiles) {
 				AnalyseFile af = new AnalyseFile(pck, file, metodos);
-				threads.add(af);
+//				threads.add(af);
 				//af.start();
 
 				af.run();
@@ -63,30 +63,15 @@ public class CodeSmells {
 		return ficheiros;
 	}
 	
-	/**
-	 * 	Creates the excel file
-	 * 	@throws InterruptedException
-	 */
-	private void createExcellDoc() throws InterruptedException {
-		for (Thread thread : threads) {
-			thread.join();
-		}
-		
-		//System.out.println("Path de escrita: " + rootPath);
-		WriteToXLSX excell = new WriteToXLSX(rootPath + "\\smells.xlsx", metodos);
-		excell.init();
-		//System.out.println("ESCRITO!!!");
-	}
-	
 
 	public static void main (String[] args) {
 		CodeSmells cs = new CodeSmells("C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship");
-		try {
+//		try {
 			cs.init();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 }

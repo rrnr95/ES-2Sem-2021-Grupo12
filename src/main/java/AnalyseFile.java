@@ -68,29 +68,48 @@ public class AnalyseFile extends Thread {
 			
 			int lineNum = metodos.getMethodStats().size();
 			
-			MethodStats meth = new MethodStats();
-			meth.setMethodId(lineNum + 1);
-			meth.setPack(parentPackage);
-			meth.setCls(pathToFile.replace(".java", ""));
-			meth.setInnerClasses(innerClasses);
-			
-			meth.setMeth(methodName);
-			for(String k : loc_method_hash.keySet()) {
-				if (k.equals(methodName)) {
-					meth.setLOC_method(loc_method_hash.get(k));
-				}
-			}
-			List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
-			int ind = methodNameList.indexOf(methodName);
-			int cyc = cycLst.get(ind);
-			meth.setCYCLO_method(cyc);
-			
-			meth.setNOM_class(nom);
-			meth.setLOC_class(loc);
-			meth.setWMC_class(wmc);
+			MethodStats meth = createRow(innerClasses, methodCodeList, methodNameList, nom, loc, wmc, loc_method_hash,
+					methodName, lineNum);
 			
 			metodos.addMetodo(meth);
 			
 		}
+	}
+	/**
+	 * 			CREATE ROW?
+	 * @param innerClasses
+	 * @param methodCodeList
+	 * @param methodNameList
+	 * @param nom
+	 * @param loc
+	 * @param wmc
+	 * @param loc_method_hash
+	 * @param methodName
+	 * @param lineNum
+	 * @return
+	 */
+	private MethodStats createRow(List<String> innerClasses, List<String> methodCodeList, List<String> methodNameList,
+			int nom, int loc, int wmc, Map<String, Integer> loc_method_hash, String methodName, int lineNum) {
+		MethodStats meth = new MethodStats();
+		meth.setMethodId(lineNum + 1);
+		meth.setPack(parentPackage);
+		meth.setCls(pathToFile.replace(".java", ""));
+		meth.setInnerClasses(innerClasses);
+		
+		meth.setMeth(methodName);
+		for(String k : loc_method_hash.keySet()) {
+			if (k.equals(methodName)) {
+				meth.setLOC_method(loc_method_hash.get(k));
+			}
+		}
+		List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
+		int ind = methodNameList.indexOf(methodName);
+		int cyc = cycLst.get(ind);
+		meth.setCYCLO_method(cyc);
+		
+		meth.setNOM_class(nom);
+		meth.setLOC_class(loc);
+		meth.setWMC_class(wmc);
+		return meth;
 	}
 }
