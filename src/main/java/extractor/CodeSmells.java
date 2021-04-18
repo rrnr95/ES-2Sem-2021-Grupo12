@@ -21,6 +21,10 @@ public class CodeSmells {
 		createExcellDoc();
 	}
 	
+	public RecursoPartilhado getRecursoPartilhado() {
+		return metodos;
+	}
+	
 	private void analyse() {
 		//par nome-path dos packages
 		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();

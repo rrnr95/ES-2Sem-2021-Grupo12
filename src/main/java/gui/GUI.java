@@ -13,6 +13,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import extractor.CodeSmells;
+import extractor.RecursoPartilhado;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -21,6 +22,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -34,6 +36,11 @@ public class GUI {
 
 	private static JFrame frmExtractMetrics;
 	private static JTextField txtf_path;
+	private JPanel panel;
+	private JButton btn_folder;
+	private JButton btnCalculateMetrics;
+	private JScrollPane scrollPane;
+	
 	private JTable table;
 
 	/**
@@ -70,7 +77,7 @@ public class GUI {
 		frmExtractMetrics.setBounds(100, 100, 928, 620);
 		frmExtractMetrics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(Color.LIGHT_GRAY);
 		frmExtractMetrics.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
@@ -81,13 +88,13 @@ public class GUI {
 		panel.add(txtf_path);
 		txtf_path.setColumns(10);
 
-		JButton btn_folder = new JButton("Folder");
+		btn_folder = new JButton("Folder");
 		addChooseListener(btn_folder);
 
 		btn_folder.setBounds(250, 540, 74, 23);
 		panel.add(btn_folder);
 		
-		JButton btnCalculateMetrics = new JButton("Calculate Metrics");
+		btnCalculateMetrics = new JButton("Calculate Metrics");
 		btnCalculateMetrics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculateMetricsPressed();
@@ -95,13 +102,6 @@ public class GUI {
 		});
 		btnCalculateMetrics.setBounds(772, 540, 140, 23);
 		panel.add(btnCalculateMetrics);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 902, 519);
-		panel.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
 	}
 
 	
@@ -142,13 +142,7 @@ public class GUI {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 			
-			try {
-				Thread.sleep(3000);	// temp
-				printMetricsGUI(project);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			printCalculatedMetrics(cs);
 			
 		} else {
 			
@@ -156,6 +150,19 @@ public class GUI {
 		}
 		
 //		printMetricsGUI(new File("C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship"));
+	}
+	
+	
+	private void printCalculatedMetrics(CodeSmells cs) {
+		Object[] columnNames = {"Nº total packages", "Nº total de classes", "Nº total de metodos", "Nº total de linhas de codigo"};
+		HashMap<String, Integer> summary = (HashMap<String, Integer>) cs.getRecursoPartilhado().statsSummary();
+		Object[][] info = {
+				{summary.get("NumPacks"), summary.get("NumClasses"), summary.get("NumMethods"), summary.get("NumLinesOfCode")}
+		};
+		table = new JTable(info, columnNames);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 11, 902, 519);
+		panel.add(scrollPane);
 	}
 	
 	
