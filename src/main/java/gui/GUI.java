@@ -129,6 +129,8 @@ public class GUI {
 	
 	private void calculateMetricsPressed() {
 		
+		// TODO thread join  
+		
 		File project = new File(txtf_path.getText());
 		if (project.exists()) {
 			
@@ -141,7 +143,7 @@ public class GUI {
 			}
 			
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(3000);	// temp
 				printMetricsGUI(project);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -163,8 +165,10 @@ public class GUI {
 		BufferedInputStream excelBIS = null;
         XSSFWorkbook excelImportToJTable = null;
         DefaultTableModel model = new DefaultTableModel();
+        
 		try {
             File excelFile = new File(project.getAbsolutePath() + "\\smells.xlsx");
+            
             excelFIS = new FileInputStream(excelFile);
             excelBIS = new BufferedInputStream(excelFIS);
             excelImportToJTable = new XSSFWorkbook(excelBIS);
@@ -189,9 +193,9 @@ public class GUI {
 
                 model.addRow(new Object[]{excelMethod_id, excelPackage, excelClass, excelInner_classes, excelMethod, excelNOM_class, excelLOC_class, excelWMC_class, excelIs_God_class, excelLOC_method, excelCYCLO_method, excelIs_long_method});
             }
-            table.setModel(model);
+            table.setModel(model);  // isto nao esta a funcionar fsr!!!!!!!!!!!
             
-           // JOptionPane.showMessageDialog(null, "Imported Successfully !!.....");
+           // JOptionPane.showMessageDialog(null, "Imported Successfully!");
         } catch (IOException iOException) {
             JOptionPane.showMessageDialog(null, iOException.getMessage());
         } finally {
@@ -209,6 +213,7 @@ public class GUI {
                 JOptionPane.showMessageDialog(null, iOException.getMessage());
             }
         }
+		// refresh table
 		table.revalidate();
         table.repaint();
 	}
