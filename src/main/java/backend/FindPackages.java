@@ -11,8 +11,8 @@ import java.util.Stack;
  */
 public class FindPackages {
 
-	private Stack<File> pilha;
-	private String root;
+	private static Stack<File> pilha;
+	private static String root;
 	
 
 	/**
@@ -20,11 +20,11 @@ public class FindPackages {
 	 * @param 	path
 	 * 			pathname of project's root
 	 */
-	public FindPackages (String path) {
-
-		this.pilha = new Stack<File>();
-		this.root = path;
-	}
+//	public FindPackages (String path) {
+//
+//		this.pilha = new Stack<File>();
+//		this.root = path;
+//	}
 	
 
 	/**
@@ -32,10 +32,12 @@ public class FindPackages {
 	 * @return	number of packages
 	 * @throws 	NullPointerException
 	 */
-	public HashMap<String, String> getPackages() throws NullPointerException {
+	public static HashMap<String, String> getPackages(String path) throws NullPointerException {
+		pilha = new Stack<File>();
+		root = path;
 		//nome-path
 		HashMap<String, String> tuplo = new HashMap<>();
-
+		
 		
 		//se a root nao tem o src
 		if (! containsSrc(new File(root))) {
@@ -77,7 +79,7 @@ public class FindPackages {
 	 * 			Returns the first found filepath of a file that is a directory not hidden, from the given folder
 	 * @return	The absolute pathname string 
 	 */
-	private String newRoot(String path) {
+	private static String newRoot(String path) {
 
 		for (File f : new File(path).listFiles()) {
 			if (f.isDirectory() && !f.isHidden()) {
@@ -93,7 +95,7 @@ public class FindPackages {
 	 * 			folder file
 	 * @return	true or false
 	 */
-	private boolean containsJavaFiles(File file) {
+	private static boolean containsJavaFiles(File file) {
 		for (File f : file.listFiles()) {
 			if (f.getName().contains(".java")) {
 				return true;
@@ -108,7 +110,7 @@ public class FindPackages {
 	 * @param 	file Receives file and check if it has directory
 	 * @return	
 	 */
-	private boolean containsDirectory(File file) {
+	private static boolean containsDirectory(File file) {
 		for (File f : file.listFiles()) {
 			if(f.isDirectory()) {
 				return true;
@@ -123,7 +125,7 @@ public class FindPackages {
 	 * @param 	file
 	 * @return	true or false
 	 */
-	private boolean containsSrc (File file) {
+	private static boolean containsSrc (File file) {
 		if (file.isDirectory()) {
 			for (File f : file.listFiles()) {
 				if (f.isDirectory() && f.getName().equals("src")) {
@@ -140,7 +142,7 @@ public class FindPackages {
 	 * 			file path
 	 * @return	a File located on a given path
 	 */
-	private File getFile(String path) {
+	private static File getFile(String path) {
 		File f = new File(path);
 		return f;
 	}

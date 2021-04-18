@@ -11,7 +11,7 @@ public class CodeSmells {
 		
 	public CodeSmells (String path) {
 		this.rootPath = path;
-		this.metodos = new RecursoPartilhado();
+//		this.metodos = new RecursoPartilhado();
 //		this.threads = new ArrayList<>();
 	}
 	
@@ -26,8 +26,8 @@ public class CodeSmells {
 	 */
 	private void analyse() {
 		//par nome-path dos packages
-		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
-		
+//		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
+		HashMap<String, String> packs = FindPackages.getPackages(rootPath);
 		//iterar cada package
 		for (String pck : packs.keySet()) {
 			//encontrar o path para todos os ficheiros
@@ -65,7 +65,7 @@ public class CodeSmells {
 	
 
 	public static void main (String[] args) {
-		CodeSmells cs = new CodeSmells("C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship");
+		CodeSmells cs = new CodeSmells("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project");
 //		try {
 			cs.init();
 //		} catch (InterruptedException e) {

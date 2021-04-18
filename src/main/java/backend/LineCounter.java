@@ -19,29 +19,28 @@ public class LineCounter {
 	/**
 	 * 	Total number of lines
 	 */
-	private int linesCount;
+	private static int totaLinesCount;
 	/**
 	 *	List of methods names
 	 */
-	private List<String> methodsNames;
+	private static List<String> methodsNames;
 
-	private Map<String, Integer> methodNameLines = new HashMap<String, Integer>();
+	private static Map<String, Integer> methodNameLines = new HashMap<String, Integer>();
 
 
-	
 	/**
 	 * 			Count lines of a java file located at a given path
 	 * @param 	path
 	 * 			the name of the file to read
 	 */
-	public LineCounter(String path) {
+	public static void countLines(String path) {
 		try {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
 			
-			methodsNames = new MethodUtils(path).getMethodName();
-
-			counter(bfreader);
+//			methodsNames = new MethodUtils(path).getMethodName();
+			methodsNames = MethodUtils.getMethodNames(path);
+			counter(bfreader , methodsNames);
 			
 			bfreader.close();
 			freader.close();
@@ -57,7 +56,7 @@ public class LineCounter {
 	 * @param 	bReader
 	 * @throws 	IOException
 	 */
-	public void counter(BufferedReader bReader) throws IOException {
+	private static void counter(BufferedReader bReader, List<String> methodsNames) throws IOException {
 		//int count = 0;
 		boolean commentBegan = false;
 		String line = null;
@@ -90,7 +89,7 @@ public class LineCounter {
 			}
 			
 			if (isSourceCodeLine(line)) {
-				linesCount++;
+				totaLinesCount++;
 				
 				// find start of method
 				if (!"".equals(m)) {
@@ -231,7 +230,7 @@ public class LineCounter {
 	 * 		
 	 * @return Map with method's name and number of lines of method
 	 */
-	public Map<String, Integer> getMethodNameLines() {
+	public static Map<String, Integer> getMethodNameLines() {
 		return methodNameLines;
 	}
 	
@@ -240,9 +239,10 @@ public class LineCounter {
 	 * getter 
 	 * @return total of lines
 	 */
-	public int getLinesCount() {
-		return linesCount;
+	public static int getTotalLinesCount() {
+		return totaLinesCount;
 	}
+
 
 }
 

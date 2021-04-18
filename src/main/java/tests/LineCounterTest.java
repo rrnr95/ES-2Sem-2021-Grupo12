@@ -23,7 +23,7 @@ public class LineCounterTest {
 	
 	@Test
 	public void testGetLinesCount() {
-		int lines = ln.getLinesCount();
+		int lines = ln.getTotalLinesCount();
 		assertEquals(16, lines);
 	}	
 	

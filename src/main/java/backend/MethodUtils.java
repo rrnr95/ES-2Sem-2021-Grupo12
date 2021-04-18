@@ -20,20 +20,20 @@ public class MethodUtils {
 	/**
 	 * List of code for each method
 	 */
-	private List<String> methodCode;
+	private static List<String> methods;
 	/**
 	 * List of method's names
 	 */
-	private List<String> methodName;
+	private static List<String> methodNames;
 
 	/**	
-	 * 			Constructor
+	 * 			
 	 * @param 	path 
 	 * 			a pathname of the java file to parse
 	 */
-	public MethodUtils(String path) {
-		methodCode = new ArrayList<String>();
-		methodName = new ArrayList<String>();
+	public static void parseJavaFile(String path) {
+		methods = new ArrayList<String>();
+		methodNames = new ArrayList<String>();
 		try {
 			extractMethodSourceCode(path);
 		} catch (FileNotFoundException e) {
@@ -48,15 +48,15 @@ public class MethodUtils {
 	 * 			a pathname string
 	 * @throws 	FileNotFoundException
 	 */
-	public void extractMethodSourceCode(String path) throws FileNotFoundException{
+	private static void extractMethodSourceCode(String path) throws FileNotFoundException{
 		 
 		new VoidVisitorAdapter<Object>() {
             @Override
             public void visit(MethodDeclaration n, Object arg) {
                 super.visit(n, arg);
              //   System.out.println(" * " + n);
-                methodCode.add(n.toString());
-                methodName.add(n.getName().toString());
+                methods.add(n.toString());
+                methodNames.add(n.getName().toString());
                 
                 
             }
@@ -69,16 +69,21 @@ public class MethodUtils {
 	 * 			getter of list of method's code
 	 * @return 	String List with all method's code
 	 */
-	public List<String> getMethodCode() {
-		return methodCode;
+	public static List<String> getMethods() {
+		
+		return methods;
 	}
 	
 	/**
 	 * 			getter of list method's names 
 	 * @return 	String List with method's names
 	 */
-	public List<String> getMethodName() {
-		return methodName;
+	public static List<String> getMethodNames() {
+		return methodNames;
+	}
+	
+	public static int getNumberOfMethods() {
+		return methodNames.size();
 	}
 
 }

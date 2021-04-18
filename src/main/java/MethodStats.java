@@ -48,7 +48,7 @@ public class MethodStats {
 		this.pack = pack;
 		this.cls = cls;
 		this.innerClasses = innerClasses;
-		this.meth = meth;
+//		this.meth = meth;
 		LOC_method = lOC_method;
 		CYCLO_method = cYCLO_method;
 		NOM_class = nOM_class;

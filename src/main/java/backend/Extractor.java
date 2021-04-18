@@ -30,12 +30,14 @@ public final class Extractor {
 		
 		for(String path: fjava_path_list) {
 				
-				MethodUtils mu = new MethodUtils(path);
-				final int num_methods = mu.getMethodName().size();
+//				MethodUtils mu = new MethodUtils(path);
+//				final int num_methods = mu.getMethodName().size();
+				final int num_methods = MethodUtils.getNumberOfMethods(path);
 				
-				LineCounter ln = new LineCounter(path);
-				final int num_lines = ln.getLinesCount();
-				final Map<String, Integer> method_lines_list = ln.getMethodNameLines();
+//				LineCounter ln = new LineCounter(path);
+				LineCounter.countLines(path);
+				final int num_lines = LineCounter.getTotalLinesCount();
+				final Map<String, Integer> method_lines_list = LineCounter.getMethodNameLines();
 				
 				System.out.println("---------------//--------------");
 				System.out.println("Linhas do ficheiro: " + num_lines);

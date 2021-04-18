@@ -12,7 +12,7 @@ import backend.CycloMethod;
 public class CycloMethodTest {
 	
 	private final String FILE = "C:\\Users\\Utilizador\\eclipse-workspace\\ES-2Sem-2021-Grupo12\\imported_project\\not_source\\src\\pckg\\TestForCycloMethod.java";
-	private final List<String> methodCode = new MethodUtils(FILE).getMethodCode();
+	private final List<String> methodCode = new MethodUtils(FILE).getMethodsCode();
 	private List<Integer> methodsCycloValue = CycloMethod.allMethodsCycloValue(methodCode);
 	
 	@Test

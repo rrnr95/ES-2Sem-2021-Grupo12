@@ -1,3 +1,4 @@
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -14,12 +15,12 @@ import backend.NumberOfClassesPerFile;
 public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
-	private RecursoPartilhado metodos;
+//	private RecursoPartilhado metodos;
 	
 	public AnalyseFile(String parent, String path, RecursoPartilhado metodos) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
-		this.metodos = metodos;
+//		this.metodos = metodos;
 	}
 	
 	public void run() {
@@ -52,28 +53,32 @@ public class AnalyseFile extends Thread {
 		
 		NumberOfClassesPerFile noc = new NumberOfClassesPerFile(pathToFile);
 		List<String> innerClasses = noc.getClasses();
-		MethodUtils methods = new MethodUtils(pathToFile);
+//		MethodUtils methods = new MethodUtils(pathToFile);
+//		
+//		List<String> methodCodeList = methods.getMethodsCode();
+//		List<String> methodNameList = methods.getMethodName();
+		MethodUtils.parseJavaFile(pathToFile);
+		List<String> methodCodeList = MethodUtils.getMethods();
+		List<String> methodNameList = MethodUtils.getMethodNames();
 		
-		List<String> methodCodeList = methods.getMethodCode();
-		List<String> methodNameList = methods.getMethodName();
-		
-		LineCounter ln = new LineCounter(pathToFile);
+//		LineCounter ln = new LineCounter(pathToFile);
+		LineCounter.countLines(pathToFile);
 		int nom = methodNameList.size();
-		int loc = ln.getLinesCount();
+		int loc = LineCounter.getTotalLinesCount();
 		int wmc = CycloMethod.wmcCalculator(CycloMethod.allMethodsCycloValue(methodCodeList));
 		
-		Map<String, Integer> loc_method_hash = ln.getMethodNameLines();
+		Map<String, Integer> loc_method_hash = LineCounter.getMethodNameLines();
 		
-		for (String methodName : methodNameList) {
-			
-			int lineNum = metodos.getMethodStats().size();
-			
-			MethodStats meth = createRow(innerClasses, methodCodeList, methodNameList, nom, loc, wmc, loc_method_hash,
-					methodName, lineNum);
-			
-			metodos.addMetodo(meth);
-			
-		}
+//		for (String methodName : methodNameList) {
+//			
+//			int lineNum = metodos.getMethodStats().size();
+//			
+//			MethodStats meth = createRow(innerClasses, methodCodeList, methodNameList, nom, loc, wmc, loc_method_hash,
+//					methodName, lineNum);
+//			
+//			metodos.addMetodo(meth);
+//			
+//		}
 	}
 	/**
 	 * 			CREATE ROW?
@@ -88,8 +93,15 @@ public class AnalyseFile extends Thread {
 	 * @param lineNum
 	 * @return
 	 */
-	private MethodStats createRow(List<String> innerClasses, List<String> methodCodeList, List<String> methodNameList,
-			int nom, int loc, int wmc, Map<String, Integer> loc_method_hash, String methodName, int lineNum) {
+	private MethodStats createRow(	List<String> innerClasses, 
+									List<String> methodCodeList, 
+									List<String> methodNameList,
+									int nom, 
+									int loc, 
+									int wmc, 
+									Map<String, Integer> loc_method_hash, 
+									String methodName, 
+									int lineNum) {
 		MethodStats meth = new MethodStats();
 		meth.setMethodId(lineNum + 1);
 		meth.setPack(parentPackage);
