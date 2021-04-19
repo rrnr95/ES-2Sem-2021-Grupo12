@@ -37,6 +37,7 @@ public class GUI {
 	private JButton btn_folder;
 	private JButton btnCalculateMetrics;
 	private JButton btnFetchXLSX;
+	private JButton btnRules;
 	private JScrollPane scrollPane;
 	
 	private JTable table;
@@ -108,6 +109,15 @@ public class GUI {
 		});
 		btnFetchXLSX.setBounds(620, 540, 140, 23);
 		panel.add(btnFetchXLSX);
+		
+		btnRules = new JButton("Rules");
+		btnRules.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showRulesPressed();
+			}
+		});
+		btnRules.setBounds(470, 540, 140, 23);
+		panel.add(btnRules);
 	}
 
 	
@@ -245,6 +255,21 @@ public class GUI {
         else {
         	JOptionPane.showMessageDialog(null,"Diretoria Desconhecida");
         }
+	}
+	
+	public void showRulesPressed() {
+		//frmExtractMetrics.dispose();
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					RulesGUI window = new RulesGUI();
+					window.setVisible();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 		
 }
