@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO renomear classe FileUtils?
 /**
  * 			Class used to extract the number of classes from a file
  * @author 	ES-2Sem-2021-Grupo12
@@ -15,29 +15,31 @@ public class NumberOfClassesPerFile {
 	/**
 	 * 	Filename
 	 */
-	private String fileName;
+//	private String fileName;
 	/**
 	 * 	List of classes
 	 */
-	private List<String> classes;
+//	private List<String> classes;
 	
 	/**
 	 * 			Constructor
 	 * @param 	file
 	 * 			filename
 	 */
-	public NumberOfClassesPerFile(String file) {
-		this.fileName = file;
-		this.classes = new ArrayList<String>();
-		searchClasses();
-	}
+//	public NumberOfClassesPerFile(String file) {
+////		this.fileName = file;
+////		this.classes = new ArrayList<String>();
+//		getClassesFromFile(file);
+//	}
 	
 	/**
 	 * 			Reads the file line by line, and extract the classes found to a list.
 	 * @return	list of classes found
 	 */
-	public void searchClasses() {
-
+	public static List<String> getClassesFromFile(String fileName) {
+		
+		List<String> classes = new ArrayList<String>();
+		
 		String currentLine;
 		boolean isValid = true;
 		
@@ -76,6 +78,7 @@ public class NumberOfClassesPerFile {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return classes;
 	}
 	
 	/**
@@ -95,24 +98,38 @@ public class NumberOfClassesPerFile {
 	 * 			Get classes
 	 * @return	List classes
 	 */
-	public List<String> getClasses() {
-		return classes;
-	}
+//	public List<String> getClasses() {
+//		return classes;
+//	}
+	
+//	/**
+//	 * 			Get filename
+//	 * @return	filename
+//	 */
+//	public String getFileName() {
+//		return fileName;
+//	}
 	
 	/**
-	 * 			Get filename
-	 * @return	filename
+	 * 			Gets a filename from a given fullpath
+	 * @param 	p
+	 * 			fullpath from a file
+	 * @return	filename from a given fullpath
 	 */
-	public String getFileName() {
-		return fileName;
+	public static String getFileName(String p) {
+		String fileName = p.replace("\\", "/");
+		String[] splitted = fileName.split("/");
+		return splitted[splitted.length - 1];
 	}
 	
 	public static void main (String[] args) {
-		NumberOfClassesPerFile n = new NumberOfClassesPerFile("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project\\src\\pckg\\HelloWorld.java");
-		System.out.println(n.getClasses().size());
+		String file = "D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project\\not_source\\src\\pckg\\HelloWorld.java";
+//		NumberOfClassesPerFile n = searchClasses(file);
+		List<String> classes = getClassesFromFile(file);
+		System.out.println(classes.size());
 		
-		System.out.println(n.getClasses());
-		System.out.println(n.getFileName());
+		System.out.println(classes);
+//		System.out.println(n.getFileName());
 //		for (String s : n.getClasses()) {
 //			System.out.println(s);
 //		}

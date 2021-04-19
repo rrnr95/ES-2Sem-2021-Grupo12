@@ -37,9 +37,9 @@ public class LineCounter {
 		try {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
-			
+			MethodUtils.parseJavaFile(path);
 //			methodsNames = new MethodUtils(path).getMethodName();
-			methodsNames = MethodUtils.getMethodNames(path);
+			methodsNames = MethodUtils.getMethodNames();
 			counter(bfreader , methodsNames);
 			
 			bfreader.close();

@@ -15,12 +15,12 @@ import backend.NumberOfClassesPerFile;
 public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
-//	private RecursoPartilhado metodos;
+	private RecursoPartilhado metodos;
 	
 	public AnalyseFile(String parent, String path, RecursoPartilhado metodos) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
-//		this.metodos = metodos;
+		this.metodos = metodos;
 	}
 	
 	public void run() {
@@ -51,8 +51,9 @@ public class AnalyseFile extends Thread {
 		}
 */
 		
-		NumberOfClassesPerFile noc = new NumberOfClassesPerFile(pathToFile);
-		List<String> innerClasses = noc.getClasses();
+//		NumberOfClassesPerFile noc = new NumberOfClassesPerFile(pathToFile);
+//		List<String> innerClasses = noc.getClasses();
+		List<String> innerClasses = NumberOfClassesPerFile.getClassesFromFile(pathToFile);
 //		MethodUtils methods = new MethodUtils(pathToFile);
 //		
 //		List<String> methodCodeList = methods.getMethodsCode();
@@ -69,16 +70,16 @@ public class AnalyseFile extends Thread {
 		
 		Map<String, Integer> loc_method_hash = LineCounter.getMethodNameLines();
 		
-//		for (String methodName : methodNameList) {
-//			
-//			int lineNum = metodos.getMethodStats().size();
-//			
-//			MethodStats meth = createRow(innerClasses, methodCodeList, methodNameList, nom, loc, wmc, loc_method_hash,
-//					methodName, lineNum);
-//			
-//			metodos.addMetodo(meth);
-//			
-//		}
+		for (String methodName : methodNameList) {
+			
+			int lineNum = metodos.getMethodStats().size();
+			
+			MethodStats meth = createRow(innerClasses, methodCodeList, methodNameList, nom, loc, wmc, loc_method_hash,
+					methodName, lineNum);
+			
+			metodos.addMetodo(meth);
+			
+		}
 	}
 	/**
 	 * 			CREATE ROW?

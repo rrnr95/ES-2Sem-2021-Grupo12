@@ -32,7 +32,8 @@ public final class Extractor {
 				
 //				MethodUtils mu = new MethodUtils(path);
 //				final int num_methods = mu.getMethodName().size();
-				final int num_methods = MethodUtils.getNumberOfMethods(path);
+				MethodUtils.parseJavaFile(path);
+				final int num_methods = MethodUtils.getNumberOfMethods();
 				
 //				LineCounter ln = new LineCounter(path);
 				LineCounter.countLines(path);
@@ -82,10 +83,10 @@ public final class Extractor {
 					
 					
 					target_list.add(file_path);
-//					System.out.println("Added ->  " + file_path);
-					NumberOfClassesPerFile nClass = new NumberOfClassesPerFile(file_path);
-					System.out.println( "Filename: " + nClass.getFileName() );
-					System.out.println( "Number of classes: " + nClass.getClasses() );
+					System.out.println("Added ->  " + file_path);
+					int numberOfClasses = NumberOfClassesPerFile.getClassesFromFile(file_path).size();
+					System.out.println( "Filename: " + NumberOfClassesPerFile.getFileName(file_path) );
+					System.out.println( "Number of classes: " + numberOfClasses);
 				}
 				else
 					System.out.println("Not added ->  " + file_path);
