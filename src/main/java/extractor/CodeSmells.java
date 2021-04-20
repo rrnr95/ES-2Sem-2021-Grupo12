@@ -1,3 +1,4 @@
+package extractor;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +21,16 @@ public class CodeSmells {
 		createExcellDoc();
 	}
 	
-	/**
-	 *	Analyzes the file on the specified path and creates the arraylist
-	 * 	
-	 */
+
+	public RecursoPartilhado getRecursoPartilhado() {
+		return metodos;
+	}
+	
+
+/**
+ *	Analyzes the file on the specified path and creates the arraylist
+ * 	
+ */
 	private void analyse() {
 		//par nome-path dos packages
 		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
