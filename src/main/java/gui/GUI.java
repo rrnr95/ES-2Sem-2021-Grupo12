@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -39,8 +41,10 @@ public class GUI {
 	private JButton btnFetchXLSX;
 	private JButton btnRules;
 	private JScrollPane scrollPane;
-	
 	private JTable table;
+	private JButton btnAddRule;
+	private JButton btnConfirmRule;
+
 
 	/**
 	 * Launch the application.
@@ -118,6 +122,7 @@ public class GUI {
 		});
 		btnRules.setBounds(470, 540, 140, 23);
 		panel.add(btnRules);
+		
 	}
 
 	
@@ -145,8 +150,6 @@ public class GUI {
 	
 	private void calculateMetricsPressed() {
 		
-		// TODO thread join  
-		
 		File project = new File(txtf_path.getText());
 		if (project.exists()) {
 			
@@ -154,10 +157,10 @@ public class GUI {
 			try {
 				cs.init();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 			
+			cleanFrame();
 			printCalculatedMetrics(cs);
 			
 		} else {
@@ -174,10 +177,12 @@ public class GUI {
 		Object[][] info = {
 				{summary.get("NumPacks"), summary.get("NumClasses"), summary.get("NumMethods"), summary.get("NumLinesOfCode")}
 		};
+
 		table = new JTable(info, columnNames);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 519);
 		panel.add(scrollPane);
+		
 	}
 	
 	
@@ -190,6 +195,7 @@ public class GUI {
 	        XSSFWorkbook excelImportToJTable = null;
         	
 			try {
+				cleanFrame();
 	            File excelFile = new File(project.getAbsolutePath() + "\\smells.xlsx");
 	            
 	            excelFIS = new FileInputStream(excelFile);
@@ -229,11 +235,12 @@ public class GUI {
 	                data[row-1][11] = excelIs_long_method;
 	
 	            }
+	    		
 	            table = new JTable(data, header);
 	    		scrollPane = new JScrollPane(table);
 	    		scrollPane.setBounds(10, 11, 902, 519);
 	    		panel.add(scrollPane);
-
+	    		
 	        } catch (IOException iOException) {
 	            JOptionPane.showMessageDialog(null, iOException.getMessage());
 	        } finally {
@@ -257,19 +264,77 @@ public class GUI {
         }
 	}
 	
-	public void showRulesPressed() {
-		//frmExtractMetrics.dispose();
+	private void showRulesPressed() {
+		cleanFrame();
+		Object[] columnNames = {"header1"};
+		Object[][] info = { {"conteudo1"}, {"conteudo2"}, {"conteudo3"} };
+
+		table = new JTable(info, columnNames);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 11, 902, 419);
+		panel.add(scrollPane);
 		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RulesGUI window = new RulesGUI();
-					window.setVisible();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		btnAddRule = new JButton("Add Rule");
+		btnAddRule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addRulePressed();
 			}
 		});
+		btnAddRule.setBounds(550, 450, 140, 23);
+		panel.add(btnAddRule);
+		
+		btnConfirmRule = new JButton("Confirm Rule");
+		btnConfirmRule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				confirmRulePressed();
+			}
+		});
+		btnConfirmRule.setBounds(720, 450, 140, 23);
+		panel.add(btnConfirmRule);
+		
+		addTableListner();
+		
+		panel.revalidate();
+		panel.repaint();
+	}
+	
+	private void addRulePressed() {
+		System.out.println("add rule pressed");
+	}
+	
+	private void confirmRulePressed() {
+		System.out.println("confirm rule pressed");
+	}
+	
+	private void addTableListner() {
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	        public void valueChanged(ListSelectionEvent event) {
+	        	
+	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+
+	        }
+	    });
+	}
+	
+	private void cleanFrame() {
+		if (table != null) {
+			table.setVisible(false);
+			frmExtractMetrics.remove(table);
+		}
+		if (scrollPane != null) {
+			scrollPane.setVisible(false);
+			frmExtractMetrics.remove(scrollPane);
+		}
+		if (btnAddRule != null) {
+			btnAddRule.setVisible(false);
+			frmExtractMetrics.remove(btnAddRule);
+		}
+		if (btnConfirmRule != null) {
+			btnConfirmRule.setVisible(false);
+			frmExtractMetrics.remove(btnConfirmRule);
+		}
+		
+		System.out.println("LIMPAR");
 	}
 		
 }
