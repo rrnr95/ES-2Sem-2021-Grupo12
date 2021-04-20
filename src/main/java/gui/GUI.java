@@ -44,6 +44,8 @@ public class GUI {
 	private JTable table;
 	private JButton btnAddRule;
 	private JButton btnConfirmRule;
+	
+	private String rule;
 
 
 	/**
@@ -66,6 +68,7 @@ public class GUI {
 	 * Create the application.
 	 */
 	public GUI() {
+		rule = "default";
 		initialize();
 	}
 
@@ -179,6 +182,7 @@ public class GUI {
 		};
 
 		table = new JTable(info, columnNames);
+		table.setEnabled(false);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 519);
 		panel.add(scrollPane);
@@ -237,6 +241,7 @@ public class GUI {
 	            }
 	    		
 	            table = new JTable(data, header);
+	    		table.setEnabled(false);
 	    		scrollPane = new JScrollPane(table);
 	    		scrollPane.setBounds(10, 11, 902, 519);
 	    		panel.add(scrollPane);
@@ -266,10 +271,13 @@ public class GUI {
 	
 	private void showRulesPressed() {
 		cleanFrame();
+		
+		//AQUI TERÁ DE SER UM PROCESSO IO!!!
 		Object[] columnNames = {"header1"};
 		Object[][] info = { {"conteudo1"}, {"conteudo2"}, {"conteudo3"} };
 
 		table = new JTable(info, columnNames);
+
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 419);
 		panel.add(scrollPane);
@@ -310,8 +318,8 @@ public class GUI {
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	
-	            System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-
+	            rule = table.getValueAt(table.getSelectedRow(), 0).toString();
+	            System.out.println(rule);
 	        }
 	    });
 	}
