@@ -272,6 +272,7 @@ public class GUI {
 	private void showRulesPressed() {
 		cleanFrame();
 		
+		//TODO - popular columnNames e info com o ficheiro binario
 		//AQUI TERÁ DE SER UM PROCESSO IO!!!
 		Object[] columnNames = {"header1"};
 		Object[][] info = { {"conteudo1"}, {"conteudo2"}, {"conteudo3"} };
@@ -307,10 +308,12 @@ public class GUI {
 	}
 	
 	private void addRulePressed() {
+		//TODO - logica para adicionar regras ao binario
 		System.out.println("add rule pressed");
 	}
 	
 	private void confirmRulePressed() {
+		//TODO - confirmar regra selecioonada como atributo
 		System.out.println("confirm rule pressed");
 	}
 	

@@ -12,6 +12,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import extractor.MethodStats;
+
 public class Rule implements Serializable {
 	
 	private String name;
