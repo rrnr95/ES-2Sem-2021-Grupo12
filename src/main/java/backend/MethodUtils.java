@@ -68,6 +68,26 @@ public class MethodUtils {
 	
         
 	}
+	
+	// receives a list of Method objects and returns a list of each method's code as String
+	public static List<String> toMethodCodeList(List<Method> methodList) {
+		List<String> methodCodeList = new ArrayList<String>();
+		
+		for (Method m : methodList) {
+			methodCodeList.add(m.getCode());
+		}
+		return methodCodeList;
+	}
+	
+	// receives a list of Method objects and returns a list of each method's name as String
+	public static List<String> toMethodNameList(List<Method> methodList) {
+		List<String> methodsNames = new ArrayList<String>();
+		
+		for (Method m : methodList) {
+			methodsNames.add(m.getName());
+		}
+		return methodsNames;
+	}
 
 //	/**
 //	 * 			getter of list of method's code

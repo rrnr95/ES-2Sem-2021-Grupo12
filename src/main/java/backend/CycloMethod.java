@@ -162,7 +162,7 @@ public class CycloMethod {
 	 * @return	an integers List with the number of cycles found in the 
 	 * 			Each index's List, has the number of cycles found in the same list index of the received list 
 	 */
-	public synchronized static List<Integer> allMethodsCycloValue(List<String> methods){
+	public synchronized static List<Integer> allMethodsCycloValue(List<Method> methods){
 		
 		String[] methodsArray = new String[methods.size()];
 		methods.toArray(methodsArray);
@@ -188,7 +188,9 @@ public class CycloMethod {
 	 * 			List containing the number of cycles found in previous calculation.
 	 * @return	sum of all integers in a given list. 
 	 */
-	public  synchronized static int wmcCalculator(List<Integer> methodsCycloValue) {
+	public  synchronized static int wmcCalculator(List<Method> methods) {
+		List<Integer> methodsCycloValue = allMethodsCycloValue(methods);
+		
 		int res = 0;
 		for(Integer value : methodsCycloValue)
 			res+=value;

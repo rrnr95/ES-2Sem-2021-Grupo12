@@ -33,18 +33,20 @@ public class LineCounter {
 	 * @param 	path
 	 * 			the name of the file to read
 	 */
-	public static void countLines(String path) {
+	public static void countLines(String path, List<Method> metodos) {
 		try {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
 			MethodUtils.getMethodsFromFile(path);
 //			methodsNames = new MethodUtils(path).getMethodName();
-			//TODO Pedreiro de VFX
-			List<Method> metodos = MethodUtils.getMethodsFromFile(path);
-			List<String> methodsNames = new ArrayList<String>();
-			for (Method m : metodos) {
-				methodsNames.add(m.getName());
-			}
+			
+			//TODO Pedreiro de VFX -- edited by Erica
+			List<String> methodsNames = MethodUtils.toMethodNameList(metodos);
+			//List<Method> metodos = MethodUtils.getMethodsFromFile(path);
+//			List<String> methodsNames = new ArrayList<String>();
+//			for (Method m : metodos) {
+//				methodsNames.add(m.getName());
+//			}
 			//---------------------------
 			counter(bfreader , methodsNames);
 			

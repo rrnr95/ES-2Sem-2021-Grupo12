@@ -16,12 +16,12 @@ import backend.NumberOfClassesPerFile;
 public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
-	private RecursoPartilhado metodos;
+//	private RecursoPartilhado metodos;
 	
 	public AnalyseFile(String parent, String path, RecursoPartilhado metodos) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
-		this.metodos = metodos;
+//		this.metodos = metodos;
 	}
 	
 	public void run() {
@@ -67,30 +67,33 @@ public class AnalyseFile extends Thread {
 //		List<String> methodNameList = MethodUtils.getMethodNames();
 		
 //		LineCounter ln = new LineCounter(pathToFile);
-		LineCounter.countLines(pathToFile);
+		LineCounter.countLines(pathToFile, methodList);
 		int nom = methodList.size();
 		int loc = LineCounter.getTotalLinesCount();
 		
-		//TODO altera isto rui!
-		List<String> methodCodeList = new ArrayList<String>();
-		for (Method m : methodList) {
-			methodCodeList.add(m.getCode());
-		}
-		//TODO
-		int wmc = CycloMethod.wmcCalculator(CycloMethod.allMethodsCycloValue(methodCodeList));
+		//TODO altera isto rui! -- edited by Erica
+		// NOTE: useless code?
+//		List<String> methodCodeList = new ArrayList<String>();
+//		for (Method m : methodList) {
+//			methodCodeList.add(m.getCode());
+//		}
+		
+		//TODO -- edited By Erica
+		int wmc = CycloMethod.wmcCalculator(methodList);
 		
 		Map<String, Integer> loc_method_hash = LineCounter.getMethodNameLines();
 		
-		for (Method method : methodList) {
-			
-			int lineNum = metodos.getMethodStats().size();
-			
-			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, loc_method_hash,
-					method.getName(), lineNum);
-			
-			metodos.addMetodo(meth);
-			
-		}
+		// NOTE: useless code?
+//		for (Method method : methodList) {
+//			
+//			int lineNum = metodos.getMethodStats().size();
+//			
+//			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, loc_method_hash,
+//					method.getName(), lineNum);
+//			
+//			metodos.addMetodo(meth);
+//			
+//		}
 	}
 	/**
 	 * 			CREATE ROW?
