@@ -1,14 +1,15 @@
-import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import backend.CycloMethod;
 import backend.LineCounter;
+import backend.Method;
 import backend.MethodUtils;
 import backend.NumberOfClassesPerFile;
 
 /**
- * 			Class used to analyse 
+ * 			Class used to analyse a single java file
  * @author 	ES-2Sem-2021-Grupo12
  *
  */
@@ -58,24 +59,34 @@ public class AnalyseFile extends Thread {
 //		
 //		List<String> methodCodeList = methods.getMethodsCode();
 //		List<String> methodNameList = methods.getMethodName();
-		MethodUtils.parseJavaFile(pathToFile);
-		List<String> methodCodeList = MethodUtils.getMethods();
-		List<String> methodNameList = MethodUtils.getMethodNames();
+//		MethodUtils.parseJavaFile(pathToFile);
+		List<Method> methodList = MethodUtils.getMethodsFromFile(pathToFile);
+		
+		
+//		List<String> methodCodeList = MethodUtils.getMethods();
+//		List<String> methodNameList = MethodUtils.getMethodNames();
 		
 //		LineCounter ln = new LineCounter(pathToFile);
 		LineCounter.countLines(pathToFile);
-		int nom = methodNameList.size();
+		int nom = methodList.size();
 		int loc = LineCounter.getTotalLinesCount();
+		
+		//TODO altera isto rui!
+		List<String> methodCodeList = new ArrayList<String>();
+		for (Method m : methodList) {
+			methodCodeList.add(m.getCode());
+		}
+		//TODO
 		int wmc = CycloMethod.wmcCalculator(CycloMethod.allMethodsCycloValue(methodCodeList));
 		
 		Map<String, Integer> loc_method_hash = LineCounter.getMethodNameLines();
 		
-		for (String methodName : methodNameList) {
+		for (Method method : methodList) {
 			
 			int lineNum = metodos.getMethodStats().size();
 			
-			MethodStats meth = createRow(innerClasses, methodCodeList, methodNameList, nom, loc, wmc, loc_method_hash,
-					methodName, lineNum);
+			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, loc_method_hash,
+					method.getName(), lineNum);
 			
 			metodos.addMetodo(meth);
 			
@@ -95,8 +106,9 @@ public class AnalyseFile extends Thread {
 	 * @return
 	 */
 	private MethodStats createRow(	List<String> innerClasses, 
-									List<String> methodCodeList, 
-									List<String> methodNameList,
+									Method method,
+//									List<String> methodCodeList, 
+//									List<String> methodNameList,
 									int nom, 
 									int loc, 
 									int wmc, 
@@ -115,9 +127,10 @@ public class AnalyseFile extends Thread {
 				meth.setLOC_method(loc_method_hash.get(k));
 			}
 		}
-		List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
-		int ind = methodNameList.indexOf(methodName);
-		int cyc = cycLst.get(ind);
+//		List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
+//		int ind = methodNameList.indexOf(methodName);
+//		int cyc = cycLst.get(ind);
+		int cyc = CycloMethod.cycloMethodValue(method);
 		meth.setCYCLO_method(cyc);
 		
 		meth.setNOM_class(nom);

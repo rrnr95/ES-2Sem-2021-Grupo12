@@ -37,9 +37,15 @@ public class LineCounter {
 		try {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
-			MethodUtils.parseJavaFile(path);
+			MethodUtils.getMethodsFromFile(path);
 //			methodsNames = new MethodUtils(path).getMethodName();
-			methodsNames = MethodUtils.getMethodNames();
+			//TODO Pedreiro de VFX
+			List<Method> metodos = MethodUtils.getMethodsFromFile(path);
+			List<String> methodsNames = new ArrayList<String>();
+			for (Method m : metodos) {
+				methodsNames.add(m.getName());
+			}
+			//---------------------------
 			counter(bfreader , methodsNames);
 			
 			bfreader.close();

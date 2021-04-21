@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import backend.FindPackages;
 
+/**
+ * 			Application entry point. Project analyzer 
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class CodeSmells {
 //	private String rootPath;
 //	private static RecursoPartilhado metodos;

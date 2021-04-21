@@ -138,13 +138,22 @@ public class CycloMethod {
 	 * 			String array representing a method's code
 	 * @return	number of cycles found
 	 */
-	private  synchronized static int cycloMethodValue(String[] method) {
+	private static int cycloMethodValue(String[] method) {
 		int res = 1;	
 		for(String s : method)
 			res+=lineCycloCounter(sourceCodeExtrator(s));
 		return res;
 	}
 	
+	//------------------------
+	public static int cycloMethodValue(Method method) {
+		int res = 1;
+		String[] str = method.getCode().split("\n");
+		for(String s : str)
+			res+=lineCycloCounter(sourceCodeExtrator(method.getCode()));
+		return res;
+	}
+	//------------------------
 
 	/**
 	 * 			Counts the number of cycles on list of Strings. Each String represents a method.

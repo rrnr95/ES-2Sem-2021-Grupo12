@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-
+//TODO MethodStatList
 public class RecursoPartilhado {
 	private List<MethodStats> recursoPartilhado;
 	
