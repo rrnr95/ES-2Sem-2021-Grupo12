@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import extractor.CodeSmells;
+import extractor.RecursoPartilhado;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -155,16 +156,16 @@ public class GUI {
 		
 		File project = new File(txtf_path.getText());
 		if (project.exists()) {
-			
-			CodeSmells cs = new CodeSmells(project.getAbsolutePath());
-			try {
-				cs.init();
-			} catch (InterruptedException e) {
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+			RecursoPartilhado rp;
+//			CodeSmells cs = new CodeSmells(project.getAbsolutePath());
+//			try {
+				rp = CodeSmells.init(project.getAbsolutePath());
+//			} catch (InterruptedException e) {
+//				JOptionPane.showMessageDialog(null, e.getMessage());
+//			}
 			
 			cleanFrame();
-			printCalculatedMetrics(cs);
+			printCalculatedMetrics(rp);
 			
 		} else {
 			
@@ -174,9 +175,9 @@ public class GUI {
 	}
 	
 	
-	private void printCalculatedMetrics(CodeSmells cs) {
+	private void printCalculatedMetrics(RecursoPartilhado rp) {
 		Object[] columnNames = {"Nº total packages", "Nº total de classes", "Nº total de metodos", "Nº total de linhas de codigo"};
-		HashMap<String, Integer> summary = (HashMap<String, Integer>) cs.getRecursoPartilhado().statsSummary();
+		HashMap<String, Integer> summary = (HashMap<String, Integer>) rp.statsSummary();
 		Object[][] info = {
 				{summary.get("NumPacks"), summary.get("NumClasses"), summary.get("NumMethods"), summary.get("NumLinesOfCode")}
 		};

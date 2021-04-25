@@ -1,26 +1,31 @@
+
 package extractor;
+
+import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
 import backend.CycloMethod;
 import backend.LineCounter;
+import backend.Method;
 import backend.MethodUtils;
 import backend.NumberOfClassesPerFile;
 
 /**
- * 			Class used to analyse 
+ * 			Class used to analyse a single java file
  * @author 	ES-2Sem-2021-Grupo12
  *
  */
 public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
-	private RecursoPartilhado metodos;
+//	private RecursoPartilhado metodos;
 	
 	public AnalyseFile(String parent, String path, RecursoPartilhado metodos) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
-		this.metodos = metodos;
+//		this.metodos = metodos;
 	}
 	
 	public void run() {
@@ -51,47 +56,93 @@ public class AnalyseFile extends Thread {
 		}
 */
 		
-		NumberOfClassesPerFile noc = new NumberOfClassesPerFile(pathToFile);
-		List<String> innerClasses = noc.getClasses();
-		MethodUtils methods = new MethodUtils(pathToFile);
+//		NumberOfClassesPerFile noc = new NumberOfClassesPerFile(pathToFile);
+//		List<String> innerClasses = noc.getClasses();
+		List<String> innerClasses = NumberOfClassesPerFile.getClassesFromFile(pathToFile);
+//		MethodUtils methods = new MethodUtils(pathToFile);
+//		
+//		List<String> methodCodeList = methods.getMethodsCode();
+//		List<String> methodNameList = methods.getMethodName();
+//		MethodUtils.parseJavaFile(pathToFile);
+		List<Method> methodList = MethodUtils.getMethodsFromFile(pathToFile);
 		
-		List<String> methodCodeList = methods.getMethodCode();
-		List<String> methodNameList = methods.getMethodName();
 		
-		LineCounter ln = new LineCounter(pathToFile);
-		int nom = methodNameList.size();
-		int loc = ln.getLinesCount();
-		int wmc = CycloMethod.wmcCalculator(CycloMethod.allMethodsCycloValue(methodCodeList));
+//		List<String> methodCodeList = MethodUtils.getMethods();
+//		List<String> methodNameList = MethodUtils.getMethodNames();
 		
-		Map<String, Integer> loc_method_hash = ln.getMethodNameLines();
+//		LineCounter ln = new LineCounter(pathToFile);
+		LineCounter.countLines(pathToFile, methodList);
+		int nom = methodList.size();
+		int loc = LineCounter.getTotalLinesCount();
 		
-		for (String methodName : methodNameList) {
-			
-			int lineNum = metodos.getMethodStats().size();
-			
-			MethodStats meth = new MethodStats();
-			meth.setMethodId(lineNum + 1);
-			meth.setPack(parentPackage);
-			meth.setCls(pathToFile.replace(".java", ""));
-			meth.setInnerClasses(innerClasses);
-			
-			meth.setMeth(methodName);
-			for(String k : loc_method_hash.keySet()) {
-				if (k.equals(methodName)) {
-					meth.setLOC_method(loc_method_hash.get(k));
-				}
+		//TODO altera isto rui! -- edited by Erica
+		// NOTE: useless code?
+//		List<String> methodCodeList = new ArrayList<String>();
+//		for (Method m : methodList) {
+//			methodCodeList.add(m.getCode());
+//		}
+		
+		//TODO -- edited By Erica
+		int wmc = CycloMethod.wmcCalculator(methodList);
+		
+		Map<String, Integer> loc_method_hash = LineCounter.getMethodNameLines();
+		
+		// NOTE: useless code?
+//		for (Method method : methodList) {
+//			
+//			int lineNum = metodos.getMethodStats().size();
+//			
+//			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, loc_method_hash,
+//					method.getName(), lineNum);
+//			
+//			metodos.addMetodo(meth);
+//			
+//		}
+	}
+	/**
+	 * 			CREATE ROW?
+	 * @param innerClasses
+	 * @param methodCodeList
+	 * @param methodNameList
+	 * @param nom
+	 * @param loc
+	 * @param wmc
+	 * @param loc_method_hash
+	 * @param methodName
+	 * @param lineNum
+	 * @return
+	 */
+	private MethodStats createRow(	List<String> innerClasses, 
+									Method method,
+//									List<String> methodCodeList, 
+//									List<String> methodNameList,
+									int nom, 
+									int loc, 
+									int wmc, 
+									Map<String, Integer> loc_method_hash, 
+									String methodName, 
+									int lineNum) {
+		MethodStats meth = new MethodStats();
+		meth.setMethodId(lineNum + 1);
+		meth.setPack(parentPackage);
+		meth.setCls(pathToFile.replace(".java", ""));
+		meth.setInnerClasses(innerClasses);
+		
+		meth.setMeth(methodName);
+		for(String k : loc_method_hash.keySet()) {
+			if (k.equals(methodName)) {
+				meth.setLOC_method(loc_method_hash.get(k));
 			}
-			List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
-			int ind = methodNameList.indexOf(methodName);
-			int cyc = cycLst.get(ind);
-			meth.setCYCLO_method(cyc);
-			
-			meth.setNOM_class(nom);
-			meth.setLOC_class(loc);
-			meth.setWMC_class(wmc);
-			
-			metodos.addMetodo(meth);
-			
 		}
+//		List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
+//		int ind = methodNameList.indexOf(methodName);
+//		int cyc = cycLst.get(ind);
+		int cyc = CycloMethod.cycloMethodValue(method);
+		meth.setCYCLO_method(cyc);
+		
+		meth.setNOM_class(nom);
+		meth.setLOC_class(loc);
+		meth.setWMC_class(wmc);
+		return meth;
 	}
 }

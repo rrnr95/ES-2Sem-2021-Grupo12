@@ -2,6 +2,8 @@ package extractor;
 import java.util.ArrayList;
 import java.util.List;
 
+import backend.NumberOfClassesPerFile;
+
 /**
  * 			Object that represents each row of excel file
  * @author 	ES-2Sem-2021-Grupo12
@@ -49,7 +51,7 @@ public class MethodStats {
 		this.pack = pack;
 		this.cls = cls;
 		this.innerClasses = innerClasses;
-		this.meth = meth;
+//		this.meth = meth;
 		LOC_method = lOC_method;
 		CYCLO_method = cYCLO_method;
 		NOM_class = nOM_class;
@@ -173,17 +175,17 @@ public class MethodStats {
 		}
 	}
 	
-	/**
-	 * 			Gets a filename from a given fullpath
-	 * @param 	p
-	 * 			fullpath from a file
-	 * @return	filename from a given fullpath
-	 */
-	private String fileName(String p) {
-		String fileName = p.replace("\\", "/");
-		String[] splitted = fileName.split("/");
-		return splitted[splitted.length - 1];
-	}
+//	/**
+//	 * 			Gets a filename from a given fullpath
+//	 * @param 	p
+//	 * 			fullpath from a file
+//	 * @return	filename from a given fullpath
+//	 */
+//	private String fileName(String p) {
+//		String fileName = p.replace("\\", "/");
+//		String[] splitted = fileName.split("/");
+//		return splitted[splitted.length - 1];
+//	}
 	
 	/**
 	 * 			Creates a list of the field values of MethodStats object, used to iterate over, and fill each cell in a row
@@ -194,7 +196,7 @@ public class MethodStats {
 		
 		list.add(String.valueOf(methodId));
 		list.add(pack);
-		list.add(fileName(cls));
+		list.add(NumberOfClassesPerFile.getFileName(cls));
 		list.add(listAsString(innerClasses));
 		list.add(meth);
 		

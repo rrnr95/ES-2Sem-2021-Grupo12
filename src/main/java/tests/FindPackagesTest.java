@@ -13,16 +13,11 @@ import backend.FindPackages;
 public class FindPackagesTest {
 
 	private static final String PATH = "C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship";
-	private static final FindPackages fp = new FindPackages(PATH);
-	
-	@Test
-	public void testFindPackages() {
-		assertEquals(FindPackages.class, fp.getClass());
-	}
+
 
 	@Test
 	public void testGetPackages() {
-		HashMap<String, String> packs = fp.getPackages();
+		HashMap<String, String> packs = FindPackages.getPackages(PATH);
 		HashMap<String, String> expected_packs = new HashMap<String, String>();
 		
 		expected_packs.put("tests", "C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship\\src\\tests");

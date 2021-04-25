@@ -9,36 +9,38 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 /**
- * Class used to parse a java file, and extract all method's code and name for a given java file
- * Represents an object with two attributes. Two lists, one with the code, and another with names.  
+ * Class used to parse a java file, and extract all method's code and name for a given java file 
  * The indexes of each list are correlated. First index of methodName has the corresponding code in methodCode first index.
  * @author ES-2Sem-2021-Grupo12
  *
  */
 public class MethodUtils {
 	
-	/**
-	 * List of code for each method
-	 */
-	private List<String> methodCode;
-	/**
-	 * List of method's names
-	 */
-	private List<String> methodName;
-
+//	/**
+//	 * List of code for each method
+//	 */
+//	private static List<String> methods;
+//	/**
+//	 * List of method's names
+//	 */
+//	private static List<String> methodNames;
+//
 	/**	
-	 * 			Constructor
+	 * 			
 	 * @param 	path 
 	 * 			a pathname of the java file to parse
 	 */
-	public MethodUtils(String path) {
-		methodCode = new ArrayList<String>();
-		methodName = new ArrayList<String>();
+	public static List<Method> getMethodsFromFile(String path) {
+		List<Method> methods = new ArrayList<Method>();
+//		List<String> methods = new ArrayList<String>();
+//		List<String> methodNames = new ArrayList<String>();
+		
 		try {
-			extractMethodSourceCode(path);
+			extractMethodSourceCode(path, methods);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		return methods;
 	}
 	
 	/**
@@ -48,15 +50,17 @@ public class MethodUtils {
 	 * 			a pathname string
 	 * @throws 	FileNotFoundException
 	 */
-	public void extractMethodSourceCode(String path) throws FileNotFoundException{
-		 
+	private static void extractMethodSourceCode(String path, final List<Method> metodos ) throws FileNotFoundException{
+
 		new VoidVisitorAdapter<Object>() {
             @Override
             public void visit(MethodDeclaration n, Object arg) {
                 super.visit(n, arg);
              //   System.out.println(" * " + n);
-                methodCode.add(n.toString());
-                methodName.add(n.getName().toString());
+                Method m = new Method(n.getName().toString() , n.toString() );
+                metodos.add(m);
+//                methods.add(n.toString());
+//                methodNames.add(n.getName().toString());
                 
                 
             }
@@ -64,21 +68,46 @@ public class MethodUtils {
 	
         
 	}
-
-	/**
-	 * 			getter of list of method's code
-	 * @return 	String List with all method's code
-	 */
-	public List<String> getMethodCode() {
-		return methodCode;
+	
+	// receives a list of Method objects and returns a list of each method's code as String
+	public static List<String> toMethodCodeList(List<Method> methodList) {
+		List<String> methodCodeList = new ArrayList<String>();
+		
+		for (Method m : methodList) {
+			methodCodeList.add(m.getCode());
+		}
+		return methodCodeList;
 	}
 	
-	/**
-	 * 			getter of list method's names 
-	 * @return 	String List with method's names
-	 */
-	public List<String> getMethodName() {
-		return methodName;
+	// receives a list of Method objects and returns a list of each method's name as String
+	public static List<String> toMethodNameList(List<Method> methodList) {
+		List<String> methodsNames = new ArrayList<String>();
+		
+		for (Method m : methodList) {
+			methodsNames.add(m.getName());
+		}
+		return methodsNames;
 	}
+
+//	/**
+//	 * 			getter of list of method's code
+//	 * @return 	String List with all method's code
+//	 */
+//	public static List<String> getMethods() {
+//		
+//		return methods;
+//	}
+//	
+//	/**
+//	 * 			getter of list method's names 
+//	 * @return 	String List with method's names
+//	 */
+//	public static List<String> getMethodNames() {
+//		return methodNames;
+//	}
+//	
+//	public static int getNumberOfMethods() {
+//		return methodNames.size();
+//	}
 
 }

@@ -5,36 +5,51 @@ import java.util.HashMap;
 import java.util.List;
 import backend.FindPackages;
 
+/**
+ * 			Application entry point. Project analyzer 
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class CodeSmells {
-	private String rootPath;
-	private RecursoPartilhado metodos;
-	private List<Thread> threads;
+//	private String rootPath;
+//	private static RecursoPartilhado metodos;
+//	static private List<Thread> threads;
 		
-	public CodeSmells (String path) {
-		this.rootPath = path;
-		this.metodos = new RecursoPartilhado();
-		this.threads = new ArrayList<>();
-	}
+//	public CodeSmells (String path) {
+//		this.rootPath = path;
+//		this.metodos = new RecursoPartilhado();
+////		this.threads = new ArrayList<>();
+//	}
 	
-	public void init() throws InterruptedException {
-		analyse();
-		createExcellDoc();
-	}
-	
-
-	public RecursoPartilhado getRecursoPartilhado() {
+	public static RecursoPartilhado init(String path) /*throws InterruptedException*/ {
+		RecursoPartilhado metodos = new RecursoPartilhado();
+		analyse(path, metodos);
+		WriteToXLSX.exportToExcel(path + "\\smells.xlsx", metodos);
 		return metodos;
 	}
 	
-
-/**
- *	Analyzes the file on the specified path and creates the arraylist
- * 	
- */
-	private void analyse() {
+//<<<<<<< HEAD:src/main/java/extractor/CodeSmells.java
+//
+//	public RecursoPartilhado getRecursoPartilhado() {
+//		return metodos;
+//	}
+//	
+//
+///**
+// *	Analyzes the file on the specified path and creates the arraylist
+// * 	
+// */
+//	private void analyse() {
+//=======
+	/**
+	 *	Analyzes the file on the specified path and creates the arraylist
+	 * 	
+	 */
+	private static void analyse(String path , RecursoPartilhado metodos ) {
+//>>>>>>> refactor:src/main/java/CodeSmells.java
 		//par nome-path dos packages
-		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
-		
+//		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
+		HashMap<String, String> packs = FindPackages.getPackages(path);
 		//iterar cada package
 		for (String pck : packs.keySet()) {
 			//encontrar o path para todos os ficheiros
@@ -43,12 +58,12 @@ public class CodeSmells {
 			//iterar cada ficheiro, e lançar uma thread para analisar
 			for (String file : pathToFiles) {
 				AnalyseFile af = new AnalyseFile(pck, file, metodos);
-				threads.add(af);
+//				threads.add(af);
 				//af.start();
 
 				af.run();
 			}
-		}	
+		}
 	}
 	
 	/**
@@ -57,7 +72,7 @@ public class CodeSmells {
 	 * 			path to get files from
 	 * @return	list of absolutepath of java files on a given directory 
 	 */
-	private List<String> getPathToJavaFiles (String directoryPath) {
+	private static List<String> getPathToJavaFiles (String directoryPath) {
 		List<String> ficheiros = new ArrayList<>();
 		 
 		File dir = new File(directoryPath);
@@ -66,34 +81,20 @@ public class CodeSmells {
 				ficheiros.add(f.getAbsolutePath());
 			}
 		}
-		
+
 		return ficheiros;
-	}
-	
-	/**
-	 * 	Creates the excel file
-	 * 	@throws InterruptedException
-	 */
-	private void createExcellDoc() throws InterruptedException {
-		for (Thread thread : threads) {
-			thread.join();
-		}
-		
-		//System.out.println("Path de escrita: " + rootPath);
-		WriteToXLSX excell = new WriteToXLSX(rootPath + "\\smells.xlsx", metodos);
-		excell.init();
-		//System.out.println("ESCRITO!!!");
 	}
 	
 
 	public static void main (String[] args) {
-		CodeSmells cs = new CodeSmells("C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship");
-		try {
-			cs.init();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		CodeSmells cs = new CodeSmells("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project");
+		init("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project");
+//		try {
+//			cs.init();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 }
