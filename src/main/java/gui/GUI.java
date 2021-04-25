@@ -3,6 +3,8 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -13,6 +15,8 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import backend.Rule;
+import backend.RulesManager;
 import extractor.CodeSmells;
 
 import javax.swing.JButton;
@@ -22,12 +26,15 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 
@@ -42,10 +49,17 @@ public class GUI {
 	private JButton btnRules;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private JList guiRuleList;
 	private JButton btnAddRule;
 	private JButton btnConfirmRule;
+		
+	//private String rule;
+	private RulesManager ruleManager;
+	private Rule selectedRule;
+	private JTextArea ruleDescriptionField;
+	private JLabel currentRuleLabel;
 	
-	private String rule;
+	
 
 
 	/**
@@ -68,7 +82,12 @@ public class GUI {
 	 * Create the application.
 	 */
 	public GUI() {
-		rule = "default";
+		ruleManager = new RulesManager(System.getProperty("user.dir"));
+		
+		
+		
+		
+//		rule = "default";
 		initialize();
 	}
 
@@ -76,6 +95,16 @@ public class GUI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+	
+		try {
+			selectedRule = ruleManager.readObjectsFromFile().get(0);
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		frmExtractMetrics = new JFrame();
 		frmExtractMetrics.setBackground(Color.GRAY);
 		frmExtractMetrics.setTitle("Extract metrics");
@@ -126,6 +155,9 @@ public class GUI {
 		btnRules.setBounds(470, 540, 140, 23);
 		panel.add(btnRules);
 		
+		currentRuleLabel = new JLabel("Current Rule: " + selectedRule.getRuleName());
+		currentRuleLabel.setBounds(10, 516, 140, 23);		
+		panel.add(currentRuleLabel);
 	}
 
 	
@@ -184,7 +216,8 @@ public class GUI {
 		table = new JTable(info, columnNames);
 		table.setEnabled(false);
 		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 11, 902, 519);
+		scrollPane.setBounds(10, 11, 902, 500);
+		
 		panel.add(scrollPane);
 		
 	}
@@ -243,8 +276,10 @@ public class GUI {
 	            table = new JTable(data, header);
 	    		table.setEnabled(false);
 	    		scrollPane = new JScrollPane(table);
-	    		scrollPane.setBounds(10, 11, 902, 519);
-	    		panel.add(scrollPane);
+	    		scrollPane.setBounds(10, 11, 902, 500);
+	    		panel.add(scrollPane);		
+	    		
+	    		
 	    		
 	        } catch (IOException iOException) {
 	            JOptionPane.showMessageDialog(null, iOException.getMessage());
@@ -274,13 +309,27 @@ public class GUI {
 		
 		//TODO - popular columnNames e info com o ficheiro binario
 		//AQUI TERÁ DE SER UM PROCESSO IO!!!
-		Object[] columnNames = {"header1"};
-		Object[][] info = { {"conteudo1"}, {"conteudo2"}, {"conteudo3"} };
+//		Object[] columnNames = {"Regras"};
+//		Object[][] info = new Object[20][1];
+		guiRuleList = new JList();
+		
+		try {
+			List<Rule> rules = ruleManager.readObjectsFromFile();
+			guiRuleList=new JList(rules.toArray());
+			
+		} catch (ClassNotFoundException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		ruleDescriptionField = new JTextArea();
+		ruleDescriptionField.setBounds(10, 358, 902, 50);
+		panel.add(ruleDescriptionField);
+		//table = new JTable(info, columnNames);
 
-		table = new JTable(info, columnNames);
-
-		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 11, 902, 419);
+		scrollPane = new JScrollPane(guiRuleList);
+		scrollPane.setBounds(10, 11, 902, 343);
 		panel.add(scrollPane);
 		
 		btnAddRule = new JButton("Add Rule");
@@ -301,7 +350,7 @@ public class GUI {
 		btnConfirmRule.setBounds(720, 450, 140, 23);
 		panel.add(btnConfirmRule);
 		
-		addTableListner();
+		addListListner();
 		
 		panel.revalidate();
 		panel.repaint();
@@ -317,12 +366,15 @@ public class GUI {
 		System.out.println("confirm rule pressed");
 	}
 	
-	private void addTableListner() {
-		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	private void addListListner() {
+		guiRuleList.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	
-	            rule = table.getValueAt(table.getSelectedRow(), 0).toString();
-	            System.out.println(rule);
+	        	selectedRule = (Rule)guiRuleList.getSelectedValue();
+	        	currentRuleLabel.setText("Current Rule: " + selectedRule.getRuleName());
+	        	ruleDescriptionField.setText(selectedRule.printPrettyCondition());
+	            System.out.println(guiRuleList.getSelectedValue().toString());
+	            
 	        }
 	    });
 	}
@@ -344,7 +396,14 @@ public class GUI {
 			btnConfirmRule.setVisible(false);
 			frmExtractMetrics.remove(btnConfirmRule);
 		}
-		
+		if(guiRuleList != null) {
+			guiRuleList.setVisible(false);
+			frmExtractMetrics.remove(btnAddRule);
+		}
+		if(ruleDescriptionField != null) {
+			ruleDescriptionField.setVisible(false);
+			frmExtractMetrics.remove(ruleDescriptionField);
+		}
 		System.out.println("LIMPAR");
 	}
 		
