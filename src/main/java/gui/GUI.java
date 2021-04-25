@@ -45,7 +45,7 @@ public class GUI {
 	private JButton btnAddRule;
 	private JButton btnConfirmRule;
 	
-	private String rule;
+	private Rule rule;
 
 
 	/**
@@ -68,7 +68,7 @@ public class GUI {
 	 * Create the application.
 	 */
 	public GUI() {
-		rule = "default";
+		//rule = "default";
 		initialize();
 	}
 
@@ -156,7 +156,7 @@ public class GUI {
 		File project = new File(txtf_path.getText());
 		if (project.exists()) {
 			
-			CodeSmells cs = new CodeSmells(project.getAbsolutePath());
+			CodeSmells cs = new CodeSmells(project.getAbsolutePath(), rule);
 			try {
 				cs.init();
 			} catch (InterruptedException e) {
@@ -321,8 +321,8 @@ public class GUI {
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	
-	            rule = table.getValueAt(table.getSelectedRow(), 0).toString();
-	            System.out.println(rule);
+	            //rule = table.getValueAt(table.getSelectedRow(), 0).toString();
+	            //System.out.println(rule);
 	        }
 	    });
 	}

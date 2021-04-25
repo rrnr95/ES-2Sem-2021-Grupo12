@@ -6,6 +6,7 @@ import backend.CycloMethod;
 import backend.LineCounter;
 import backend.MethodUtils;
 import backend.NumberOfClassesPerFile;
+import gui.Rule;
 
 /**
  * 			Class used to analyse 
@@ -16,11 +17,13 @@ public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
 	private RecursoPartilhado metodos;
+	private Rule rule;
 	
-	public AnalyseFile(String parent, String path, RecursoPartilhado metodos) {
+	public AnalyseFile(String parent, String path, RecursoPartilhado metodos, Rule rule) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
 		this.metodos = metodos;
+		this.rule = rule;
 	}
 	
 	public void run() {
@@ -89,6 +92,9 @@ public class AnalyseFile extends Thread {
 			meth.setNOM_class(nom);
 			meth.setLOC_class(loc);
 			meth.setWMC_class(wmc);
+			
+			meth.setIsGodClass(String.valueOf(rule.isLongMethod(meth)));
+			meth.setIsLongMethod(String.valueOf(rule.isGodClass(meth)));
 			
 			metodos.addMetodo(meth);
 			

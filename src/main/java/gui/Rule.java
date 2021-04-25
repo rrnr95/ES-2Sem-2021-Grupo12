@@ -1,3 +1,4 @@
+package gui;
 
 
 import java.io.File;
@@ -184,7 +185,7 @@ public class Rule implements Serializable {
         return rules;        
 	}
 	
-	
+	/*
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		Rule r = new Rule("rule1", 0,10,0,10,0,10,true,5,10,5,10,true);
 		ArrayList<String> innerteste = new ArrayList<String>();
@@ -202,7 +203,7 @@ public class Rule implements Serializable {
 		System.out.println(r.isLongMethod(ms));
 		
 	}
-	
+	*/
 	
 	
 }
