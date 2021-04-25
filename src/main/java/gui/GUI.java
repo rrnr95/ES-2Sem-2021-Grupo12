@@ -60,22 +60,18 @@ public class GUI {
 	private JTextField txtLOC_class_max;
 	private JTextField txtWMCmax;
 	private JSeparator separator;
-	private JLabel lblLongMethod;
-	private JLabel lblSelectMetrics_1;
 	private JCheckBox chckbxLOC_method;
 	private JCheckBox chckbxCYCLO_method;
 	private JTextField txtLOC_method_min;
 	private JTextField txtLOC_method_max;
 	private JTextField txtCYCLOmin;
 	private JTextField txtCYCLOmax;
-	private JLabel lblMin_1;
-	private JLabel lblMax_1;
-	private JLabel lblLogicOperators_1;
 	private JRadioButton rdbtnAND_LONG_METHOD;
 	private JRadioButton rdbtnOR_LONG_METHOD;
 	private JSeparator separator_1;
-	private JSeparator separator_2;
+	private JSeparator separator_horizontal;
 	private JButton btnCancel;
+	private JButton btnSaveRule;
 
 
 	/**
@@ -441,12 +437,12 @@ public class GUI {
 		separator.setBounds(504, 77, 12, 136);
 		panelAddRules.add(separator);
 		
-		lblLongMethod = new JLabel("LONG_METHOD");
+		JLabel lblLongMethod = new JLabel("LONG_METHOD");
 		lblLongMethod.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblLongMethod.setBounds(47, 300, 122, 16);
 		panelAddRules.add(lblLongMethod);
 		
-		lblSelectMetrics_1 = new JLabel("Select the desired metrics:");
+		JLabel lblSelectMetrics_1 = new JLabel("Select the desired metrics:");
 		lblSelectMetrics_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblSelectMetrics_1.setBounds(47, 339, 173, 16);
 		panelAddRules.add(lblSelectMetrics_1);
@@ -485,17 +481,17 @@ public class GUI {
 		txtCYCLOmax.setBounds(344, 416, 86, 20);
 		panelAddRules.add(txtCYCLOmax);
 		
-		lblMin_1 = new JLabel("Minimum");
+		JLabel lblMin_1 = new JLabel("Minimum");
 		lblMin_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMin_1.setBounds(266, 353, 54, 16);
 		panelAddRules.add(lblMin_1);
 		
-		lblMax_1 = new JLabel("Maximum");
+		JLabel lblMax_1 = new JLabel("Maximum");
 		lblMax_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMax_1.setBounds(359, 353, 54, 16);
 		panelAddRules.add(lblMax_1);
 		
-		lblLogicOperators_1 = new JLabel("Select the desired logic operator:");
+		JLabel lblLogicOperators_1 = new JLabel("Select the desired logic operator:");
 		lblLogicOperators_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblLogicOperators_1.setBounds(548, 341, 202, 16);
 		panelAddRules.add(lblLogicOperators_1);
@@ -510,14 +506,19 @@ public class GUI {
 		
 		separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(504, 317, 12, 136);
+		separator_1.setBounds(504, 335, 12, 130);
 		panelAddRules.add(separator_1);
 		
-		separator_2 = new JSeparator();
-		separator_2.setBounds(47, 260, 812, 10);
-		panelAddRules.add(separator_2);
+		separator_horizontal = new JSeparator();
+		separator_horizontal.setBounds(47, 260, 812, 10);
+		panelAddRules.add(separator_horizontal);
 		
-		JButton btnSaveRule = new JButton("Save Rule");
+		btnSaveRule = new JButton("Save Rule");
+		btnSaveRule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveRulePressed();
+			}
+		});
 		btnSaveRule.setBounds(745, 528, 114, 23);
 		panelAddRules.add(btnSaveRule);
 		
@@ -530,6 +531,10 @@ public class GUI {
 		btnCancel.setBounds(54, 528, 104, 23);
 		panelAddRules.add(btnCancel);
 		
+	}
+	
+	private void saveRulePressed() {
+		System.out.println("save rule pressed");
 	}
 	
 	private void confirmRulePressed() {
