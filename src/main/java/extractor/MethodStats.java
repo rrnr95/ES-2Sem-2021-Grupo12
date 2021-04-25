@@ -16,10 +16,12 @@ public class MethodStats {
 	private int LOC_method;
 	private int CYCLO_method;
 	
-	//referente à CLASSE: tenho duvidas aqui???
 	private int NOM_class;
 	private int LOC_class;
 	private int WMC_class;
+	
+	private String isGodClass;
+	private String isLongMethod;
 	
 	/**
 	 * 			Constructor
@@ -44,7 +46,7 @@ public class MethodStats {
 	 * @param 	wMC_class
 	 * 			
 	 */
-	public MethodStats(int methodId, String pack, String cls, List<String> innerClasses, String meth, int lOC_method, int cYCLO_method, int nOM_class, int lOC_class, int wMC_class) {
+	public MethodStats(int methodId, String pack, String cls, List<String> innerClasses, String meth, int lOC_method, int cYCLO_method, int nOM_class, int lOC_class, int wMC_class, String isGodClass, String isLongMethod) {
 		this.methodId = methodId;
 		this.pack = pack;
 		this.cls = cls;
@@ -55,6 +57,8 @@ public class MethodStats {
 		NOM_class = nOM_class;
 		LOC_class = lOC_class;
 		WMC_class = wMC_class;
+		this.isLongMethod = isLongMethod;
+		this.isGodClass = isGodClass;
 	}
 	
 	public MethodStats() {
@@ -159,6 +163,24 @@ public class MethodStats {
 		WMC_class = wMC_class;
 	}
 	
+	public String getIsLongMethod() {
+		return isLongMethod;
+	}
+	
+	
+	public void setIsLongMethod(String isLongMethod) {
+		this.isLongMethod = isLongMethod;
+	}
+	
+	public String getIsGodClass() {
+		return isGodClass;
+	}
+	
+	
+	public void setIsGodClass(String isGodClass) {
+		this.isGodClass = isGodClass;
+	}
+	
 	/**
 	 * 
 	 * @param list
@@ -202,12 +224,12 @@ public class MethodStats {
 		list.add(String.valueOf(LOC_class));
 		list.add(String.valueOf(WMC_class));
 		
-		list.add("is_God_class");
+		list.add(isGodClass);
 		
 		list.add(String.valueOf(LOC_method));
 		list.add(String.valueOf(CYCLO_method));
 		
-		list.add("is_long_method");
+		list.add(isLongMethod);
 		
 		return list;
 	}

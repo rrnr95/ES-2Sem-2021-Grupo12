@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import backend.FindPackages;
+import gui.Rule;
 
 public class CodeSmells {
 	private String rootPath;
 	private RecursoPartilhado metodos;
 	private List<Thread> threads;
+	private Rule rule;
 		
-	public CodeSmells (String path) {
+	public CodeSmells (String path, Rule rule) {
 		this.rootPath = path;
 		this.metodos = new RecursoPartilhado();
 		this.threads = new ArrayList<>();
+		this.rule = rule;
 	}
 	
 	public void init() throws InterruptedException {
@@ -42,7 +45,7 @@ public class CodeSmells {
 
 			//iterar cada ficheiro, e lançar uma thread para analisar
 			for (String file : pathToFiles) {
-				AnalyseFile af = new AnalyseFile(pck, file, metodos);
+				AnalyseFile af = new AnalyseFile(pck, file, metodos, rule);
 				threads.add(af);
 				//af.start();
 
@@ -86,7 +89,7 @@ public class CodeSmells {
 	}
 	
 
-	public static void main (String[] args) {
+/*	public static void main (String[] args) {
 		CodeSmells cs = new CodeSmells("C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship");
 		try {
 			cs.init();
@@ -95,5 +98,5 @@ public class CodeSmells {
 			e.printStackTrace();
 		}
 	}
-	
+*/	
 }

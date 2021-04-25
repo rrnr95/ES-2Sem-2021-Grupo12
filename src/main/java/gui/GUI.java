@@ -15,7 +15,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import backend.Rule;
 import backend.RulesManager;
 import extractor.CodeSmells;
 
@@ -62,6 +61,7 @@ public class GUI {
 	
 
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -82,12 +82,9 @@ public class GUI {
 	 * Create the application.
 	 */
 	public GUI() {
+
 		ruleManager = new RulesManager(System.getProperty("user.dir"));
-		
-		
-		
-		
-//		rule = "default";
+
 		initialize();
 	}
 
@@ -188,7 +185,7 @@ public class GUI {
 		File project = new File(txtf_path.getText());
 		if (project.exists()) {
 			
-			CodeSmells cs = new CodeSmells(project.getAbsolutePath());
+			CodeSmells cs = new CodeSmells(project.getAbsolutePath(), selectedRule);
 			try {
 				cs.init();
 			} catch (InterruptedException e) {
@@ -370,11 +367,12 @@ public class GUI {
 		guiRuleList.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	
+
 	        	selectedRule = (Rule)guiRuleList.getSelectedValue();
 	        	currentRuleLabel.setText("Current Rule: " + selectedRule.getRuleName());
 	        	ruleDescriptionField.setText(selectedRule.printPrettyCondition());
 	            System.out.println(guiRuleList.getSelectedValue().toString());
-	            
+
 	        }
 	    });
 	}
