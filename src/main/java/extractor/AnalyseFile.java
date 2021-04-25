@@ -11,6 +11,7 @@ import backend.LineCounter;
 import backend.Method;
 import backend.MethodUtils;
 import backend.NumberOfClassesPerFile;
+import gui.Rule;
 
 /**
  * 			Class used to analyse a single java file
@@ -20,12 +21,18 @@ import backend.NumberOfClassesPerFile;
 public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
+
 //	private RecursoPartilhado metodos;
+	private Rule rule;
+
 	
-	public AnalyseFile(String parent, String path, RecursoPartilhado metodos) {
+	public AnalyseFile(String parent, String path, RecursoPartilhado metodos, Rule rule) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
+
 //		this.metodos = metodos;
+		this.rule = rule;
+
 	}
 	
 	public void run() {
@@ -133,6 +140,7 @@ public class AnalyseFile extends Thread {
 			if (k.equals(methodName)) {
 				meth.setLOC_method(loc_method_hash.get(k));
 			}
+
 		}
 //		List<Integer> cycLst = CycloMethod.allMethodsCycloValue(methodCodeList);
 //		int ind = methodNameList.indexOf(methodName);
@@ -143,6 +151,12 @@ public class AnalyseFile extends Thread {
 		meth.setNOM_class(nom);
 		meth.setLOC_class(loc);
 		meth.setWMC_class(wmc);
+		
+		meth.setIsGodClass(String.valueOf(rule.isLongMethod(meth)));
+		meth.setIsLongMethod(String.valueOf(rule.isGodClass(meth)));
+		
+//		metodos.addMetodo(meth);
+		
 		return meth;
 	}
 }

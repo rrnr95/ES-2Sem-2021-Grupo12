@@ -1,3 +1,4 @@
+package backend;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import gui.Rule;
 
 public class RulesManager {
 
@@ -19,12 +22,15 @@ public class RulesManager {
 	public RulesManager(String path) {
 		path+= "\\stored_rules.bin";
 		stored_rules = new File(path);
-		initFile();
+		if(!stored_rules.exists())
+			initFile();
 		
 	}
 	
 	
 	private void initFile() {
+		
+		System.out.println("Ficheiro ainda nao existia, criado novo!");
 		try {
 			FileOutputStream f = new FileOutputStream(stored_rules);
 			ObjectOutputStream o = new ObjectOutputStream(f);

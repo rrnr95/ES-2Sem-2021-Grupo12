@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import backend.FindPackages;
+import gui.Rule;
 
 /**
  * 			Application entry point. Project analyzer 
@@ -11,6 +12,7 @@ import backend.FindPackages;
  *
  */
 public class CodeSmells {
+//<<<<<<< HEAD
 //	private String rootPath;
 //	private static RecursoPartilhado metodos;
 //	static private List<Thread> threads;
@@ -20,10 +22,23 @@ public class CodeSmells {
 //		this.metodos = new RecursoPartilhado();
 ////		this.threads = new ArrayList<>();
 //	}
+//=======
+//	private String rootPath;
+//	private RecursoPartilhado metodos;
+//	private List<Thread> threads;
+//	private Rule rule;
+//		
+//	public CodeSmells (String path, Rule rule) {
+//		this.rootPath = path;
+//		this.metodos = new RecursoPartilhado();
+//		this.threads = new ArrayList<>();
+//		this.rule = rule;
+//	}
+//>>>>>>> 02abe83da03a699ae36cf2e95c9a386f3a8daef3
 	
-	public static RecursoPartilhado init(String path) /*throws InterruptedException*/ {
+	public static RecursoPartilhado init(String path,Rule rule)  {
 		RecursoPartilhado metodos = new RecursoPartilhado();
-		analyse(path, metodos);
+		analyse(path, metodos, rule);
 		WriteToXLSX.exportToExcel(path + "\\smells.xlsx", metodos);
 		return metodos;
 	}
@@ -45,7 +60,7 @@ public class CodeSmells {
 	 *	Analyzes the file on the specified path and creates the arraylist
 	 * 	
 	 */
-	private static void analyse(String path , RecursoPartilhado metodos ) {
+	private static void analyse(String path , RecursoPartilhado metodos, Rule rule ) {
 //>>>>>>> refactor:src/main/java/CodeSmells.java
 		//par nome-path dos packages
 //		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
@@ -57,8 +72,13 @@ public class CodeSmells {
 
 			//iterar cada ficheiro, e lançar uma thread para analisar
 			for (String file : pathToFiles) {
-				AnalyseFile af = new AnalyseFile(pck, file, metodos);
+//<<<<<<< HEAD
+//				AnalyseFile af = new AnalyseFile(pck, file, metodos);
+////				threads.add(af);
+//=======
+				AnalyseFile af = new AnalyseFile(pck, file, metodos, rule);
 //				threads.add(af);
+
 				//af.start();
 
 				af.run();
@@ -86,15 +106,4 @@ public class CodeSmells {
 	}
 	
 
-	public static void main (String[] args) {
-//		CodeSmells cs = new CodeSmells("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project");
-		init("D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project");
-//		try {
-//			cs.init();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	}
-	
 }

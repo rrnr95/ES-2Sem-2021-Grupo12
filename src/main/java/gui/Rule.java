@@ -1,3 +1,4 @@
+package gui;
 
 
 import java.io.File;
@@ -46,36 +47,95 @@ public class Rule implements Serializable {
 	}
 
 
-	@Override
-	public String toString() {
-		String res = "Rule: " + name + "\nNom_Class   min: " + nomClassMin + " max: " + nomClassMax + "\n";		
-		res+= "Loc_Class   min: " + locClassMin + " max: " + locClassMax + "\n";
-		res+= "Wmc_Class   min: " + wmcClassMin + " max: " + wmcClassMax + "\n";
-		res+= "Conjuction? " + classRulesConjunction + "\n\n";
-		res+= "Loc_Method   min: " + locMethodMin + " max: " + locMethodMax + "\n";
-		res+= "Cyclo_Method   min: " + cycloMethodMin + " max: " + cycloMethodMax + "\n";
-		res+= "Conjuction? " + methodRulesConjunction + "\n\n";
-		return res;		
+//	@Override
+//	public String toString() {
+//		String res = "Rule: " + name + "\nNom_Class   min: " + nomClassMin + " max: " + nomClassMax + "\n";		
+//		res+= "Loc_Class   min: " + locClassMin + " max: " + locClassMax + "\n";
+//		res+= "Wmc_Class   min: " + wmcClassMin + " max: " + wmcClassMax + "\n";
+//		res+= "Conjuction? " + classRulesConjunction + "\n\n";
+//		res+= "Loc_Method   min: " + locMethodMin + " max: " + locMethodMax + "\n";
+//		res+= "Cyclo_Method   min: " + cycloMethodMin + " max: " + cycloMethodMax + "\n";
+//		res+= "Conjuction? " + methodRulesConjunction + "\n\n";
+//		return res;		
+//	}
+	
+	
+	
+//	Extrair NOM_class
+//	Extrair LOC_class
+//	Extrair WMC_class
+//	Extrair LOC_method
+//	Extrair CYCLO_method
+	
+	
+	
+	public String printPrettyCondition() {
+		String andOrGodClass = 	(classRulesConjunction ? "AND" :  "OR");
+		String andOrLongMethod = (methodRulesConjunction ? "AND" :  "OR");
+				
+		String godClassCond = "isGodClass if: ";
+		if(isValidParam(this.nomClassMin)) {
+			godClassCond+= this.nomClassMin + " < NOM_class < " + this.nomClassMax;
+		}
+		
+		
+		if (isValidParam(this.locClassMin)) {
+			if (!godClassCond.equals("isGodClass if: ")) {
+				godClassCond += " " + andOrGodClass + " ";
+			}
+			
+			godClassCond+= this.locClassMin + " < LOC_class < " + this.locClassMax;
+		}
+		
+		if (isValidParam(this.wmcClassMin)) {
+			if (!godClassCond.equals("isGodClass if: ")) {
+				godClassCond += " " + andOrGodClass + " ";
+			}
+			
+			godClassCond+= this.wmcClassMin + " < WMC_class < " + this.wmcClassMax;
+		}	
+		
+		
+		
+		String longMethodCond = "isLongMethod if: ";
+		if(isValidParam(this.locMethodMin)) {
+			longMethodCond+= this.locMethodMin + " < LOC_method < " + this.locMethodMax;
+		}
+		
+		
+		if (isValidParam(this.cycloMethodMin)) {
+			if (!longMethodCond.equals("isLongMethod if: ")) {
+				longMethodCond += " " + andOrLongMethod + " ";
+			}
+			
+			longMethodCond+= this.cycloMethodMin + " < CYCLO_method < " + this.cycloMethodMax;
+		}
+		return godClassCond + "\n" + longMethodCond;
 	}
 	
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 	
 	public boolean isGodClass(MethodStats method) {
 		
 		List<Boolean> results = new ArrayList<Boolean>();
 		
 		//checks if method results are inside of thresholds, if outside the threshold adds 'true' value to results list.
-		if(!(this.nomClassMin < 0)) {
+		if(isValidParam(this.nomClassMin)) {
 			boolean nomClassRes = ((method.getNOM_class() >= this.nomClassMin) && (method.getNOM_class() <= this.nomClassMax));
 			results.add(!nomClassRes);
 		}
 		
-		if(!(this.locClassMin < 0)) {
+		if(isValidParam(this.locClassMin)) {
 			boolean locClassRes = ((method.getLOC_class() >= this.locClassMin) && (method.getLOC_class() <= this.locClassMax));
 			results.add(!locClassRes);
 		}
 		
 		
-		if(!(this.wmcClassMin < 0)) {
+		if(isValidParam(this.wmcClassMin)) {
 			boolean wmcClassRes = ((method.getWMC_class() >= this.wmcClassMin) && (method.getWMC_class() <= this.wmcClassMax));
 			results.add(!wmcClassRes);
 		}
@@ -107,13 +167,13 @@ public class Rule implements Serializable {
 
 		// checks if method results are inside of thresholds, if outside the threshold
 		// adds 'true' value to results list.
-		if (!(this.locMethodMin < 0)) {
+		if (isValidParam(this.locMethodMin)) {
 			boolean locMethodRes = ((method.getLOC_method() >= this.locMethodMin) && (method.getLOC_method() <= this.locMethodMax));
 			results.add(!locMethodRes);
 		}
 		
 		
-		if (!(this.cycloMethodMin < 0)) {
+		if (isValidParam(this.cycloMethodMin)) {
 			boolean cycloMethodRes = ((method.getCYCLO_method() >= this.cycloMethodMin) && (method.getCYCLO_method() <= this.cycloMethodMax));
 			results.add(!cycloMethodRes);
 		}
@@ -136,6 +196,14 @@ public class Rule implements Serializable {
 					return res;
 				}		
 		
+	}
+	
+	public String getRuleName() {
+		return this.name;
+	}
+	
+	private boolean isValidParam(int param) {
+		return !(param < 0);
 	}
 	
 	
@@ -188,8 +256,8 @@ public class Rule implements Serializable {
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		Rule r = new Rule("rule1", 0,10,0,10,0,10,true,5,10,5,10,true);
 		ArrayList<String> innerteste = new ArrayList<String>();
-		MethodStats ms = new MethodStats(1,"default","Main",innerteste,"get()",6,11,11,11,11);
-		System.out.println(r.toString());
+		MethodStats ms = new MethodStats(1,"default","Main",innerteste,"get()",6,11,11,11,11,"","");
+		System.out.println(r.printPrettyCondition());
 
 	
 		System.out.println("\n");

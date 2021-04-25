@@ -164,18 +164,18 @@ public class CycloMethod {
 	 */
 	public synchronized static List<Integer> allMethodsCycloValue(List<Method> methods){
 		
-		String[] methodsArray = new String[methods.size()];
-		methods.toArray(methodsArray);
+//		String[] methodsArray = new String[methods.size()];
+//		methods.toArray(methodsArray);
 
 		List<Integer> result = new ArrayList<Integer>();
 		
-//		for(String method : methods) {
-//			result.add(cycloMethodValue(method.split("\n"))); 
-//		}
-		
-		for(int i=0; i < methodsArray.length; i++){ 
-			result.add(cycloMethodValue(methodsArray[i].split("\n"))); 
+		for(Method method : methods) {
+			result.add(cycloMethodValue(method.getCode().split("\n"))); 
 		}
+		
+//		for(int i=0; i < methodsArray.length; i++){ 
+//			result.add(cycloMethodValue(methodsArray[i].split("\n"))); 
+//		}
 		
 		return result;
 	}
