@@ -187,6 +187,7 @@ public class GUI {
 		if (project.exists()) {
 
 			RecursoPartilhado rp;
+			System.out.println(project.getAbsolutePath());
 				rp = CodeSmells.init(project.getAbsolutePath(), selectedRule);
 
 			cleanFrame();

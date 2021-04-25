@@ -72,12 +72,9 @@ public class CodeSmells {
 
 			//iterar cada ficheiro, e lançar uma thread para analisar
 			for (String file : pathToFiles) {
-//<<<<<<< HEAD
-//				AnalyseFile af = new AnalyseFile(pck, file, metodos);
-////				threads.add(af);
-//=======
+
 				AnalyseFile af = new AnalyseFile(pck, file, metodos, rule);
-//				threads.add(af);
+
 
 				//af.start();
 

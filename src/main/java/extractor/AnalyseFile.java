@@ -22,7 +22,7 @@ public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
 
-//	private RecursoPartilhado metodos;
+	private RecursoPartilhado metodos;
 	private Rule rule;
 
 	
@@ -30,7 +30,7 @@ public class AnalyseFile extends Thread {
 		this.parentPackage = parent;
 		this.pathToFile = path;
 
-//		this.metodos = metodos;
+		this.metodos = metodos;
 		this.rule = rule;
 
 	}
@@ -95,16 +95,16 @@ public class AnalyseFile extends Thread {
 		Map<String, Integer> loc_method_hash = LineCounter.getMethodNameLines();
 		
 		// NOTE: useless code?
-//		for (Method method : methodList) {
-//			
-//			int lineNum = metodos.getMethodStats().size();
-//			
-//			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, loc_method_hash,
-//					method.getName(), lineNum);
-//			
-//			metodos.addMetodo(meth);
-//			
-//		}
+		for (Method method : methodList) {
+			
+			int lineNum = metodos.getMethodStats().size();
+			
+			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, loc_method_hash,
+					method.getName(), lineNum);
+			
+			metodos.addMetodo(meth);
+			
+		}
 	}
 	/**
 	 * 			CREATE ROW?
@@ -155,7 +155,7 @@ public class AnalyseFile extends Thread {
 		meth.setIsGodClass(String.valueOf(rule.isLongMethod(meth)));
 		meth.setIsLongMethod(String.valueOf(rule.isGodClass(meth)));
 		
-//		metodos.addMetodo(meth);
+		metodos.addMetodo(meth);
 		
 		return meth;
 	}

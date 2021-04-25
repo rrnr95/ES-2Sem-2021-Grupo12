@@ -11,30 +11,6 @@ import java.util.regex.Pattern;
  *
  */
 public class CycloMethod {
-
-
-
-	
-//	public static void main(String[] args) throws FileNotFoundException {
-// 
-//		List<String> methodCode;
-//		List<String> methodName;
-//		String path = ("C:\\Users\\Diogo\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\NumberOfClassesPerFile.java");
-//		methodCode = new MethodUtils(path).getMethodCode();
-//		methodName = new MethodUtils(path).getMethodName();
-//		List<Integer> methodsCycloValue = allMethodsCycloValue(methodCode);
-//		 
-//		for(String s : methodCode) {
-//			System.out.println(methodName.get(methodCode.indexOf(s)) +": " +  methodsCycloValue.get(methodCode.indexOf(s)));
-//		}
-//		
-//		
-//		System.out.println("Class wmc value: " + wmcCalculator(methodsCycloValue));
-//		System.out.println("Treated Class wmc value: " + wmcCalculator(methodsCycloValue));
-//		
-//		
-//	}
-	
 	
 	/**
 	 * 			Receives a String and checks if it corresponds to an empty line or commentary
@@ -134,26 +110,26 @@ public class CycloMethod {
 	/**
 	 * 			Counts the number of cycles on a String array representing lines of code on each index. 
 	 * 			The array represents a method. 
-	 * @param 	method
+	 * @param 	methodCode
 	 * 			String array representing a method's code
 	 * @return	number of cycles found
 	 */
-	private static int cycloMethodValue(String[] method) {
+	private static int cycloMethodValue(String[] methodCode) {
 		int res = 1;	
-		for(String s : method)
+		for(String s : methodCode)
 			res+=lineCycloCounter(sourceCodeExtrator(s));
 		return res;
 	}
 	
-	//------------------------
+
 	public static int cycloMethodValue(Method method) {
 		int res = 1;
-		String[] str = method.getCode().split("\n");
+		String[] str = method.getCode().split("\r\n");
 		for(String s : str)
-			res+=lineCycloCounter(sourceCodeExtrator(method.getCode()));
+			res+=lineCycloCounter(sourceCodeExtrator(s));
 		return res;
 	}
-	//------------------------
+
 
 	/**
 	 * 			Counts the number of cycles on list of Strings. Each String represents a method.
@@ -162,20 +138,14 @@ public class CycloMethod {
 	 * @return	an integers List with the number of cycles found in the 
 	 * 			Each index's List, has the number of cycles found in the same list index of the received list 
 	 */
-	public synchronized static List<Integer> allMethodsCycloValue(List<Method> methods){
+	public static List<Integer> allMethodsCycloValue(List<Method> methods){
 		
-//		String[] methodsArray = new String[methods.size()];
-//		methods.toArray(methodsArray);
 
 		List<Integer> result = new ArrayList<Integer>();
 		
 		for(Method method : methods) {
 			result.add(cycloMethodValue(method.getCode().split("\n"))); 
 		}
-		
-//		for(int i=0; i < methodsArray.length; i++){ 
-//			result.add(cycloMethodValue(methodsArray[i].split("\n"))); 
-//		}
 		
 		return result;
 	}
@@ -188,7 +158,7 @@ public class CycloMethod {
 	 * 			List containing the number of cycles found in previous calculation.
 	 * @return	sum of all integers in a given list. 
 	 */
-	public  synchronized static int wmcCalculator(List<Method> methods) {
+	public static int wmcCalculator(List<Method> methods) {
 		List<Integer> methodsCycloValue = allMethodsCycloValue(methods);
 		
 		int res = 0;
