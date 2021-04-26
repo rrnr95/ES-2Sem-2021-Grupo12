@@ -94,7 +94,6 @@ public class AnalyseFile extends Thread {
 		
 		Map<String, Integer> loc_method_hash = LineCounter.getMethodNameLines();
 		
-		// NOTE: useless code?
 		for (Method method : methodList) {
 			
 			int lineNum = metodos.getMethodStats().size();
@@ -155,7 +154,7 @@ public class AnalyseFile extends Thread {
 		meth.setIsGodClass(String.valueOf(rule.isLongMethod(meth)));
 		meth.setIsLongMethod(String.valueOf(rule.isGodClass(meth)));
 		
-		metodos.addMetodo(meth);
+		//metodos.addMetodo(meth);
 		
 		return meth;
 	}
