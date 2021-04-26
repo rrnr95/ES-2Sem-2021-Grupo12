@@ -19,7 +19,7 @@ public class LineCounter {
 	/**
 	 * 	Total number of lines
 	 */
-	private static int totaLinesCount;
+	private static int totalLinesCount;
 	/**
 	 *	List of methods names
 	 */
@@ -97,11 +97,11 @@ public class LineCounter {
 			}
 			
 			if (isSourceCodeLine(line)) {
-				totaLinesCount++;
+				totalLinesCount++;
 				
 				// find start of method
 				if (!"".equals(m)) {
-					if (line.matches(".*\\b" + m  + "\\b.*") && !line.contains(";")) {
+					if ((line.matches(".*\\b" + m  + "\\b.*") && !line.contains(";")) || (line.matches(".*\\b" + m  + "\\b.*") && line.matches(".+(public|private|protected|static|abstract).+"))) {
 						methodCount++;
 						methodBegan = true;
 					}
@@ -248,7 +248,9 @@ public class LineCounter {
 	 * @return total of lines
 	 */
 	public static int getTotalLinesCount() {
-		return totaLinesCount;
+		int aux = totalLinesCount;
+		totalLinesCount = 0;
+		return aux;
 	}
 
 
