@@ -97,6 +97,7 @@ public class GUI {
 	private JSeparator separator_horizontal;
 	private JButton btnCancel;
 	private JButton btnSaveRule;
+	private JTextField txtRuleName;
 
 
 	/**
@@ -198,7 +199,7 @@ public class GUI {
 
 		panelAddRules = new JPanel();
 
-
+		
 	}
 
 	
@@ -405,7 +406,6 @@ public class GUI {
 		clearAddRules();
 		panel.setVisible(false);
 		
-		//panelAddRules = new JPanel();
 		panelAddRules.setVisible(true);
 		frmExtractMetrics.getContentPane().add(panelAddRules, BorderLayout.CENTER);
 		panelAddRules.setLayout(null);
@@ -505,71 +505,71 @@ public class GUI {
 		
 		JLabel lblLongMethod = new JLabel("LONG_METHOD");
 		lblLongMethod.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblLongMethod.setBounds(47, 300, 122, 16);
+		lblLongMethod.setBounds(47, 274, 122, 16);
 		panelAddRules.add(lblLongMethod);
 		
 		JLabel lblSelectMetrics_1 = new JLabel("Select the desired metrics:");
 		lblSelectMetrics_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblSelectMetrics_1.setBounds(47, 339, 173, 16);
+		lblSelectMetrics_1.setBounds(47, 313, 173, 16);
 		panelAddRules.add(lblSelectMetrics_1);
 		
 		chckbxLOC_method = new JCheckBox("LOC_method:");
 		chckbxLOC_method.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		chckbxLOC_method.setBounds(123, 378, 119, 23);
+		chckbxLOC_method.setBounds(123, 352, 119, 23);
 		panelAddRules.add(chckbxLOC_method);
 		
 		chckbxCYCLO_method = new JCheckBox("CYCLO_method:");
 		chckbxCYCLO_method.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		chckbxCYCLO_method.setBounds(123, 414, 119, 23);
+		chckbxCYCLO_method.setBounds(123, 388, 119, 23);
 		panelAddRules.add(chckbxCYCLO_method);
 		
 		txtLOC_method_min = new JTextField();
 		txtLOC_method_min.setToolTipText("");
 		txtLOC_method_min.setColumns(10);
-		txtLOC_method_min.setBounds(248, 380, 86, 20);
+		txtLOC_method_min.setBounds(248, 354, 86, 20);
 		panelAddRules.add(txtLOC_method_min);
 		
 		txtLOC_method_max = new JTextField();
 		txtLOC_method_max.setToolTipText("");
 		txtLOC_method_max.setColumns(10);
-		txtLOC_method_max.setBounds(344, 380, 86, 20);
+		txtLOC_method_max.setBounds(344, 354, 86, 20);
 		panelAddRules.add(txtLOC_method_max);
 		
 		txtCYCLOmin = new JTextField();
 		txtCYCLOmin.setToolTipText("");
 		txtCYCLOmin.setColumns(10);
-		txtCYCLOmin.setBounds(248, 416, 86, 20);
+		txtCYCLOmin.setBounds(248, 390, 86, 20);
 		panelAddRules.add(txtCYCLOmin);
 		
 		txtCYCLOmax = new JTextField();
 		txtCYCLOmax.setToolTipText("");
 		txtCYCLOmax.setColumns(10);
-		txtCYCLOmax.setBounds(344, 416, 86, 20);
+		txtCYCLOmax.setBounds(344, 390, 86, 20);
 		panelAddRules.add(txtCYCLOmax);
 		
 		JLabel lblMin_1 = new JLabel("Minimum");
 		lblMin_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMin_1.setBounds(266, 353, 54, 16);
+		lblMin_1.setBounds(266, 327, 54, 16);
 		panelAddRules.add(lblMin_1);
 		
 		JLabel lblMax_1 = new JLabel("Maximum");
 		lblMax_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMax_1.setBounds(359, 353, 54, 16);
+		lblMax_1.setBounds(359, 327, 54, 16);
 		panelAddRules.add(lblMax_1);
 		
 		JLabel lblLogicOperators_1 = new JLabel("Select the desired logic operator:");
 		lblLogicOperators_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblLogicOperators_1.setBounds(548, 341, 202, 16);
+		lblLogicOperators_1.setBounds(548, 315, 202, 16);
 		panelAddRules.add(lblLogicOperators_1);
 		
 		rdbtnAND_LONG_METHOD = new JRadioButton("AND");
 		rdbtnAND_LONG_METHOD.setActionCommand("AND");
-		rdbtnAND_LONG_METHOD.setBounds(600, 379, 60, 23);
+		rdbtnAND_LONG_METHOD.setBounds(600, 353, 60, 23);
 		panelAddRules.add(rdbtnAND_LONG_METHOD);
 		
 		rdbtnOR_LONG_METHOD = new JRadioButton("OR");
 		rdbtnOR_LONG_METHOD.setActionCommand("OR");
-		rdbtnOR_LONG_METHOD.setBounds(600, 415, 60, 23);
+		rdbtnOR_LONG_METHOD.setBounds(600, 389, 60, 23);
 		panelAddRules.add(rdbtnOR_LONG_METHOD);
 		
 		G2 = new ButtonGroup();
@@ -578,11 +578,11 @@ public class GUI {
 		
 		separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
-		separator_1.setBounds(504, 335, 12, 130);
+		separator_1.setBounds(504, 309, 12, 114);
 		panelAddRules.add(separator_1);
 		
 		separator_horizontal = new JSeparator();
-		separator_horizontal.setBounds(47, 260, 812, 10);
+		separator_horizontal.setBounds(47, 242, 812, 10);
 		panelAddRules.add(separator_horizontal);
 		
 		btnSaveRule = new JButton("Save Rule");
@@ -602,6 +602,21 @@ public class GUI {
 		});
 		btnCancel.setBounds(54, 528, 104, 23);
 		panelAddRules.add(btnCancel);
+		
+		JSeparator separator_horizontal_1 = new JSeparator();
+		separator_horizontal_1.setBounds(47, 444, 812, 10);
+		panelAddRules.add(separator_horizontal_1);
+		
+		JLabel lblRuleName = new JLabel("Name of the Rule:");
+		lblRuleName.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblRuleName.setBounds(47, 471, 152, 23);
+		panelAddRules.add(lblRuleName);
+		
+		txtRuleName = new JTextField();
+		txtRuleName.setToolTipText("");
+		txtRuleName.setColumns(10);
+		txtRuleName.setBounds(165, 474, 180, 20);
+		panelAddRules.add(txtRuleName);
 		
 	}
 	
