@@ -451,7 +451,7 @@ public class GUI {
 		panelAddRules.add(txtWMCmin);
 		txtWMCmin.setColumns(10);
 		
-		rdbtnAND_GOD_CLASS = new JRadioButton("AND");
+		rdbtnAND_GOD_CLASS = new JRadioButton("AND", true);
 		rdbtnAND_GOD_CLASS.setActionCommand("AND");
 		rdbtnAND_GOD_CLASS.setBounds(600, 116, 60, 23);
 		panelAddRules.add(rdbtnAND_GOD_CLASS);
@@ -562,7 +562,7 @@ public class GUI {
 		lblLogicOperators_1.setBounds(548, 315, 202, 16);
 		panelAddRules.add(lblLogicOperators_1);
 		
-		rdbtnAND_LONG_METHOD = new JRadioButton("AND");
+		rdbtnAND_LONG_METHOD = new JRadioButton("AND", true);
 		rdbtnAND_LONG_METHOD.setActionCommand("AND");
 		rdbtnAND_LONG_METHOD.setBounds(600, 353, 60, 23);
 		panelAddRules.add(rdbtnAND_LONG_METHOD);
@@ -623,13 +623,13 @@ public class GUI {
 	private void saveRulePressed() {
 		System.out.println("save rule pressed");
 		
-		if ("nome".equals(null)) {
-			JOptionPane.showMessageDialog(null,"Diretoria Desconhecida");
+		if (! validName(txtRuleName)) {
+			JOptionPane.showMessageDialog(null,"Escolher um nome válido para a regra");
 		}
 		
 		else {
 			
-			String name = "regra nova";
+			String name = txtRuleName.getText();
 			
 			int NOMmin = DEFAULT_RULE.getNomClassMin();
 			int LOCclassmin = DEFAULT_RULE.getLocClassMin();
@@ -644,58 +644,67 @@ public class GUI {
 			int CYCLOmax = DEFAULT_RULE.getCycloMethodMax();
 			boolean methodConjunction = DEFAULT_RULE.isMethodRulesConjunction();
 			
-			if (chckbxNOM_class.isSelected()) {
-				NOMmin = Integer.parseInt(txtNOMmin.getText());
-				NOMmax = Integer.parseInt(txtNOMmax.getText());
-			}
-			if (chckbxLOC_class.isSelected()) {
-				LOCclassmin = Integer.parseInt(txtLOC_class_min.getText());
-				LOCclassmax = Integer.parseInt(txtLOC_class_max.getText());
-			}
-			if(chckbxWMC_class.isSelected()) {
-				WMCmin = Integer.parseInt(txtWMCmin.getText());
-				WMCmax = Integer.parseInt(txtWMCmax.getText());
-			}		
-			if (G1.getSelection().getActionCommand().equals("AND")) {
-				classConjunction = true;
-			}
-			if(chckbxLOC_method.isSelected()) {
-				LOCmin = Integer.parseInt(txtLOC_method_min.getText());
-				LOCmax = Integer.parseInt(txtLOC_method_max.getText());
-			}
-			if(chckbxCYCLO_method.isSelected()) {
-				CYCLOmin = Integer.parseInt(txtCYCLOmin.getText());
-				CYCLOmax = Integer.parseInt( txtCYCLOmax.getText());
-			}
-			if (G2.getSelection().getActionCommand().equals("AND")) {
-				methodConjunction = true;
-			}
-	
-			Rule rule = new Rule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction, LOCmin, LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
 			try {
-				ruleManager.addRuleToFile(rule);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+				if (chckbxNOM_class.isSelected()) {
+					NOMmin = Integer.parseInt(txtNOMmin.getText());
+					NOMmax = Integer.parseInt(txtNOMmax.getText());
+				}
+				if (chckbxLOC_class.isSelected()) {
+					LOCclassmin = Integer.parseInt(txtLOC_class_min.getText());
+					LOCclassmax = Integer.parseInt(txtLOC_class_max.getText());
+				}
+				if(chckbxWMC_class.isSelected()) {
+					WMCmin = Integer.parseInt(txtWMCmin.getText());
+					WMCmax = Integer.parseInt(txtWMCmax.getText());
+				}		
+				if (G1.getSelection().getActionCommand().equals("AND")) {
+					classConjunction = true;
+				}
+				if(chckbxLOC_method.isSelected()) {
+					LOCmin = Integer.parseInt(txtLOC_method_min.getText());
+					LOCmax = Integer.parseInt(txtLOC_method_max.getText());
+				}
+				if(chckbxCYCLO_method.isSelected()) {
+					CYCLOmin = Integer.parseInt(txtCYCLOmin.getText());
+					CYCLOmax = Integer.parseInt( txtCYCLOmax.getText());
+				}
+				if (G2.getSelection().getActionCommand().equals("AND")) {
+					methodConjunction = true;
+				}
+				
+				Rule rule = new Rule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction, LOCmin, LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
+				
+				try {
+					ruleManager.addRuleToFile(rule);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, "Apenas é possivel escolher valores numéricos");
 			}
-			
-			showRulesPressed();
 		}
+		showRulesPressed();
 	}
 	
 	private void deleteRulePressed() {
-		try {
-			System.out.println("SELECTED RULE: " + selectedRule);
-			ruleManager.deleteRuleFromFile(selectedRule);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (selectedRule.toString().equals("Default")) {
+			JOptionPane.showMessageDialog(null, "Não é possivel apagar esta regra");
 		}
-		showRulesPressed();
+		else {
+			try {
+				System.out.println("SELECTED RULE: " + selectedRule);
+				ruleManager.deleteRuleFromFile(selectedRule);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			showRulesPressed();
+		}
 	}
 	
 	private void addListListner() {
@@ -710,6 +719,20 @@ public class GUI {
 
 	        }
 	    });
+	}
+	
+	private boolean validName (JTextField name) {
+		if (name.getText().equals("")) {
+			return false;
+		}
+		for (int i = 0; i < guiRuleList.getModel().getSize(); i++) {
+			Object item = guiRuleList.getModel().getElementAt(i);
+			String itemName = item.toString();
+			if (itemName.equals(name.getText())) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	private void cleanFrame() {
@@ -822,6 +845,10 @@ public class GUI {
 		if (chckbxWMC_class != null) {
 			chckbxWMC_class.setVisible(false);
 			frmExtractMetrics.remove(chckbxWMC_class);
+		}
+		if (txtRuleName != null) {
+			txtRuleName.setVisible(false);
+			frmExtractMetrics.remove(txtRuleName);
 		}
 	}
 }
