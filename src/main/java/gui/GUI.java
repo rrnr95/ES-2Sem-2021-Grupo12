@@ -19,6 +19,7 @@ import backend.RulesManager;
 import extractor.CodeSmells;
 import extractor.RecursoPartilhado;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
@@ -79,6 +80,8 @@ public class GUI {
 	private JTextField txtLOC_method_max;
 	private JTextField txtCYCLOmin;
 	private JTextField txtCYCLOmax;
+	private JRadioButton rdbtnAND_GOD_CLASS;
+	private JRadioButton rdbtnOR_GOD_CLASS;
 	private JRadioButton rdbtnAND_LONG_METHOD;
 	private JRadioButton rdbtnOR_LONG_METHOD;
 	private JSeparator separator_1;
@@ -437,13 +440,17 @@ public class GUI {
 		panelAddRules.add(txtWMCmin);
 		txtWMCmin.setColumns(10);
 		
-		JRadioButton rdbtnAND_GOD_CLASS = new JRadioButton("AND");
+		rdbtnAND_GOD_CLASS = new JRadioButton("AND");
 		rdbtnAND_GOD_CLASS.setBounds(600, 116, 60, 23);
 		panelAddRules.add(rdbtnAND_GOD_CLASS);
 		
-		JRadioButton rdbtnOR_GOD_CLASS = new JRadioButton("OR");
+		rdbtnOR_GOD_CLASS = new JRadioButton("OR");
 		rdbtnOR_GOD_CLASS.setBounds(600, 154, 60, 23);
 		panelAddRules.add(rdbtnOR_GOD_CLASS);
+		
+		ButtonGroup G1 = new ButtonGroup();
+		G1.add(rdbtnAND_GOD_CLASS);
+		G1.add(rdbtnOR_GOD_CLASS);
 		
 		JLabel lblLogicOperators = new JLabel("Select the desired logic operator:");
 		lblLogicOperators.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -549,6 +556,10 @@ public class GUI {
 		rdbtnOR_LONG_METHOD = new JRadioButton("OR");
 		rdbtnOR_LONG_METHOD.setBounds(600, 415, 60, 23);
 		panelAddRules.add(rdbtnOR_LONG_METHOD);
+		
+		ButtonGroup G2 = new ButtonGroup();
+		G2.add(rdbtnAND_LONG_METHOD);
+		G2.add(rdbtnOR_LONG_METHOD);
 		
 		separator_1 = new JSeparator();
 		separator_1.setOrientation(SwingConstants.VERTICAL);
