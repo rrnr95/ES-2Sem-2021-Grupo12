@@ -20,6 +20,7 @@ import extractor.CodeSmells;
 import extractor.RecursoPartilhado;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
@@ -63,6 +64,7 @@ public class GUI {
 	//private String rule;
 	private RulesManager ruleManager;
 	private Rule selectedRule;
+	private Rule DEFAULT_RULE;
 	private JTextArea ruleDescriptionField;
 	private JLabel currentRuleLabel;
 
@@ -76,14 +78,21 @@ public class GUI {
 	private JSeparator separator;
 	private JCheckBox chckbxLOC_method;
 	private JCheckBox chckbxCYCLO_method;
+	
+	private JCheckBox chckbxNOM_class;
+	private JCheckBox chckbxLOC_class;
+	private JCheckBox chckbxWMC_class;
+	
 	private JTextField txtLOC_method_min;
 	private JTextField txtLOC_method_max;
 	private JTextField txtCYCLOmin;
 	private JTextField txtCYCLOmax;
 	private JRadioButton rdbtnAND_GOD_CLASS;
 	private JRadioButton rdbtnOR_GOD_CLASS;
+	private ButtonGroup G1;
 	private JRadioButton rdbtnAND_LONG_METHOD;
 	private JRadioButton rdbtnOR_LONG_METHOD;
+	private ButtonGroup G2;
 	private JSeparator separator_1;
 	private JSeparator separator_horizontal;
 	private JButton btnCancel;
@@ -123,6 +132,7 @@ public class GUI {
 	
 		try {
 			selectedRule = ruleManager.readObjectsFromFile().get(0);
+			DEFAULT_RULE = selectedRule;
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -372,10 +382,10 @@ public class GUI {
 		btnAddRule.setBounds(550, 450, 140, 23);
 		panel.add(btnAddRule);
 		
-		btnConfirmRule = new JButton("Confirm Rule");
+		btnConfirmRule = new JButton("Delete Rule");
 		btnConfirmRule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				confirmRulePressed();
+				deleteRulePressed();
 			}
 		});
 		btnConfirmRule.setBounds(720, 450, 140, 23);
@@ -392,6 +402,7 @@ public class GUI {
 		//TODO - logica para adicionar regras ao binario
 		System.out.println("add rule pressed");
 		cleanFrame();
+		clearAddRules();
 		panel.setVisible(false);
 		
 		//panelAddRules = new JPanel();
@@ -409,17 +420,17 @@ public class GUI {
 		lblGodClass.setBounds(47, 35, 94, 16);
 		panelAddRules.add(lblGodClass);
 		
-		JCheckBox chckbxNOM_class = new JCheckBox("NOM_class:");
+		chckbxNOM_class = new JCheckBox("NOM_class:");
 		chckbxNOM_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxNOM_class.setBounds(123, 115, 97, 23);
 		panelAddRules.add(chckbxNOM_class);
 		
-		JCheckBox chckbxLOC_class = new JCheckBox("LOC_class:");
+		chckbxLOC_class = new JCheckBox("LOC_class:");
 		chckbxLOC_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxLOC_class.setBounds(123, 153, 97, 23);
 		panelAddRules.add(chckbxLOC_class);
 		
-		JCheckBox chckbxWMC_class = new JCheckBox("WMC_class:");
+		chckbxWMC_class = new JCheckBox("WMC_class:");
 		chckbxWMC_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxWMC_class.setBounds(123, 190, 97, 23);
 		panelAddRules.add(chckbxWMC_class);
@@ -441,14 +452,16 @@ public class GUI {
 		txtWMCmin.setColumns(10);
 		
 		rdbtnAND_GOD_CLASS = new JRadioButton("AND");
+		rdbtnAND_GOD_CLASS.setActionCommand("AND");
 		rdbtnAND_GOD_CLASS.setBounds(600, 116, 60, 23);
 		panelAddRules.add(rdbtnAND_GOD_CLASS);
 		
 		rdbtnOR_GOD_CLASS = new JRadioButton("OR");
+		rdbtnOR_GOD_CLASS.setActionCommand("OR");
 		rdbtnOR_GOD_CLASS.setBounds(600, 154, 60, 23);
 		panelAddRules.add(rdbtnOR_GOD_CLASS);
 		
-		ButtonGroup G1 = new ButtonGroup();
+		G1 = new ButtonGroup();
 		G1.add(rdbtnAND_GOD_CLASS);
 		G1.add(rdbtnOR_GOD_CLASS);
 		
@@ -550,14 +563,16 @@ public class GUI {
 		panelAddRules.add(lblLogicOperators_1);
 		
 		rdbtnAND_LONG_METHOD = new JRadioButton("AND");
+		rdbtnAND_LONG_METHOD.setActionCommand("AND");
 		rdbtnAND_LONG_METHOD.setBounds(600, 379, 60, 23);
 		panelAddRules.add(rdbtnAND_LONG_METHOD);
 		
 		rdbtnOR_LONG_METHOD = new JRadioButton("OR");
+		rdbtnOR_LONG_METHOD.setActionCommand("OR");
 		rdbtnOR_LONG_METHOD.setBounds(600, 415, 60, 23);
 		panelAddRules.add(rdbtnOR_LONG_METHOD);
 		
-		ButtonGroup G2 = new ButtonGroup();
+		G2 = new ButtonGroup();
 		G2.add(rdbtnAND_LONG_METHOD);
 		G2.add(rdbtnOR_LONG_METHOD);
 		
@@ -592,11 +607,80 @@ public class GUI {
 	
 	private void saveRulePressed() {
 		System.out.println("save rule pressed");
+		
+		if ("nome".equals(null)) {
+			JOptionPane.showMessageDialog(null,"Diretoria Desconhecida");
+		}
+		
+		else {
+			
+			String name = "regra nova";
+			
+			int NOMmin = DEFAULT_RULE.getNomClassMin();
+			int LOCclassmin = DEFAULT_RULE.getLocClassMin();
+			int WMCmin = DEFAULT_RULE.getWmcClassMin();
+			int NOMmax = DEFAULT_RULE.getNomClassMax();
+			int LOCclassmax = DEFAULT_RULE.getLocClassMax();
+			int WMCmax = DEFAULT_RULE.getWmcClassMax();
+			boolean classConjunction = DEFAULT_RULE.isClassRulesConjunction();
+			int LOCmin = DEFAULT_RULE.getLocMethodMin();
+			int LOCmax = DEFAULT_RULE.getLocMethodMax();
+			int CYCLOmin = DEFAULT_RULE.getCycloMethodMin();
+			int CYCLOmax = DEFAULT_RULE.getCycloMethodMax();
+			boolean methodConjunction = DEFAULT_RULE.isMethodRulesConjunction();
+			
+			if (chckbxNOM_class.isSelected()) {
+				NOMmin = Integer.parseInt(txtNOMmin.getText());
+				NOMmax = Integer.parseInt(txtNOMmax.getText());
+			}
+			if (chckbxLOC_class.isSelected()) {
+				LOCclassmin = Integer.parseInt(txtLOC_class_min.getText());
+				LOCclassmax = Integer.parseInt(txtLOC_class_max.getText());
+			}
+			if(chckbxWMC_class.isSelected()) {
+				WMCmin = Integer.parseInt(txtWMCmin.getText());
+				WMCmax = Integer.parseInt(txtWMCmax.getText());
+			}		
+			if (G1.getSelection().getActionCommand().equals("AND")) {
+				classConjunction = true;
+			}
+			if(chckbxLOC_method.isSelected()) {
+				LOCmin = Integer.parseInt(txtLOC_method_min.getText());
+				LOCmax = Integer.parseInt(txtLOC_method_max.getText());
+			}
+			if(chckbxCYCLO_method.isSelected()) {
+				CYCLOmin = Integer.parseInt(txtCYCLOmin.getText());
+				CYCLOmax = Integer.parseInt( txtCYCLOmax.getText());
+			}
+			if (G2.getSelection().getActionCommand().equals("AND")) {
+				methodConjunction = true;
+			}
+	
+			Rule rule = new Rule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction, LOCmin, LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
+			try {
+				ruleManager.addRuleToFile(rule);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			showRulesPressed();
+		}
 	}
 	
-	private void confirmRulePressed() {
-		//TODO - confirmar regra selecioonada como atributo
-		System.out.println("confirm rule pressed");
+	private void deleteRulePressed() {
+		try {
+			System.out.println("SELECTED RULE: " + selectedRule);
+			ruleManager.deleteRuleFromFile(selectedRule);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		showRulesPressed();
 	}
 	
 	private void addListListner() {
@@ -639,5 +723,90 @@ public class GUI {
 			frmExtractMetrics.remove(ruleDescriptionField);
 		}
 		System.out.println("LIMPAR");
+	}
+	
+	private void clearAddRules() {
+		if (txtNOMmin != null) {
+			txtNOMmin.setVisible(false);
+			frmExtractMetrics.remove(txtNOMmin);
+		}
+		if (txtLOC_class_min != null) {
+			txtLOC_class_min.setVisible(false);
+			frmExtractMetrics.remove(txtLOC_class_min);
+		}
+		if (txtWMCmin != null) {
+			txtWMCmin.setVisible(false);
+			frmExtractMetrics.remove(txtWMCmin);
+		}
+		if (txtNOMmax != null) {
+			txtNOMmax.setVisible(false);
+			frmExtractMetrics.remove(txtNOMmax);
+		}
+		if (txtLOC_class_max != null) {
+			txtLOC_class_max.setVisible(false);
+			frmExtractMetrics.remove(txtLOC_class_max);
+		}
+		if (txtWMCmax != null) {
+			txtWMCmax.setVisible(false);
+			frmExtractMetrics.remove(txtWMCmax);
+		}
+		if (chckbxLOC_method != null) {
+			chckbxLOC_method.setVisible(false);
+			frmExtractMetrics.remove(chckbxLOC_method);
+		}
+		if (chckbxCYCLO_method != null) {
+			chckbxCYCLO_method.setVisible(false);
+			frmExtractMetrics.remove(chckbxCYCLO_method);
+		}
+		if (txtLOC_method_min != null) {
+			txtLOC_method_min.setVisible(false);
+			frmExtractMetrics.remove(txtLOC_method_min);
+		}
+		if (txtLOC_method_max != null) {
+			txtLOC_method_max.setVisible(false);
+			frmExtractMetrics.remove(txtLOC_method_max);
+		}
+		if (txtCYCLOmin != null) {
+			txtCYCLOmin.setVisible(false);
+			frmExtractMetrics.remove(txtCYCLOmin);
+		}
+		if (txtCYCLOmax != null) {
+			txtCYCLOmax.setVisible(false);
+			frmExtractMetrics.remove(txtCYCLOmax);
+		}
+		if (rdbtnAND_GOD_CLASS != null) {
+			rdbtnAND_GOD_CLASS.setVisible(false);
+			frmExtractMetrics.remove(rdbtnAND_GOD_CLASS);
+		}
+		if (rdbtnOR_GOD_CLASS != null) {
+			rdbtnOR_GOD_CLASS.setVisible(false);
+			frmExtractMetrics.remove(rdbtnOR_GOD_CLASS);
+		}
+		if (rdbtnAND_LONG_METHOD != null) {
+			rdbtnAND_LONG_METHOD.setVisible(false);
+			frmExtractMetrics.remove(rdbtnAND_LONG_METHOD);
+		}
+		if (rdbtnOR_LONG_METHOD != null) {
+			rdbtnOR_LONG_METHOD.setVisible(false);
+			frmExtractMetrics.remove(rdbtnOR_LONG_METHOD);
+		}
+		if (G1 != null) {
+			G1 = null;
+		}
+		if (G2 != null) {
+			G2 = null;
+		}
+		if (chckbxNOM_class != null) {
+			chckbxNOM_class.setVisible(false);
+			frmExtractMetrics.remove(chckbxNOM_class);
+		}
+		if (chckbxLOC_class != null) {
+			chckbxLOC_class.setVisible(false);
+			frmExtractMetrics.remove(chckbxLOC_class);
+		}
+		if (chckbxWMC_class != null) {
+			chckbxWMC_class.setVisible(false);
+			frmExtractMetrics.remove(chckbxWMC_class);
+		}
 	}
 }

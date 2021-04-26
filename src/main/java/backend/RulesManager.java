@@ -85,6 +85,33 @@ public class RulesManager {
 		}
 	}
 	
+	public void deleteRuleFromFile (Rule rule) throws ClassNotFoundException, IOException {
+		List<Rule> rules = readObjectsFromFile();
+		int index = 0;
+		for (Rule r : rules) {
+			if (r.toString().equals(rule.toString())) {
+				break;
+			}
+			index++;
+		}
+		rules.remove(index);
+		
+		try {
+			FileOutputStream f = new FileOutputStream(stored_rules);
+			ObjectOutputStream o = new ObjectOutputStream(f);
+			
+			// Write object to file
+			o.writeObject(rules);
+			
+			o.close();
+			f.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void updateAllFileRules(List<Rule> rules) {
 		
 		try {

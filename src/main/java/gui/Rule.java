@@ -22,10 +22,6 @@ public class Rule implements Serializable {
 	private boolean classRulesConjunction;
 	private int locMethodMin, locMethodMax, cycloMethodMin, cycloMethodMax;
 	private boolean methodRulesConjunction;
-	
-	
-
-	
 
 	
 	public Rule(String name, int nomClassMin, int nomClassMax, int locClassMin, int locClassMax, int wmcClassMin,
@@ -69,6 +65,71 @@ public class Rule implements Serializable {
 	
 	
 	
+	public String getName() {
+		return name;
+	}
+
+
+	public int getNomClassMin() {
+		return nomClassMin;
+	}
+
+
+	public int getNomClassMax() {
+		return nomClassMax;
+	}
+
+
+	public int getLocClassMin() {
+		return locClassMin;
+	}
+
+
+	public int getLocClassMax() {
+		return locClassMax;
+	}
+
+
+	public int getWmcClassMin() {
+		return wmcClassMin;
+	}
+
+
+	public int getWmcClassMax() {
+		return wmcClassMax;
+	}
+
+
+	public boolean isClassRulesConjunction() {
+		return classRulesConjunction;
+	}
+
+
+	public int getLocMethodMin() {
+		return locMethodMin;
+	}
+
+
+	public int getLocMethodMax() {
+		return locMethodMax;
+	}
+
+
+	public int getCycloMethodMin() {
+		return cycloMethodMin;
+	}
+
+
+	public int getCycloMethodMax() {
+		return cycloMethodMax;
+	}
+
+
+	public boolean isMethodRulesConjunction() {
+		return methodRulesConjunction;
+	}
+
+
 	public String printPrettyCondition() {
 		String andOrGodClass = 	(classRulesConjunction ? "AND" :  "OR");
 		String andOrLongMethod = (methodRulesConjunction ? "AND" :  "OR");

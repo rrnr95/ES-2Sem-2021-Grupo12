@@ -18,7 +18,7 @@ public class LineCounterTest {
 	
 	@Test
 	public void testGetLinesCount() {
-		LineCounter.countLines(FILE);
+//		LineCounter.countLines(FILE);
 		int lines = LineCounter.getTotalLinesCount();
 		assertEquals(16, lines);
 	}	
