@@ -649,19 +649,23 @@ public class GUI {
 			int CYCLOmax = DEFAULT_RULE.getCycloMethodMax();
 			
 			boolean methodConjunction = DEFAULT_RULE.isMethodRulesConjunction();
+			Object error = false;
 			
 			try {
 				if (chckbxNOM_class.isSelected()) {
 					NOMmin = Integer.parseInt(txtNOMmin.getText());
 					NOMmax = Integer.parseInt(txtNOMmax.getText());
+					error = validInput(NOMmin, NOMmax);
 				}
 				if (chckbxLOC_class.isSelected()) {
 					LOCclassmin = Integer.parseInt(txtLOC_class_min.getText());
 					LOCclassmax = Integer.parseInt(txtLOC_class_max.getText());
+					error = validInput(LOCclassmin, LOCclassmax);
 				}
 				if(chckbxWMC_class.isSelected()) {
 					WMCmin = Integer.parseInt(txtWMCmin.getText());
 					WMCmax = Integer.parseInt(txtWMCmax.getText());
+					error = validInput(WMCmin, WMCmax);
 				}		
 				if (G1.getSelection().getActionCommand().equals("AND")) {
 					classConjunction = true;
@@ -669,10 +673,12 @@ public class GUI {
 				if(chckbxLOC_method.isSelected()) {
 					LOCmin = Integer.parseInt(txtLOC_method_min.getText());
 					LOCmax = Integer.parseInt(txtLOC_method_max.getText());
+					error = validInput(LOCmin, LOCmax);
 				}
 				if(chckbxCYCLO_method.isSelected()) {
 					CYCLOmin = Integer.parseInt(txtCYCLOmin.getText());
 					CYCLOmax = Integer.parseInt( txtCYCLOmax.getText());
+					error = validInput(CYCLOmin, CYCLOmax);
 				}
 				if (G2.getSelection().getActionCommand().equals("AND")) {
 					methodConjunction = true;
@@ -688,7 +694,7 @@ public class GUI {
 					e.printStackTrace();
 				}
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "Apenas é possivel escolher valores numéricos");
+				JOptionPane.showMessageDialog(null, "Apenas é possivel escolher valores numéricos \n O valor maximo deverá ser maior que o minimo");
 			}
 		}
 		showRulesPressed();
@@ -725,6 +731,11 @@ public class GUI {
 
 	        }
 	    });
+	}
+	
+	private boolean validInput (int min, int max) {
+		if (max >= min) return false;
+		else throw new NumberFormatException();
 	}
 	
 	private boolean validName (JTextField name) {
