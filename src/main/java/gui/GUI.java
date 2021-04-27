@@ -632,16 +632,22 @@ public class GUI {
 			String name = txtRuleName.getText();
 			
 			int NOMmin = DEFAULT_RULE.getNomClassMin();
-			int LOCclassmin = DEFAULT_RULE.getLocClassMin();
-			int WMCmin = DEFAULT_RULE.getWmcClassMin();
 			int NOMmax = DEFAULT_RULE.getNomClassMax();
+			
+			int LOCclassmin = DEFAULT_RULE.getLocClassMin();
 			int LOCclassmax = DEFAULT_RULE.getLocClassMax();
+			
+			int WMCmin = DEFAULT_RULE.getWmcClassMin();
 			int WMCmax = DEFAULT_RULE.getWmcClassMax();
+			
 			boolean classConjunction = DEFAULT_RULE.isClassRulesConjunction();
+			
 			int LOCmin = DEFAULT_RULE.getLocMethodMin();
 			int LOCmax = DEFAULT_RULE.getLocMethodMax();
+			
 			int CYCLOmin = DEFAULT_RULE.getCycloMethodMin();
 			int CYCLOmax = DEFAULT_RULE.getCycloMethodMax();
+			
 			boolean methodConjunction = DEFAULT_RULE.isMethodRulesConjunction();
 			
 			try {

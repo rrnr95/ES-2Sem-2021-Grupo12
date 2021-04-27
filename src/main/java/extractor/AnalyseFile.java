@@ -151,8 +151,8 @@ public class AnalyseFile extends Thread {
 		meth.setLOC_class(loc);
 		meth.setWMC_class(wmc);
 		
-		meth.setIsGodClass(String.valueOf(rule.isLongMethod(meth)));
-		meth.setIsLongMethod(String.valueOf(rule.isGodClass(meth)));
+		meth.setIsGodClass(String.valueOf(rule.isGodClass(meth)));
+		meth.setIsLongMethod(String.valueOf(rule.isLongMethod(meth)));
 		
 		//metodos.addMetodo(meth);
 		
