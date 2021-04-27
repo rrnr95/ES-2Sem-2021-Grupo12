@@ -196,6 +196,7 @@ public class GUI {
 		currentRuleLabel = new JLabel("Current Rule: " + selectedRule.getRuleName());
 		currentRuleLabel.setBounds(10, 516, 140, 23);		
 		panel.add(currentRuleLabel);
+		
 
 		panelAddRules = new JPanel();
 
@@ -366,6 +367,7 @@ public class GUI {
 		
 		
 		ruleDescriptionField = new JTextArea();
+		
 		ruleDescriptionField.setBounds(10, 358, 902, 50);
 		panel.add(ruleDescriptionField);
 		//table = new JTable(info, columnNames);
@@ -625,28 +627,31 @@ public class GUI {
 		
 		if (! validName(txtRuleName)) {
 			JOptionPane.showMessageDialog(null,"Escolher um nome válido para a regra");
+		}else if(!validRuleSelection()) {
+			JOptionPane.showMessageDialog(null,"Selecionar pelo menos um parâmetro");
 		}
+		
 		
 		else {
 			
 			String name = txtRuleName.getText();
 			
-			int NOMmin = DEFAULT_RULE.getNomClassMin();
-			int NOMmax = DEFAULT_RULE.getNomClassMax();
+			int NOMmin = -1; //DEFAULT_RULE.getNomClassMin();
+			int NOMmax = -1; //DEFAULT_RULE.getNomClassMax();
 			
-			int LOCclassmin = DEFAULT_RULE.getLocClassMin();
-			int LOCclassmax = DEFAULT_RULE.getLocClassMax();
+			int LOCclassmin = -1; //DEFAULT_RULE.getLocClassMin();
+			int LOCclassmax = -1; //DEFAULT_RULE.getLocClassMax();
 			
-			int WMCmin = DEFAULT_RULE.getWmcClassMin();
-			int WMCmax = DEFAULT_RULE.getWmcClassMax();
+			int WMCmin = -1; //DEFAULT_RULE.getWmcClassMin();
+			int WMCmax = -1; //DEFAULT_RULE.getWmcClassMax();
 			
 			boolean classConjunction = DEFAULT_RULE.isClassRulesConjunction();
 			
-			int LOCmin = DEFAULT_RULE.getLocMethodMin();
-			int LOCmax = DEFAULT_RULE.getLocMethodMax();
+			int LOCmin = -1; //DEFAULT_RULE.getLocMethodMin();
+			int LOCmax = -1; //DEFAULT_RULE.getLocMethodMax();
 			
-			int CYCLOmin = DEFAULT_RULE.getCycloMethodMin();
-			int CYCLOmax = DEFAULT_RULE.getCycloMethodMax();
+			int CYCLOmin = -1; //DEFAULT_RULE.getCycloMethodMin();
+			int CYCLOmax = -1; //DEFAULT_RULE.getCycloMethodMax();
 			
 			boolean methodConjunction = DEFAULT_RULE.isMethodRulesConjunction();
 			Object error = false;
@@ -750,6 +755,14 @@ public class GUI {
 			}
 		}
 		return true;
+	}
+	
+	private boolean validRuleSelection() {
+		return chckbxNOM_class.isSelected() 
+				|| chckbxLOC_class.isSelected() 
+				|| chckbxWMC_class.isSelected() 
+				|| chckbxLOC_method.isSelected() 
+				|| chckbxCYCLO_method.isSelected();
 	}
 	
 	private void cleanFrame() {

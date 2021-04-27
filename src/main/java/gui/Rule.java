@@ -134,14 +134,14 @@ public class Rule implements Serializable {
 		String andOrGodClass = 	(classRulesConjunction ? "AND" :  "OR");
 		String andOrLongMethod = (methodRulesConjunction ? "AND" :  "OR");
 				
-		String godClassCond = "isGodClass if: ";
+		String godClassCond = "GodClass is false if: ";
 		if(isValidParam(this.nomClassMin)) {
 			godClassCond+= this.nomClassMin + " < NOM_class < " + this.nomClassMax;
 		}
 		
 		
 		if (isValidParam(this.locClassMin)) {
-			if (!godClassCond.equals("isGodClass if: ")) {
+			if (!godClassCond.equals("GodClass is false if: ")) {
 				godClassCond += " " + andOrGodClass + " ";
 			}
 			
@@ -149,7 +149,7 @@ public class Rule implements Serializable {
 		}
 		
 		if (isValidParam(this.wmcClassMin)) {
-			if (!godClassCond.equals("isGodClass if: ")) {
+			if (!godClassCond.equals("GodClass is false if: ")) {
 				godClassCond += " " + andOrGodClass + " ";
 			}
 			
@@ -158,19 +158,27 @@ public class Rule implements Serializable {
 		
 		
 		
-		String longMethodCond = "isLongMethod if: ";
+		String longMethodCond = "LongMethod is false if: ";
 		if(isValidParam(this.locMethodMin)) {
 			longMethodCond+= this.locMethodMin + " < LOC_method < " + this.locMethodMax;
 		}
 		
 		
 		if (isValidParam(this.cycloMethodMin)) {
-			if (!longMethodCond.equals("isLongMethod if: ")) {
+			if (!longMethodCond.equals("LongMethod is false if: ")) {
 				longMethodCond += " " + andOrLongMethod + " ";
 			}
 			
 			longMethodCond+= this.cycloMethodMin + " < CYCLO_method < " + this.cycloMethodMax;
 		}
+		
+		
+		if(godClassCond.equals("GodClass is false if: "))
+			return longMethodCond;
+		
+		if(longMethodCond.equals("LongMethod is false if: "))
+			return godClassCond;
+		
 		return godClassCond + "\n" + longMethodCond;
 	}
 	
@@ -201,7 +209,8 @@ public class Rule implements Serializable {
 			results.add(!wmcClassRes);
 		}
 		
-		
+		if(results.isEmpty())
+			return false;
 		// checks and executes AND or OR with the results
 		if(this.classRulesConjunction) {
 			boolean res = true;
@@ -239,6 +248,8 @@ public class Rule implements Serializable {
 			results.add(!cycloMethodRes);
 		}
 		
+		if(results.isEmpty())
+			return false;
 		// checks and executes AND or OR with the results
 				if(this.methodRulesConjunction) {
 					boolean res = true;
