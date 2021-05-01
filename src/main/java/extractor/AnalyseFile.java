@@ -104,6 +104,19 @@ public class AnalyseFile extends Thread {
 			metodos.addMetodo(meth);
 			
 		}
+		
+		
+		
+		if (methodList.isEmpty()) {
+			Method m = new Method();
+			MethodStats meth = createRow(innerClasses, m , nom, loc, 1, loc_method_hash,
+					"", 0);
+			
+			metodos.addMetodo(meth);
+		}
+		
+		
+		
 	}
 	/**
 	 * 			CREATE ROW?

@@ -11,6 +11,11 @@ public class Method{
 		this.code = code;
 	}
 	
+	public Method() {
+		this.name = "";
+		this.code = "";
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -150,13 +150,20 @@ public class WriteToXLSX {
 	 * It uses a MethodStats as a list for each row, iterates over it and write each value to a cell
 	 */
 	static private void populate(RecursoPartilhado rec, Sheet sh) {
+		int index = 1;
 		int l = 1;
 		for(MethodStats stat : rec.getMethodStats()) {
 			Row row = sh.createRow(l++);
 			int c = 0;
 			for (String s : stat.getMethodAsList()) {
 				Cell cell = row.createCell(c++);
-				cell.setCellValue(s);
+				if (cell.getColumnIndex() == 0) {
+					cell.setCellValue(String.valueOf(index));
+					index++;
+				}
+				else {
+					cell.setCellValue(s);
+				}
 			}
 		}
 	}

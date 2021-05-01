@@ -63,7 +63,7 @@ public class NumberOfClassesPerFile {
 				//caso a linha nao seja um comentario
 				//caso a linha contenha a keyword 'class'
 
-				if(isValid && !currentLine.contains("//") && currentLine.contains(" class ") && !currentLine.contains("(")) {
+				if(isValid && !currentLine.contains("//") && currentLine.contains(" class ") && !currentLine.contains("(") && !currentLine.contains("+") && !currentLine.contains("=") && !currentLine.contains("=")) {
 					
 					classes.add( trimClass(currentLine));
 
