@@ -23,7 +23,7 @@ public class LineCounter {
 	/**
 	 *	List of methods names
 	 */
-	private static List<String> methodsNames;
+	//private static List<String> methodsNames;
 
 	private static Map<String, Integer> methodNameLines = new HashMap<String, Integer>();
 
@@ -37,18 +37,13 @@ public class LineCounter {
 		try {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
-			MethodUtils.getMethodsFromFile(path);
-//			methodsNames = new MethodUtils(path).getMethodName();
-			
-			//TODO Pedreiro de VFX -- edited by Erica
-			List<String> methodsNames = MethodUtils.toMethodNameList(metodos);
-			//List<Method> metodos = MethodUtils.getMethodsFromFile(path);
-//			List<String> methodsNames = new ArrayList<String>();
-//			for (Method m : metodos) {
-//				methodsNames.add(m.getName());
-//			}
-			//---------------------------
-			counter(bfreader , methodsNames);
+			//metodos = MethodUtils.getMethodsFromFile(path);
+			for (Method method : metodos) {
+				System.out.println(method.getName());
+			}
+			//List<String> methodsNames = MethodUtils.toMethodNameList(metodos);
+
+			counter(bfreader , metodos);
 			
 			bfreader.close();
 			freader.close();
@@ -64,7 +59,7 @@ public class LineCounter {
 	 * @param 	bReader
 	 * @throws 	IOException
 	 */
-	private static void counter(BufferedReader bReader, List<String> methodsNames) throws IOException {
+	private static void counter(BufferedReader bReader, List<Method> methods) throws IOException {
 		//int count = 0;
 		boolean commentBegan = false;
 		String line = null;
@@ -72,10 +67,11 @@ public class LineCounter {
 		boolean methodBegan = false;
 		int methodLinesCount = 0;
 		int methodCount = 0;
-		String m = "";
+		Method m = new Method();
+		m.setExcelName("");
 		
-		if (methodsNames.size() != 0)
-			m = methodsNames.get(methodCount);	// method's name (string)
+		if (methods.size() != 0)
+			m = methods.get(methodCount);	// method's name (string)
 	
 		Stack<String> curlyBracketStack = new Stack<String>();
 
@@ -101,7 +97,8 @@ public class LineCounter {
 				
 				// find start of method
 				if (!"".equals(m)) {
-					if ((line.matches(".*\\b" + m  + "\\b.*") && !line.contains(";")) || (line.matches(".*\\b" + m  + "\\b.*") && line.matches(".+(public|private|protected|static|abstract).+"))) {
+					//System.out.println(m.getName());
+					if ((line.contains( m.getName() ) && !line.contains(";")) || (line.contains( m.getName() ) && line.matches(".+(public|private|protected|static|abstract).+"))) {
 						methodCount++;
 						methodBegan = true;
 					}
@@ -124,11 +121,12 @@ public class LineCounter {
 					// if stack is empty then method is over
 					if (curlyBracketStack.isEmpty()) {
 						methodBegan = false;
-						methodNameLines.put(m, methodLinesCount); 	// add method's name and line count to list 
+						//System.out.println(m.getExcelName());
+						methodNameLines.put(m.getExcelName(), methodLinesCount); 	// add method's name and line count to list 
 						methodLinesCount = 0;
 						
-						if (methodsNames.size() > methodCount)
-							m = methodsNames.get(methodCount);
+						if (methods.size() > methodCount)
+							m = methods.get(methodCount);
 					}
 				}
 			}

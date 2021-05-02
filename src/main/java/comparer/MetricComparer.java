@@ -97,10 +97,13 @@ public class MetricComparer {
 			//System.out.println("createMethodComparisson: meth_baseline = " + meth_baseline);
 			//System.out.println("createMethodComparisson: meth = " + meth);
 			
-			String newMethName = formatedMethodName(meth_baseline);
 			
-			if (newMethName.equals(meth) && cls_baseline.equals(cls) && newPck_baseline.equals(pck)) {
+			
+			if (meth_baseline.equals(meth) && cls_baseline.equals(cls) && newPck_baseline.equals(pck)) {
 				//System.out.println("createMethodComparisson: entrou no if");
+				System.out.println("METH: " + meth);
+				System.out.println("METH_BASELINE: " + meth_baseline);
+				System.out.println("--------------------------------------");
 				populateMethodComparisson(mc, excelRow_baseline);
 				break;
 			}
@@ -154,13 +157,13 @@ public class MetricComparer {
 		return arr[arr.length - 1];
 	}
 	
-	private String formatedMethodName(String originalName) {
-		return originalName.split( "\\(" )[0];
-	}
+//	private String formatedMethodName(String originalName) {
+//		return originalName.split( "\\(" )[0];
+//	}
 	
 	public static void main (String[] args) {
-		String path1 = "C:\\Users\\mrfur\\eclipse-workspace\\jasml_0.10 (1).zip_expanded\\smells.xlsx";
-		String path2 = "D:\\Documents\\LEI\\3º ano\\2º semestre\\Engenharia de Software\\projeto\\Code_Smells.xlsx";
+		String path1 = "C:\\Users\\Utilizador\\eclipse-workspace\\jasml_0.10 (1).zip_expanded\\smells.xlsx";
+		String path2 = "C:\\Users\\Utilizador\\Downloads\\Code_Smells.xlsx";
 		
 		MetricComparer mc = new MetricComparer(path1, path2);
 		mc.formPairs();

@@ -56,11 +56,13 @@ public class MethodUtils {
             @Override
             public void visit(MethodDeclaration n, Object arg) {
                 super.visit(n, arg);
-                String name = n.getDeclarationAsString(false, false, false).split(" ", 2)[1];
-                System.out.println(name);
+                String name = n.getName().toString();
+                String excelName = n.getDeclarationAsString(false, false, false).split(" ", 2)[1].replace(" ", "");
+                //System.out.println(name);
 
 
                 Method m = new Method(name, n.toString() );
+                m.setExcelName(excelName);
                 metodos.add(m);
 //                methods.add(n.toString());
 //                methodNames.add(n.getName().toString());
