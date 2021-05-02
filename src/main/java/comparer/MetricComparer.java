@@ -43,7 +43,7 @@ public class MetricComparer {
 	            XSSFSheet excelSheet_baseline = excelImportToJTable_baseline.getSheetAt(0);
 	            
 				for (int row = 1; row <= excelSheet_smells.getLastRowNum(); row++) {
-					System.out.println("formPairs: dentro do for");
+					//System.out.println("formPairs: dentro do for");
 					XSSFRow excelRow = excelSheet_smells.getRow(row);
 					
 					MethodComparisson mc = createMethodComparisson(excelRow, excelSheet_baseline);
@@ -58,7 +58,7 @@ public class MetricComparer {
 	}
 	
 	private MethodComparisson createMethodComparisson(XSSFRow excelRow, XSSFSheet excelSheet_baseline) {
-		System.out.println("createMethodComparisson: inicio");
+		//System.out.println("createMethodComparisson: inicio");
 		
 		String id = excelRow.getCell(0).toString();
 		String pck = excelRow.getCell(1).toString();
@@ -87,18 +87,18 @@ public class MetricComparer {
 		
 		
 		for (int row = 1; row <= excelSheet_baseline.getLastRowNum(); row++) {
-			System.out.println("createMethodComparisson: entrou no for");
+			//System.out.println("createMethodComparisson: entrou no for");
 			
 			XSSFRow excelRow_baseline = excelSheet_baseline.getRow(row);
 			String meth_baseline = excelRow_baseline.getCell(3).toString();
 			
-			System.out.println("createMethodComparisson: meth_baseline = " + meth_baseline);
-			System.out.println("createMethodComparisson: meth = " + meth);
+			//System.out.println("createMethodComparisson: meth_baseline = " + meth_baseline);
+			//System.out.println("createMethodComparisson: meth = " + meth);
 			
 			String newMethName = formatedMethodName(meth_baseline);
 			
 			if (newMethName.equals(meth)) {
-				System.out.println("createMethodComparisson: entrou no if");
+				//System.out.println("createMethodComparisson: entrou no if");
 				populateMethodComparisson(mc, excelRow_baseline);
 				break;
 			}
@@ -147,6 +147,10 @@ public class MetricComparer {
 		return res;
 	}
 	
+	private String formatedMethodName(String originalName) {
+		return originalName.split( "\\(" )[0];
+	}
+	
 	public static void main (String[] args) {
 		String path1 = "C:\\Users\\mrfur\\eclipse-workspace\\jasml_0.10 (1).zip_expanded\\smells.xlsx";
 		String path2 = "D:\\Documents\\LEI\\3º ano\\2º semestre\\Engenharia de Software\\projeto\\Code_Smells.xlsx";
@@ -155,8 +159,8 @@ public class MetricComparer {
 		mc.formPairs();
 		ArrayList<MethodComparisson> arr = (ArrayList<MethodComparisson>) mc.getMethodList();
 		
-		System.out.println("*******************************************************");
 		for (MethodComparisson comp : arr) {
+			if(comp.getMeth().equals("")) {
 			System.out.println(comp.getMethodID());
 			System.out.println(comp.getPck());
 			System.out.println(comp.getCls());
@@ -177,13 +181,14 @@ public class MetricComparer {
 			System.out.println(comp.isIs_Long_Method_smell());
 			System.out.println(comp.isIs_Long_Method_baseline());
 			
-			
 			System.out.println("--------------------------------------------------");
+
+			}
+			
+			
 		}
-	}
-	
-	private String formatedMethodName(String originalName) {
-		return originalName.split( "\\(" )[0];
+		
+		//System.out.println(arr.size());
 	}
 	
 }
