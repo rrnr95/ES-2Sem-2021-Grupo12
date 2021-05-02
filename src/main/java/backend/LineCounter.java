@@ -96,7 +96,7 @@ public class LineCounter {
 				totalLinesCount++;
 				
 				// find start of method
-				if (!"".equals(m)) {
+				if (!"".equals(m.getName())) {
 					//System.out.println(m.getName());
 					if ((line.contains( m.getName() ) && !line.contains(";")) || (line.contains( m.getName() ) && line.matches(".+(public|private|protected|static|abstract).+"))) {
 						methodCount++;
@@ -112,11 +112,9 @@ public class LineCounter {
 					if (line.contains("{")) 
 						curlyBracketStack.push(line);
 					
-					else {
-						// if there is a '}' the pop from stack
-						if (line.contains("}")) 
-							curlyBracketStack.pop();						
-					}
+					// if there is a '}' the pop from stack
+					if (line.contains("}")) 
+						curlyBracketStack.pop();						
 
 					// if stack is empty then method is over
 					if (curlyBracketStack.isEmpty()) {
