@@ -90,14 +90,16 @@ public class MetricComparer {
 			//System.out.println("createMethodComparisson: entrou no for");
 			
 			XSSFRow excelRow_baseline = excelSheet_baseline.getRow(row);
+			String pck_baseline = excelRow_baseline.getCell(1).toString();
+			String cls_baseline = excelRow_baseline.getCell(2).toString();
 			String meth_baseline = excelRow_baseline.getCell(3).toString();
-			
+			String newPck_baseline = formatPackageName(pck_baseline);
 			//System.out.println("createMethodComparisson: meth_baseline = " + meth_baseline);
 			//System.out.println("createMethodComparisson: meth = " + meth);
 			
 			String newMethName = formatedMethodName(meth_baseline);
 			
-			if (newMethName.equals(meth)) {
+			if (newMethName.equals(meth) && cls_baseline.equals(cls) && newPck_baseline.equals(pck)) {
 				//System.out.println("createMethodComparisson: entrou no if");
 				populateMethodComparisson(mc, excelRow_baseline);
 				break;
@@ -147,6 +149,11 @@ public class MetricComparer {
 		return res;
 	}
 	
+	private String formatPackageName (String pck_baseline) {
+		String[] arr = pck_baseline.split("\\.");
+		return arr[arr.length - 1];
+	}
+	
 	private String formatedMethodName(String originalName) {
 		return originalName.split( "\\(" )[0];
 	}
@@ -160,35 +167,35 @@ public class MetricComparer {
 		ArrayList<MethodComparisson> arr = (ArrayList<MethodComparisson>) mc.getMethodList();
 		
 		for (MethodComparisson comp : arr) {
-			if(comp.getMeth().equals("")) {
-			System.out.println(comp.getMethodID());
+			//if(comp.getMeth().equals("")) {
+			//System.out.println(comp.getMethodID());
 			System.out.println(comp.getPck());
 			System.out.println(comp.getCls());
 			System.out.println(comp.getMeth());
 			
-			System.out.println(comp.getNOM_class_smell());
-			System.out.println(comp.getNOM_class_baseline());
-			System.out.println(comp.getLOC_class_smell());
-			System.out.println(comp.getLOC_class_baseline());
-			System.out.println(comp.getWMC_class_smell());
-			System.out.println(comp.getWMC_class_baseline());
+//			System.out.println(comp.getNOM_class_smell());
+//			System.out.println(comp.getNOM_class_baseline());
+//			System.out.println(comp.getLOC_class_smell());
+//			System.out.println(comp.getLOC_class_baseline());
+//			System.out.println(comp.getWMC_class_smell());
+//			System.out.println(comp.getWMC_class_baseline());
 			System.out.println(comp.isIs_God_Class_smell());
 			System.out.println(comp.isIs_God_Class_baseline());
-			System.out.println(comp.getLOC_method_smell());
-			System.out.println(comp.getLOC_method_baseline());
-			System.out.println(comp.getCYCLO_method_smell());
-			System.out.println(comp.getCYCLO_method_baseline());
+//			System.out.println(comp.getLOC_method_smell());
+//			System.out.println(comp.getLOC_method_baseline());
+//			System.out.println(comp.getCYCLO_method_smell());
+//			System.out.println(comp.getCYCLO_method_baseline());
 			System.out.println(comp.isIs_Long_Method_smell());
 			System.out.println(comp.isIs_Long_Method_baseline());
 			
 			System.out.println("--------------------------------------------------");
 
-			}
+			//}
 			
 			
 		}
 		
-		//System.out.println(arr.size());
+		System.out.println(arr.size());
 	}
 	
 }

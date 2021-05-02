@@ -50,14 +50,17 @@ public class MethodUtils {
 	 * 			a pathname string
 	 * @throws 	FileNotFoundException
 	 */
-	private static void extractMethodSourceCode(String path, final List<Method> metodos ) throws FileNotFoundException{
+	private static void extractMethodSourceCode (String path, final List<Method> metodos ) throws FileNotFoundException{
 
 		new VoidVisitorAdapter<Object>() {
             @Override
             public void visit(MethodDeclaration n, Object arg) {
                 super.visit(n, arg);
-             //   System.out.println(" * " + n);
-                Method m = new Method(n.getName().toString() , n.toString() );
+                String name = n.getDeclarationAsString(false, false, false).split(" ", 2)[1];
+                System.out.println(name);
+
+
+                Method m = new Method(name, n.toString() );
                 metodos.add(m);
 //                methods.add(n.toString());
 //                methodNames.add(n.getName().toString());
@@ -67,6 +70,22 @@ public class MethodUtils {
         }.visit(StaticJavaParser.parse(new File(path)), null);
 	
         
+	}
+/*	
+	public static void main (String[] args) {
+//		String path = "C:\\Users\\mrfur\\eclipse-workspace\\jasml_0.10 (1).zip_expanded\\src\\com\\jasml\\decompiler\\JavaClassParser.java";
+		String path = "C:\\Users\\mrfur\\git\\ES-2Sem-2021-Grupo12\\src\\main\\java\\backend\\MethodUtils.java";
+		ArrayList<Method> methods = new ArrayList<>();
+		try {
+			extractMethodSourceCode(path, methods);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (Method m : methods) {
+			//System.out.println(m.getCode());
+			//System.out.println(m.getName());
+		}
 	}
 	
 	// receives a list of Method objects and returns a list of each method's code as String
@@ -78,6 +97,7 @@ public class MethodUtils {
 		}
 		return methodCodeList;
 	}
+	*/
 	
 	// receives a list of Method objects and returns a list of each method's name as String
 	public static List<String> toMethodNameList(List<Method> methodList) {
