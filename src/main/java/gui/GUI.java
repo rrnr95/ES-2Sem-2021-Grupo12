@@ -11,7 +11,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.apache.pdfbox.contentstream.operator.color.SetColor;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -23,7 +22,6 @@ import extractor.CodeSmells;
 import extractor.RecursoPartilhado;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import java.awt.event.ActionListener;
@@ -31,7 +29,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -41,15 +38,11 @@ import java.awt.Color;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-import java.awt.Canvas;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-import java.awt.Label;
 
 
 public class GUI {
@@ -797,7 +790,7 @@ public class GUI {
 		RecursoPartilhado rp;
 		
 		//TODO Alterar de forma a ir buscar o projecto jasml sempre à mesma directoria. =? importar para a base do projecto???
-		String jasml_path = "D:\\Programação\\EngenhariaSoftware\\jasml_0.10.zip_expanded";
+		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
 		
 		
 		
@@ -977,6 +970,11 @@ public class GUI {
 	}
 	
 	private void cleanFrame() {
+		frmExtractMetrics();
+		System.out.println("LIMPAR");
+	}
+
+	private void frmExtractMetrics() {
 		if (table != null) {
 			table.setVisible(false);
 			frmExtractMetrics.remove(table);
@@ -993,91 +991,82 @@ public class GUI {
 			btnConfirmRule.setVisible(false);
 			frmExtractMetrics.remove(btnConfirmRule);
 		}
-		if(guiRuleList != null) {
+		if (guiRuleList != null) {
 			guiRuleList.setVisible(false);
 			frmExtractMetrics.remove(btnAddRule);
 		}
-		if(ruleDescriptionField != null) {
+		if (ruleDescriptionField != null) {
 			ruleDescriptionField.setVisible(false);
 			frmExtractMetrics.remove(ruleDescriptionField);
 		}
-		
-		
-		
-		
-		
-		if(table_matrix1 != null) {
+		if (table_matrix1 != null) {
 			table_matrix1.setVisible(false);
 			frmExtractMetrics.remove(table_matrix1);
 		}
-		
-		if(table_matrix2 != null) {
+		if (table_matrix2 != null) {
 			table_matrix2.setVisible(false);
 			frmExtractMetrics.remove(table_matrix2);
 		}
-
-		if(lblGodClass1_1 != null) {
+		if (lblGodClass1_1 != null) {
 			lblGodClass1_1.setVisible(false);
 			frmExtractMetrics.remove(lblGodClass1_1);
 		}
-		if(lblLongMethod1_1 != null) {
+		if (lblLongMethod1_1 != null) {
 			lblLongMethod1_1.setVisible(false);
 			frmExtractMetrics.remove(lblLongMethod1_1);
 		}
-		if(lblTopTrue1_1 != null) {
+		if (lblTopTrue1_1 != null) {
 			lblTopTrue1_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopTrue1_1);
 		}
-		if(lblTopFalse1_1 != null) {
+		if (lblTopFalse1_1 != null) {
 			lblTopFalse1_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopFalse1_1);
 		}
-		if(lblSideTrue1_1 != null) {
+		if (lblSideTrue1_1 != null) {
 			lblSideTrue1_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideTrue1_1);
 		}
-		if(lblSideFalse1_1 != null) {
+		if (lblSideFalse1_1 != null) {
 			lblSideFalse1_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideFalse1_1);
 		}
-		if(lblPredicted1_1 != null) {
+		if (lblPredicted1_1 != null) {
 			lblPredicted1_1.setVisible(false);
 			frmExtractMetrics.remove(lblPredicted1_1);
 		}
-		if(lblActual1_1 != null) {
+		if (lblActual1_1 != null) {
 			lblActual1_1.setVisible(false);
 			frmExtractMetrics.remove(lblActual1_1);
 		}
-		if(lblPredicted2_1 != null) {
+		if (lblPredicted2_1 != null) {
 			lblPredicted2_1.setVisible(false);
 			frmExtractMetrics.remove(lblPredicted2_1);
 		}
-		if(lblTopTrue2_1 != null) {
+		if (lblTopTrue2_1 != null) {
 			lblTopTrue2_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopTrue2_1);
 		}
-		if(lblTopFalse2_1 != null) {
+		if (lblTopFalse2_1 != null) {
 			lblTopFalse2_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopFalse2_1);
 		}
-		if(lblSideTrue2_1 != null) {
+		if (lblSideTrue2_1 != null) {
 			lblSideTrue2_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideTrue2_1);
 		}
-		if(lblActual2_1 != null) {
+		if (lblActual2_1 != null) {
 			lblActual2_1.setVisible(false);
 			frmExtractMetrics.remove(lblActual2_1);
 		}
-		if(lblSideFalse2_1 != null) {
+		if (lblSideFalse2_1 != null) {
 			lblSideFalse2_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideFalse2_1);
-		}	
-		if(closeBtn_matrix != null) {
+		}
+		if (closeBtn_matrix != null) {
 			closeBtn_matrix.setVisible(false);
 			frmExtractMetrics.remove(closeBtn_matrix);
 		}
-
-		System.out.println("LIMPAR");
 	}
 	
 	
