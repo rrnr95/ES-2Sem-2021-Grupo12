@@ -1071,6 +1071,16 @@ public class GUI {
 	
 	
 	private void clearAddRules() {
+		frmClearExtractMetrics();
+		if (G1 != null) {
+			G1 = null;
+		}
+		if (G2 != null) {
+			G2 = null;
+		}
+	}
+
+	private void frmClearExtractMetrics() {
 		if (txtNOMmin != null) {
 			txtNOMmin.setVisible(false);
 			frmExtractMetrics.remove(txtNOMmin);
@@ -1134,12 +1144,6 @@ public class GUI {
 		if (rdbtnOR_LONG_METHOD != null) {
 			rdbtnOR_LONG_METHOD.setVisible(false);
 			frmExtractMetrics.remove(rdbtnOR_LONG_METHOD);
-		}
-		if (G1 != null) {
-			G1 = null;
-		}
-		if (G2 != null) {
-			G2 = null;
 		}
 		if (chckbxNOM_class != null) {
 			chckbxNOM_class.setVisible(false);
