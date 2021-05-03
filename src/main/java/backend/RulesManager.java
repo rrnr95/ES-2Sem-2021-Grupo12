@@ -86,14 +86,8 @@ public class RulesManager {
 	}
 	
 	public void deleteRuleFromFile (Rule rule) throws ClassNotFoundException, IOException {
+		int index = index(rule);
 		List<Rule> rules = readObjectsFromFile();
-		int index = 0;
-		for (Rule r : rules) {
-			if (r.toString().equals(rule.toString())) {
-				break;
-			}
-			index++;
-		}
 		rules.remove(index);
 		
 		try {
@@ -110,6 +104,19 @@ public class RulesManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	private int index(Rule rule) throws IOException, ClassNotFoundException {
+		List<Rule> rules = readObjectsFromFile();
+		int index = 0;
+		for (Rule r : rules) {
+			if (r.toString().equals(rule.toString())) {
+				break;
+			}
+			index++;
+		}
+		return index;
 	}
 	
 	public void updateAllFileRules(List<Rule> rules) {
