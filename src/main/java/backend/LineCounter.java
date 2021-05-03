@@ -92,6 +92,7 @@ public class LineCounter {
 					continue;
 			}
 			
+			methodCount = methodCount(methodCount, m, line);
 			if (isSourceCodeLine(line)) {
 				totalLinesCount++;
 				
@@ -99,7 +100,6 @@ public class LineCounter {
 				if (!"".equals(m.getName())) {
 					//System.out.println(m.getName());
 					if ((line.contains( m.getName() ) && !line.contains(";")) || (line.contains( m.getName() ) && line.matches(".+(public|private|protected|static|abstract).+"))) {
-						methodCount++;
 						methodBegan = true;
 					}
 				}
@@ -132,6 +132,18 @@ public class LineCounter {
 				commentBegan = true;
 			}
 		}
+	}
+
+	private static int methodCount(int methodCount, Method m, String line) {
+		if (isSourceCodeLine(line)) {
+			if (!"".equals(m.getName())) {
+				if ((line.contains(m.getName()) && !line.contains(";")) || (line.contains(m.getName())
+						&& line.matches(".+(public|private|protected|static|abstract).+"))) {
+					methodCount++;
+				}
+			}
+		}
+		return methodCount;
 	}
 	
 	
