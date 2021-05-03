@@ -5,12 +5,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import backend.ConfusionMatrix;
 
 public class MetricComparer {
 	private String smellsDoc;
@@ -161,44 +165,168 @@ public class MetricComparer {
 //		return originalName.split( "\\(" )[0];
 //	}
 	
+	
+	
+	public HashMap<String, String> getGodClassDetectionQuality(){
+		
+		if(this.getMethodList().isEmpty())
+			throw new IllegalStateException("Devem ser formados os pares antes de chamar a função.");
+		
+		HashMap<String, String> classResults = new HashMap<String, String>();
+		
+		for(MethodComparisson mc : getMethodList()) {
+			
+			if(!classResults.containsKey(mc.getCls())) {
+				classResults.put(mc.getCls(), evaluateMetric(mc.isIs_God_Class_smell(), mc.isIs_God_Class_baseline()));
+			}
+			
+		}
+		
+		return classResults;
+	}
+	
+	
+	public HashMap<String, String> getLongMethodDetectionQuality() {
+
+		if (this.getMethodList().isEmpty())
+			throw new IllegalStateException("Devem ser formados os pares antes de chamar a função.");
+
+		HashMap<String, String> methodResults = new HashMap<String, String>();
+
+		for (MethodComparisson mc : getMethodList()) {
+			if(!mc.getMeth().equals(""))
+				methodResults.put(mc.getCls()+"."+mc.getMeth(), evaluateMetric(mc.isIs_Long_Method_smell(), mc.isIs_Long_Method_baseline()));
+			
+		}
+
+		return methodResults;
+	}
+	
+	private String evaluateMetric(boolean predicted, boolean actual) {
+		
+		if(predicted) {
+			if(actual) {
+				return "VP";
+			}
+			return "FP";
+		}else {
+			if(actual) {
+				return "FN";
+			}
+			return "VN";
+		}
+		
+	}
+	
+	/*           		 Matriz de Confusão
+	 * 
+	 * 						Predicted
+	 * 					  T     |    F	
+	 * 				    _________________
+	 * 		        T  |  TP    |   FN   |  
+	 *     Actual      |________|________|
+	 *     			F  |  FP    |  	TN   |
+	 *     			   |________|________|           
+	 *     
+	 */               
+	
+	public ConfusionMatrix getGodClassConfMatrixValues(){
+		
+		ConfusionMatrix matrix = new ConfusionMatrix();
+		
+		
+		for(Map.Entry me : getGodClassDetectionQuality().entrySet()) {
+			
+			if(me.getValue().equals("VP")) {
+				matrix.setVP(matrix.getVP()+1);
+			}
+			if(me.getValue().equals("FN")) {
+				matrix.setFN(matrix.getFN()+1);
+			}
+			if(me.getValue().equals("FP")) {
+				matrix.setFP(matrix.getFP()+1);
+			}
+			if(me.getValue().equals("VN")) {
+				matrix.setVN(matrix.getVN()+1);
+			}
+		}
+		
+		return matrix;		
+	}
+	
+	
+	public ConfusionMatrix getLongMethodConfMatrixValues(){
+		
+		ConfusionMatrix matrix = new ConfusionMatrix();
+		
+		
+		for(Map.Entry me : getLongMethodDetectionQuality().entrySet()) {
+			
+			if(me.getValue().equals("VP")) {
+				matrix.setVP(matrix.getVP()+1);
+			}
+			if(me.getValue().equals("FN")) {
+				matrix.setFN(matrix.getFN()+1);
+			}
+			if(me.getValue().equals("FP")) {
+				matrix.setFP(matrix.getFP()+1);
+			}
+			if(me.getValue().equals("VN")) {
+				matrix.setVN(matrix.getVN()+1);
+			}
+		}
+		
+		return matrix;		
+	}
+	
+	
 	public static void main (String[] args) {
-		String path1 = "C:\\Users\\Utilizador\\eclipse-workspace\\jasml_0.10 (1).zip_expanded\\smells.xlsx";
-		String path2 = "C:\\Users\\Utilizador\\Downloads\\Code_Smells.xlsx";
+		String path1 = "D:\\Programação\\EngenhariaSoftware\\jasml_0.10.zip_expanded\\smells.xlsx";
+		String path2 = "C:\\Users\\Diogo\\Downloads\\Code_Smells.xlsx";
 		
 		MetricComparer mc = new MetricComparer(path1, path2);
 		mc.formPairs();
 		ArrayList<MethodComparisson> arr = (ArrayList<MethodComparisson>) mc.getMethodList();
 		
-		for (MethodComparisson comp : arr) {
-			//if(comp.getMeth().equals("")) {
-			//System.out.println(comp.getMethodID());
-			System.out.println(comp.getPck());
-			System.out.println(comp.getCls());
-			System.out.println(comp.getMeth());
-			
-//			System.out.println(comp.getNOM_class_smell());
-//			System.out.println(comp.getNOM_class_baseline());
-//			System.out.println(comp.getLOC_class_smell());
-//			System.out.println(comp.getLOC_class_baseline());
-//			System.out.println(comp.getWMC_class_smell());
-//			System.out.println(comp.getWMC_class_baseline());
-			System.out.println(comp.isIs_God_Class_smell());
-			System.out.println(comp.isIs_God_Class_baseline());
-//			System.out.println(comp.getLOC_method_smell());
-//			System.out.println(comp.getLOC_method_baseline());
-//			System.out.println(comp.getCYCLO_method_smell());
-//			System.out.println(comp.getCYCLO_method_baseline());
-			System.out.println(comp.isIs_Long_Method_smell());
-			System.out.println(comp.isIs_Long_Method_baseline());
-			
-			System.out.println("--------------------------------------------------");
-
-			//}
-			
-			
+		for(Map.Entry me : mc.getLongMethodDetectionQuality().entrySet()) {
+			System.out.println(me.getKey()+": "+me.getValue());
 		}
 		
-		System.out.println(arr.size());
+		System.out.println(mc.getGodClassConfMatrixValues().getVP()+" | " + mc.getGodClassConfMatrixValues().getFN()+"\n"+
+				mc.getGodClassConfMatrixValues().getFP()+" | " + mc.getGodClassConfMatrixValues().getVN());
+		System.out.println(mc.getLongMethodConfMatrixValues().getVP()+" | " + mc.getLongMethodConfMatrixValues().getFN()+"\n"+
+				mc.getLongMethodConfMatrixValues().getFP()+" | " + mc.getLongMethodConfMatrixValues().getVN());
+////		
+//		for (MethodComparisson comp : arr) {
+//			//if(comp.getMeth().equals("")) {
+//			//System.out.println(comp.getMethodID());
+//			System.out.println(comp.getPck());
+//			System.out.println(comp.getCls());
+//			System.out.println(comp.getMeth());
+//			
+////			System.out.println(comp.getNOM_class_smell());
+////			System.out.println(comp.getNOM_class_baseline());
+////			System.out.println(comp.getLOC_class_smell());
+////			System.out.println(comp.getLOC_class_baseline());
+////			System.out.println(comp.getWMC_class_smell());
+////			System.out.println(comp.getWMC_class_baseline());
+//			System.out.println(comp.isIs_God_Class_smell());
+//			System.out.println(comp.isIs_God_Class_baseline());
+////			System.out.println(comp.getLOC_method_smell());
+////			System.out.println(comp.getLOC_method_baseline());
+////			System.out.println(comp.getCYCLO_method_smell());
+////			System.out.println(comp.getCYCLO_method_baseline());
+//			System.out.println(comp.isIs_Long_Method_smell());
+//			System.out.println(comp.isIs_Long_Method_baseline());
+//			
+//			System.out.println("--------------------------------------------------");
+//
+//			//}
+//			
+//			
+//		}
+////		
+////		System.out.println(arr.size());
 	}
 	
 }
