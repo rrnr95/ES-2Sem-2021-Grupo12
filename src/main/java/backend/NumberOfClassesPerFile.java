@@ -50,15 +50,8 @@ public class NumberOfClassesPerFile {
 			//enquanto existirem linhas para serem lidas
 			while (currentLine != null) {
 				
-				//inicio de comentario
-				if (currentLine.contains("/*")) {
-					isValid = false;
-				}
+				isValid = isValid(isValid, currentLine);
 				
-				//fim de comentario
-				if (currentLine.contains("*/")) {
-					isValid = true;
-				}
 				
 				//caso a linha nao seja um comentario
 				//caso a linha contenha a keyword 'class'
@@ -79,6 +72,16 @@ public class NumberOfClassesPerFile {
 			e.printStackTrace();
 		}
 		return classes;
+	}
+
+	private static boolean isValid(boolean isValid, String currentLine) {
+		if (currentLine.contains("/*")) {
+			isValid = false;
+		}
+		if (currentLine.contains("*/")) {
+			isValid = true;
+		}
+		return isValid;
 	}
 	
 	/**
