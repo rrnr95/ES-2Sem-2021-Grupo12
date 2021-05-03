@@ -744,12 +744,8 @@ public class GUI {
 					CYCLOmax = Integer.parseInt( txtCYCLOmax.getText());
 					error = validInput(CYCLOmin, CYCLOmax);
 				}
-				if (G2.getSelection().getActionCommand().equals("AND")) {
-					methodConjunction = true;
-				}
-				
-				Rule rule = new Rule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction, LOCmin, LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
-				
+				Rule rule = buildRule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction,
+						LOCmin, LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
 				try {
 					ruleManager.addRuleToFile(rule);
 				} catch (ClassNotFoundException e) {
@@ -761,7 +757,18 @@ public class GUI {
 				JOptionPane.showMessageDialog(null, "Apenas é possivel escolher valores numéricos \n O valor maximo deverá ser maior que o minimo");
 			}
 		}
+	}
+
+	private Rule buildRule(String name, int NOMmin, int NOMmax, int LOCclassmin, int LOCclassmax, int WMCmin,
+			int WMCmax, boolean classConjunction, int LOCmin, int LOCmax, int CYCLOmin, int CYCLOmax,
+			boolean methodConjunction) {
+		if (G2.getSelection().getActionCommand().equals("AND")) {
+			methodConjunction = true;
+		}
+		Rule rule = new Rule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction, LOCmin,
+				LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
 		showRulesPressed();
+		return rule;
 	}
 	
 	private void deleteRulePressed() {
