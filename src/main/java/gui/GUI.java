@@ -762,13 +762,18 @@ public class GUI {
 	private Rule buildRule(String name, int NOMmin, int NOMmax, int LOCclassmin, int LOCclassmax, int WMCmin,
 			int WMCmax, boolean classConjunction, int LOCmin, int LOCmax, int CYCLOmin, int CYCLOmax,
 			boolean methodConjunction) {
+		methodConjunction = isMethodConjunction(methodConjunction);
+		Rule rule = new Rule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction, LOCmin,
+				LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
+		return rule;
+	}
+
+	private boolean isMethodConjunction(boolean methodConjunction) {
 		if (G2.getSelection().getActionCommand().equals("AND")) {
 			methodConjunction = true;
 		}
-		Rule rule = new Rule(name, NOMmin, NOMmax, LOCclassmin, LOCclassmax, WMCmin, WMCmax, classConjunction, LOCmin,
-				LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
 		showRulesPressed();
-		return rule;
+		return methodConjunction;
 	}
 	
 	private void deleteRulePressed() {
