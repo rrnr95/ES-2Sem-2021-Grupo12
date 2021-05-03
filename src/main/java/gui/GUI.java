@@ -39,6 +39,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -154,84 +155,9 @@ public class GUI {
 	 */
 	private void initialize() {
 	
-		try {
-			selectedRule = ruleManager.readObjectsFromFile().get(0);
-			DEFAULT_RULE = selectedRule;
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		frmExtractMetrics = new JFrame();
-		//frmExtractMetrics.setVisible(true);
-		frmExtractMetrics.setBackground(Color.GRAY);
-		frmExtractMetrics.setTitle("Extract metrics");
-		frmExtractMetrics.setResizable(false);
-		frmExtractMetrics.setBounds(100, 100, 928, 620);
-		frmExtractMetrics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		panel = new JPanel();
-		panel.setVisible(true);
-		panel.setBackground(Color.LIGHT_GRAY);
+		btnClassQuality();
 		frmExtractMetrics.getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-
-		txtf_path = new JTextField();
-		txtf_path.setBounds(10, 541, 232, 20);
-		txtf_path.setEditable(false);
-		panel.add(txtf_path);
-		txtf_path.setColumns(10);
-
-		btn_folder = new JButton("Folder");
-		btn_folder.setBounds(250, 540, 74, 23);
 		addChooseListener(btn_folder);
-		panel.add(btn_folder);
-		
-		btnCalculateMetrics = new JButton("Calculate Metrics");
-		btnCalculateMetrics.setBounds(770, 540, 140, 23);
-		btnCalculateMetrics.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				calculateMetricsPressed();
-			}
-		});
-		panel.add(btnCalculateMetrics);
-
-		btnFetchXLSX = new JButton("Fetch XLSX File");
-		btnFetchXLSX.setBounds(620, 540, 140, 23);
-		btnFetchXLSX.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showXLSXPressed();
-			}
-		});
-		panel.add(btnFetchXLSX);
-		
-		btnRules = new JButton("Rules");
-		btnRules.setBounds(470, 540, 140, 23);
-		btnRules.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showRulesPressed();
-			}
-		});
-		panel.add(btnRules);
-		
-		currentRuleLabel = new JLabel("Current Rule: " + selectedRule.getRuleName());
-		currentRuleLabel.setBounds(10, 516, 140, 23);		
-		panel.add(currentRuleLabel);
-		
-		
-		btnClassQuality = new JButton("Classification Quality");
-		btnClassQuality.setBounds(710, 512, 200, 23);
-		btnClassQuality.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				showClassificationQualityPressed();				
-			}
-		});
-		panel.add(btnClassQuality);
-		
 		panel_matrix = new JPanel();
 		
 		panelAddRules = new JPanel();
@@ -242,6 +168,81 @@ public class GUI {
 		
 		
 		
+	}
+
+	private void btnClassQuality() throws HeadlessException {
+		btnRules();
+		btnClassQuality.setBounds(710, 512, 200, 23);
+	}
+
+	private void btnRules() throws HeadlessException {
+		btnFetchXLSX();
+		btnRules.setBounds(470, 540, 140, 23);
+	}
+
+	private void btnFetchXLSX() throws HeadlessException {
+		btnCalculateMetrics();
+		btnFetchXLSX.setBounds(620, 540, 140, 23);
+	}
+
+	private void btnCalculateMetrics() throws HeadlessException {
+		try {
+			selectedRule = ruleManager.readObjectsFromFile().get(0);
+			DEFAULT_RULE = selectedRule;
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		frmExtractMetrics = new JFrame();
+		frmExtractMetrics.setBackground(Color.GRAY);
+		frmExtractMetrics.setTitle("Extract metrics");
+		frmExtractMetrics.setResizable(false);
+		frmExtractMetrics.setBounds(100, 100, 928, 620);
+		frmExtractMetrics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel = new JPanel();
+		panel.setVisible(true);
+		panel.setBackground(Color.LIGHT_GRAY);
+		panel.setLayout(null);
+		txtf_path = new JTextField();
+		txtf_path.setBounds(10, 541, 232, 20);
+		txtf_path.setEditable(false);
+		panel.add(txtf_path);
+		txtf_path.setColumns(10);
+		btn_folder = new JButton("Folder");
+		btn_folder.setBounds(250, 540, 74, 23);
+		panel.add(btn_folder);
+		btnCalculateMetrics = new JButton("Calculate Metrics");
+		btnCalculateMetrics.setBounds(770, 540, 140, 23);
+		btnCalculateMetrics.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				calculateMetricsPressed();
+			}
+		});
+		panel.add(btnCalculateMetrics);
+		btnFetchXLSX = new JButton("Fetch XLSX File");
+		btnFetchXLSX.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showXLSXPressed();
+			}
+		});
+		panel.add(btnFetchXLSX);
+		btnRules = new JButton("Rules");
+		btnRules.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showRulesPressed();
+			}
+		});
+		panel.add(btnRules);
+		currentRuleLabel = new JLabel("Current Rule: " + selectedRule.getRuleName());
+		currentRuleLabel.setBounds(10, 516, 140, 23);
+		panel.add(currentRuleLabel);
+		btnClassQuality = new JButton("Classification Quality");
+		btnClassQuality.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showClassificationQualityPressed();
+			}
+		});
+		panel.add(btnClassQuality);
 	}
 
 	
