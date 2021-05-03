@@ -362,11 +362,7 @@ public class GUI {
 	
 	            }
 	    		
-	            table = new JTable(data, header);
-	    		table.setEnabled(false);
-	    		scrollPane = new JScrollPane(table);
-	    		scrollPane.setBounds(10, 11, 902, 500);
-	    		panel.add(scrollPane);		
+	            addTableScrollPane(header, data);		
 	    		
 	    		
 	    		
@@ -391,6 +387,14 @@ public class GUI {
         else {
         	JOptionPane.showMessageDialog(null,"Diretoria Desconhecida");
         }
+	}
+
+	private void addTableScrollPane(Object[] header, Object[][] data) {
+		table = new JTable(data, header);
+		table.setEnabled(false);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 11, 902, 500);
+		panel.add(scrollPane);
 	}
 	
 	
