@@ -290,19 +290,25 @@ public class GUI {
 	
 	
 	private void printCalculatedMetrics(RecursoPartilhado rp) {
-		Object[] columnNames = {"Nº total packages", "Nº total de classes", "Nº total de metodos", "Nº total de linhas de codigo"};
-		HashMap<String, Integer> summary = (HashMap<String, Integer>) rp.statsSummary();
-		Object[][] info = {
-				{summary.get("NumPacks"), summary.get("NumClasses"), summary.get("NumMethods"), summary.get("NumLinesOfCode")}
-		};
-
-		table = new JTable(info, columnNames);
-		table.setEnabled(false);
-		scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(10, 11, 902, 500);
-		
+		scrollPane(rp);
 		panel.add(scrollPane);
 		
+	}
+
+	private void scrollPane(RecursoPartilhado rp) {
+		table(rp);
+		scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(10, 11, 902, 500);
+	}
+
+	private void table(RecursoPartilhado rp) {
+		Object[] columnNames = { "Nº total packages", "Nº total de classes", "Nº total de metodos",
+				"Nº total de linhas de codigo" };
+		HashMap<String, Integer> summary = (HashMap<String, Integer>) rp.statsSummary();
+		Object[][] info = { { summary.get("NumPacks"), summary.get("NumClasses"), summary.get("NumMethods"),
+				summary.get("NumLinesOfCode") } };
+		table = new JTable(info, columnNames);
+		table.setEnabled(false);
 	}
 	
 	
