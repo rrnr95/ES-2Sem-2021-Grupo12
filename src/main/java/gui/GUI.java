@@ -202,11 +202,8 @@ public class GUI {
 		panel.setVisible(true);
 		panel.setBackground(Color.LIGHT_GRAY);
 		panel.setLayout(null);
-		txtf_path = new JTextField();
-		txtf_path.setBounds(10, 541, 232, 20);
-		txtf_path.setEditable(false);
+		txtf_path();
 		panel.add(txtf_path);
-		txtf_path.setColumns(10);
 		btn_folder = new JButton("Folder");
 		btn_folder.setBounds(250, 540, 74, 23);
 		panel.add(btn_folder);
@@ -243,6 +240,13 @@ public class GUI {
 			}
 		});
 		panel.add(btnClassQuality);
+	}
+
+	private void txtf_path() {
+		txtf_path = new JTextField();
+		txtf_path.setBounds(10, 541, 232, 20);
+		txtf_path.setEditable(false);
+		txtf_path.setColumns(10);
 	}
 
 	
@@ -390,11 +394,15 @@ public class GUI {
 	}
 
 	private void addTableScrollPane(Object[] header, Object[][] data) {
+		tableToScrollPane(header, data);
+		panel.add(scrollPane);
+	}
+
+	private void tableToScrollPane(Object[] header, Object[][] data) {
 		table = new JTable(data, header);
 		table.setEnabled(false);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 500);
-		panel.add(scrollPane);
 	}
 	
 	
