@@ -28,15 +28,12 @@ public class RecursoPartilhado {
 		Set<String> cls = new HashSet<>();
 		
 		int totalMethods = recursoPartilhado.size();
-		int linesOfCode = 0;
-		
+		int linesOfCode = getLinesOfCode();
 		for (MethodStats ms : recursoPartilhado) {
 			String pck = ms.getPack();
 			packs.add(pck);
 			String cl = ms.getCls();
 			cls.add(cl);
-			int lines = ms.getLOC_method();
-			linesOfCode += lines;
 		}
 		
 		map.put("NumPacks", packs.size());
@@ -45,6 +42,15 @@ public class RecursoPartilhado {
 		map.put("NumLinesOfCode", linesOfCode);
 		
 		return map;
+	}
+
+	private int getLinesOfCode() {
+		int linesOfCode = 0;
+		for (MethodStats ms : recursoPartilhado) {
+			int lines = ms.getLOC_method();
+			linesOfCode += lines;
+		}
+		return linesOfCode;
 	}
 
 }
