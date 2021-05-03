@@ -9,13 +9,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
+import org.apache.pdfbox.contentstream.operator.color.SetColor;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import backend.RulesManager;
+import comparer.MetricComparer;
 import extractor.CodeSmells;
 import extractor.RecursoPartilhado;
 
@@ -44,6 +47,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import java.awt.Canvas;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import java.awt.Label;
 
 
 public class GUI {
@@ -98,6 +104,30 @@ public class GUI {
 	private JButton btnCancel;
 	private JButton btnSaveRule;
 	private JTextField txtRuleName;
+	
+
+	private JButton btnClassQuality;
+	private JPanel panel_matrix;
+	private JTable table_matrix1;
+	private JTable table_matrix2;
+	private JLabel lblGodClass1_1;
+	private JLabel lblLongMethod1_1;
+	private JLabel lblTopTrue1_1;
+	private JLabel lblTopFalse1_1;
+	private JLabel lblSideTrue1_1;
+	private JLabel lblSideFalse1_1;
+	private JLabel lblPredicted1_1;
+	private JLabel lblActual1_1;
+	private JLabel lblPredicted2_1;
+	private JLabel lblTopTrue2_1;
+	private JLabel lblTopFalse2_1;
+	private JLabel lblSideTrue2_1;
+	private JLabel lblActual2_1;
+	private JLabel lblSideFalse2_1;
+	private JButton closeBtn_matrix;
+	
+	
+	
 
 
 	/**
@@ -197,13 +227,32 @@ public class GUI {
 		currentRuleLabel.setBounds(10, 516, 140, 23);		
 		panel.add(currentRuleLabel);
 		
-
+		
+		btnClassQuality = new JButton("Classification Quality");
+		btnClassQuality.setBounds(710, 512, 200, 23);
+		btnClassQuality.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showClassificationQualityPressed();				
+			}
+		});
+		panel.add(btnClassQuality);
+		
+		panel_matrix = new JPanel();
+		
 		panelAddRules = new JPanel();
 
+
+		
+		
+		
+		
 		
 	}
 
 	
+
 	private static void addChooseListener(JButton btn) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -348,12 +397,10 @@ public class GUI {
 	private void showRulesPressed() {
 		cleanFrame();
 		panelAddRules.setVisible(false);
+		panel_matrix.setVisible(false);
 		panel.setVisible(true);
 		
-		//TODO - popular columnNames e info com o ficheiro binario
-		//AQUI TERÁ DE SER UM PROCESSO IO!!!
-//		Object[] columnNames = {"Regras"};
-//		Object[][] info = new Object[20][1];
+
 		guiRuleList = new JList();
 		
 		try {
@@ -738,6 +785,170 @@ public class GUI {
 	    });
 	}
 	
+	protected void showClassificationQualityPressed() {
+		
+		
+		/*
+		 * aplicar metricas com a nossa rule ao jasml
+		 * 
+		 * 
+		 */
+		
+		RecursoPartilhado rp;
+		
+		//TODO Alterar de forma a ir buscar o projecto jasml sempre à mesma directoria. =? importar para a base do projecto???
+		String jasml_path = "D:\\Programação\\EngenhariaSoftware\\jasml_0.10.zip_expanded";
+		
+		
+		
+		rp = CodeSmells.init(jasml_path, selectedRule);		
+		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
+		String CodeSmellsCalculated = jasml_path + "\\smells.xlsx";	
+		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
+		mc.formPairs();
+		System.out.println("ShowClassPressed!!!");
+		
+		
+		
+		
+		cleanFrame();
+		
+		panel.setVisible(false);
+		
+		
+		panel_matrix.setBackground(Color.LIGHT_GRAY);
+		frmExtractMetrics.getContentPane().add(panel_matrix, BorderLayout.CENTER);
+		panel_matrix.setLayout(null);
+		panel_matrix.setVisible(true);
+		
+		Object[][] dataMatrix1 = {
+				{mc.getGodClassConfMatrixValues().getVP(), mc.getGodClassConfMatrixValues().getFN()},
+				{mc.getGodClassConfMatrixValues().getFP(),mc.getGodClassConfMatrixValues().getVN()}
+		};
+		String[] colum = {""," "};
+		
+		
+		
+		class CenterTableCellRenderer extends DefaultTableCellRenderer { 
+			  protected  CenterTableCellRenderer() {
+			    setHorizontalAlignment(JLabel.CENTER);
+			  } 
+			   
+		} 
+		
+		table_matrix1 = new JTable(dataMatrix1, colum);
+		table_matrix1.setRowHeight(150);
+		table_matrix1.getColumn("").setCellRenderer(new CenterTableCellRenderer());
+		table_matrix1.getColumn(" ").setCellRenderer(new CenterTableCellRenderer());
+	
+		
+		table_matrix1.setBounds(76, 156, 300, 300);
+		panel_matrix.add(table_matrix1);
+		
+		
+		
+		Object[][] dataMatrix2 = {
+				{mc.getLongMethodConfMatrixValues().getVP(), mc.getLongMethodConfMatrixValues().getFN()},
+				{mc.getLongMethodConfMatrixValues().getFP(),mc.getLongMethodConfMatrixValues().getVN()}
+		};
+		
+		table_matrix2 = new JTable(dataMatrix2,colum);
+		table_matrix2.setRowHeight(150);
+		table_matrix2.getColumn("").setCellRenderer(new CenterTableCellRenderer());
+		table_matrix2.getColumn(" ").setCellRenderer(new CenterTableCellRenderer());
+		table_matrix2.setBounds(535, 156, 300, 300);
+		panel_matrix.add(table_matrix2);
+		
+		lblGodClass1_1 = new JLabel("GodClass");
+		lblGodClass1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGodClass1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblGodClass1_1.setBounds(76, 67, 300, 19);
+		panel_matrix.add(lblGodClass1_1);
+		
+		lblLongMethod1_1 = new JLabel("LongMethod");
+		lblLongMethod1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLongMethod1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblLongMethod1_1.setBounds(535, 69, 300, 19);
+		panel_matrix.add(lblLongMethod1_1);
+		
+		lblTopTrue1_1 = new JLabel("True");
+		lblTopTrue1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTopTrue1_1.setBounds(76, 131, 150, 14);
+		panel_matrix.add(lblTopTrue1_1);
+		
+		lblTopFalse1_1 = new JLabel("False");
+		lblTopFalse1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTopFalse1_1.setBounds(226, 131, 150, 14);
+		panel_matrix.add(lblTopFalse1_1);
+		
+		lblSideTrue1_1 = new JLabel("True");
+		lblSideTrue1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSideTrue1_1.setBounds(44, 156, 32, 150);
+		panel_matrix.add(lblSideTrue1_1);
+		
+		lblSideFalse1_1 = new JLabel("False");
+		lblSideFalse1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSideFalse1_1.setBounds(44, 306, 32, 150);
+		panel_matrix.add(lblSideFalse1_1);
+		
+		lblPredicted1_1 = new JLabel("PREDICTED");
+		lblPredicted1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPredicted1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPredicted1_1.setBounds(76, 97, 300, 14);
+		panel_matrix.add(lblPredicted1_1);
+		
+		lblActual1_1 = new JLabel("<html>A<br>C<br>T<br>U<br>A<br> L</html>");
+		lblActual1_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblActual1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActual1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblActual1_1.setBounds(0, 156, 46, 300);
+		panel_matrix.add(lblActual1_1);
+		
+		lblPredicted2_1 = new JLabel("PREDICTED");
+		lblPredicted2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPredicted2_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPredicted2_1.setBounds(535, 97, 300, 14);
+		panel_matrix.add(lblPredicted2_1);
+		
+		lblTopTrue2_1 = new JLabel("True");
+		lblTopTrue2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTopTrue2_1.setBounds(535, 131, 150, 14);
+		panel_matrix.add(lblTopTrue2_1);
+		
+		lblTopFalse2_1 = new JLabel("False");
+		lblTopFalse2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTopFalse2_1.setBounds(685, 131, 150, 14);
+		panel_matrix.add(lblTopFalse2_1);
+		
+		lblSideTrue2_1 = new JLabel("True");
+		lblSideTrue2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSideTrue2_1.setBounds(503, 156, 32, 150);
+		panel_matrix.add(lblSideTrue2_1);
+		
+		lblActual2_1 = new JLabel("<html>A<br>C<br>T<br>U<br>A<br> L</html>");
+		lblActual2_1.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblActual2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActual2_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblActual2_1.setBounds(459, 156, 46, 300);
+		panel_matrix.add(lblActual2_1);
+		
+		lblSideFalse2_1 = new JLabel("False");
+		lblSideFalse2_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSideFalse2_1.setBounds(503, 306, 32, 150);
+		panel_matrix.add(lblSideFalse2_1);
+		
+		closeBtn_matrix = new JButton("Close");
+		closeBtn_matrix.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showRulesPressed();
+			}
+		});
+		closeBtn_matrix.setBounds(54, 528, 104, 23);
+		panel_matrix.add(closeBtn_matrix);
+
+	}
+	
+	
 	private boolean validInput (int min, int max) {
 		if (max >= min) return false;
 		else throw new NumberFormatException();
@@ -790,8 +1001,85 @@ public class GUI {
 			ruleDescriptionField.setVisible(false);
 			frmExtractMetrics.remove(ruleDescriptionField);
 		}
+		
+		
+		
+		
+		
+		if(table_matrix1 != null) {
+			table_matrix1.setVisible(false);
+			frmExtractMetrics.remove(table_matrix1);
+		}
+		
+		if(table_matrix2 != null) {
+			table_matrix2.setVisible(false);
+			frmExtractMetrics.remove(table_matrix2);
+		}
+
+		if(lblGodClass1_1 != null) {
+			lblGodClass1_1.setVisible(false);
+			frmExtractMetrics.remove(lblGodClass1_1);
+		}
+		if(lblLongMethod1_1 != null) {
+			lblLongMethod1_1.setVisible(false);
+			frmExtractMetrics.remove(lblLongMethod1_1);
+		}
+		if(lblTopTrue1_1 != null) {
+			lblTopTrue1_1.setVisible(false);
+			frmExtractMetrics.remove(lblTopTrue1_1);
+		}
+		if(lblTopFalse1_1 != null) {
+			lblTopFalse1_1.setVisible(false);
+			frmExtractMetrics.remove(lblTopFalse1_1);
+		}
+		if(lblSideTrue1_1 != null) {
+			lblSideTrue1_1.setVisible(false);
+			frmExtractMetrics.remove(lblSideTrue1_1);
+		}
+		if(lblSideFalse1_1 != null) {
+			lblSideFalse1_1.setVisible(false);
+			frmExtractMetrics.remove(lblSideFalse1_1);
+		}
+		if(lblPredicted1_1 != null) {
+			lblPredicted1_1.setVisible(false);
+			frmExtractMetrics.remove(lblPredicted1_1);
+		}
+		if(lblActual1_1 != null) {
+			lblActual1_1.setVisible(false);
+			frmExtractMetrics.remove(lblActual1_1);
+		}
+		if(lblPredicted2_1 != null) {
+			lblPredicted2_1.setVisible(false);
+			frmExtractMetrics.remove(lblPredicted2_1);
+		}
+		if(lblTopTrue2_1 != null) {
+			lblTopTrue2_1.setVisible(false);
+			frmExtractMetrics.remove(lblTopTrue2_1);
+		}
+		if(lblTopFalse2_1 != null) {
+			lblTopFalse2_1.setVisible(false);
+			frmExtractMetrics.remove(lblTopFalse2_1);
+		}
+		if(lblSideTrue2_1 != null) {
+			lblSideTrue2_1.setVisible(false);
+			frmExtractMetrics.remove(lblSideTrue2_1);
+		}
+		if(lblActual2_1 != null) {
+			lblActual2_1.setVisible(false);
+			frmExtractMetrics.remove(lblActual2_1);
+		}
+		if(lblSideFalse2_1 != null) {
+			lblSideFalse2_1.setVisible(false);
+			frmExtractMetrics.remove(lblSideFalse2_1);
+		}	
+		if(closeBtn_matrix != null) {
+			closeBtn_matrix.setVisible(false);
+			frmExtractMetrics.remove(closeBtn_matrix);
+		}
+
 		System.out.println("LIMPAR");
 	}
+	
 	
 	private void clearAddRules() {
 		if (txtNOMmin != null) {

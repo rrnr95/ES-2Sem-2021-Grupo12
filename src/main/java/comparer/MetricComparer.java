@@ -282,15 +282,15 @@ public class MetricComparer {
 	
 	public static void main (String[] args) {
 		String path1 = "D:\\Programação\\EngenhariaSoftware\\jasml_0.10.zip_expanded\\smells.xlsx";
-		String path2 = "C:\\Users\\Diogo\\Downloads\\Code_Smells.xlsx";
+		String path2 = "C:\\Users\\Diogo\\git\\New folder\\ES-2Sem-2021-Grupo12\\Code_Smells.xlsx";
 		
 		MetricComparer mc = new MetricComparer(path1, path2);
 		mc.formPairs();
-		ArrayList<MethodComparisson> arr = (ArrayList<MethodComparisson>) mc.getMethodList();
+		//ArrayList<MethodComparisson> arr = (ArrayList<MethodComparisson>) mc.getMethodList();
 		
-		for(Map.Entry me : mc.getLongMethodDetectionQuality().entrySet()) {
-			System.out.println(me.getKey()+": "+me.getValue());
-		}
+//		for(Map.Entry me : mc.getLongMethodDetectionQuality().entrySet()) {
+//			System.out.println(me.getKey()+": "+me.getValue());
+//		}
 		
 		System.out.println(mc.getGodClassConfMatrixValues().getVP()+" | " + mc.getGodClassConfMatrixValues().getFN()+"\n"+
 				mc.getGodClassConfMatrixValues().getFP()+" | " + mc.getGodClassConfMatrixValues().getVN());
