@@ -1047,17 +1047,17 @@ public class GUI {
 		lblSideFalse2_1.setBounds(503, 306, 32, 150);
 		panel_matrix.add(lblSideFalse2_1);
 		
-		JLabel lblAcertos = new JLabel("Number of correct predictions = " + correctValues);
-		lblAcertos.setHorizontalTextPosition(SwingConstants.RIGHT);
-		lblAcertos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblAcertos.setBounds(535, 500, 300, 25);
-		panel_matrix.add(lblAcertos);
+		JLabel lblCorrectness = new JLabel("Number of correct predictions = " + correctValues);
+		lblCorrectness.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblCorrectness.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblCorrectness.setBounds(535, 500, 300, 25);
+		panel_matrix.add(lblCorrectness);
 		
-		JLabel lblErros = new JLabel("Number of wrong predictions = " + errors);
-		lblErros.setHorizontalTextPosition(SwingConstants.RIGHT);
-		lblErros.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblErros.setBounds(535, 520, 300, 25);
-		panel_matrix.add(lblErros);
+		JLabel lblErrors = new JLabel("Number of wrong predictions = " + errors);
+		lblErrors.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblErrors.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblErrors.setBounds(535, 520, 300, 25);
+		panel_matrix.add(lblErrors);
 		
 		closeBtn_matrix = new JButton("Close");
 		closeBtn_matrix.addActionListener(new ActionListener() {
