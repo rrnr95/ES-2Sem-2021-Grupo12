@@ -37,11 +37,6 @@ public class LineCounter {
 		try {
 			FileReader freader = new FileReader(path);
 			BufferedReader bfreader = new BufferedReader(freader);
-			//metodos = MethodUtils.getMethodsFromFile(path);
-			for (Method method : metodos) {
-				System.out.println(method.getName());
-			}
-			//List<String> methodsNames = MethodUtils.toMethodNameList(metodos);
 
 			counter(bfreader , metodos);
 			
@@ -60,7 +55,6 @@ public class LineCounter {
 	 * @throws 	IOException
 	 */
 	private static void counter(BufferedReader bReader, List<Method> methods) throws IOException {
-		//int count = 0;
 		boolean commentBegan = false;
 		String line = null;
 		
@@ -98,7 +92,6 @@ public class LineCounter {
 				
 				// find start of method
 				if (!"".equals(m.getName())) {
-					//System.out.println(m.getName());
 					if ((line.contains( m.getName() ) && !line.contains(";")) || (line.contains( m.getName() ) && line.matches(".+(public|private|protected|static|abstract).+"))) {
 						methodBegan = true;
 					}
@@ -119,7 +112,6 @@ public class LineCounter {
 					// if stack is empty then method is over
 					if (curlyBracketStack.isEmpty()) {
 						methodBegan = false;
-						//System.out.println(m.getExcelName());
 						methodNameLines.put(m.getExcelName(), methodLinesCount); 	// add method's name and line count to list 
 						methodLinesCount = 0;
 						

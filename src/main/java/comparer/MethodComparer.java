@@ -33,9 +33,6 @@ public class MethodComparer {
 			String meth_baseline = excelRow_baseline.getCell(3).toString();
 			String newPck_baseline = formatPackageName(pck_baseline);
 			if (meth_baseline.equals(meth) && cls_baseline.equals(cls) && newPck_baseline.equals(pck)) {
-				System.out.println("METH: " + meth);
-				System.out.println("METH_BASELINE: " + meth_baseline);
-				System.out.println("--------------------------------------");
 				populateMethodComparisson(mc, excelRow_baseline);
 				break;
 			}

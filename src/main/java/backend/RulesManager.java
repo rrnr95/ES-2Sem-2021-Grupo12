@@ -30,7 +30,6 @@ public class RulesManager {
 	
 	private void initFile() {
 		
-		System.out.println("Ficheiro ainda nao existia, criado novo!");
 		try {
 			FileOutputStream f = new FileOutputStream(stored_rules);
 			ObjectOutputStream o = new ObjectOutputStream(f);
@@ -45,7 +44,6 @@ public class RulesManager {
 			f.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -132,22 +130,8 @@ public class RulesManager {
 			f.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		RulesManager rm = new RulesManager("C:\\Users\\Diogo\\git\\New folder\\ES-2Sem-2021-Grupo12");
-		List<Rule> ruleList = rm.readObjectsFromFile();
-		System.out.println(ruleList);
-		System.out.println("\n");
-		Rule rule = new Rule("Regra 1", 0, 10, 0, 10, 0, 10, true, 0, 10, 0, 10, false);
-		rm.addRuleToFile(rule);
-		ruleList = rm.readObjectsFromFile();
-		System.out.println(ruleList);
-		System.out.println("\n");
-		
-		
-	}
 }

@@ -125,17 +125,6 @@ public class NumberOfClassesPerFile {
 		return splitted[splitted.length - 1];
 	}
 	
-	public static void main (String[] args) {
-		String file = "D:\\Git\\ES\\ES-2Sem-2021-Grupo12\\imported_project\\not_source\\src\\pckg\\HelloWorld.java";
-//		NumberOfClassesPerFile n = searchClasses(file);
-		List<String> classes = getClassesFromFile(file);
-		System.out.println(classes.size());
-		
-		System.out.println(classes);
-//		System.out.println(n.getFileName());
-//		for (String s : n.getClasses()) {
-//			System.out.println(s);
-//		}
-	}
+
 	
 }
