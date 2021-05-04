@@ -1236,8 +1236,8 @@ public class GUI {
 		if (txtLOC_class_min != null) {
 			frmExtractMetrics.remove(txtLOC_class_min);
 		}
+		txtWMCmin();
 		if (txtWMCmin != null) {
-			txtWMCmin.setVisible(false);
 			frmExtractMetrics.remove(txtWMCmin);
 		}
 		txtNOMmax();
@@ -1307,6 +1307,12 @@ public class GUI {
 		txtRuleName();
 		if (txtRuleName != null) {
 			frmExtractMetrics.remove(txtRuleName);
+		}
+	}
+
+	private void txtWMCmin() {
+		if (txtWMCmin != null) {
+			txtWMCmin.setVisible(false);
 		}
 	}
 
