@@ -36,14 +36,14 @@ public class WriteToXLSX {
 	 * 			Constructor
 	 * @param 	path
 	 * 			Location(String) where the file is stored
-	 * @param 	rec
+	 * @param 	shrdRes
 	 * 		 	Metrics list
 	 */
-	static public void exportToExcel(String path, RecursoPartilhado rec) {
+	static public void exportToExcel(String path, SharedResource shrdRes) {
 		Workbook wb = new XSSFWorkbook();
 		Sheet sh = wb.createSheet("code_smells");
 		createHeader(wb,sh);
-		populate(rec,sh);
+		populate(shrdRes,sh);
 		resizeCell(sh);
 		write(path,wb);
 	}
@@ -76,15 +76,15 @@ public class WriteToXLSX {
 	/**
 	 * 			Populates the excel file
 	 * 			It uses a MethodStats as a list for each row, iterates over it and writes each value to a cell
-	 * 	@param	rec
+	 * 	@param	shrdRes
 	 * 			Shared Resource with the MethodStats list
 	 * 	@param 	sh
 	 * 			Sheet where the list information is to be dumped
 	 */
-	static private void populate(RecursoPartilhado rec, Sheet sh) {
+	static private void populate(SharedResource shrdRes, Sheet sh) {
 		int index = 1;
 		int l = 1;
-		for(MethodStats stat : rec.getMethodStats()) {
+		for(MethodStats stat : shrdRes.getMethodStats()) {
 			Row row = sh.createRow(l++);
 			int c = 0;
 			for (String s : stat.getMethodAsList()) {

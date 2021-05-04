@@ -20,7 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import backend.RulesManager;
 import comparer.MetricComparer;
 import extractor.CodeSmells;
-import extractor.RecursoPartilhado;
+import extractor.SharedResource;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -49,9 +49,8 @@ import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-//import com.jgoodies.forms.factories.DefaultComponentFactory;
 
-
+//TODO rp to sr refactor 
 
 public class GUI {
 
@@ -69,7 +68,6 @@ public class GUI {
 	private JButton btnAddRule;
 	private JButton btnConfirmRule;
 		
-	//private String rule;
 	private RulesManager ruleManager;
 	private Rule selectedRule;
 	private Rule DEFAULT_RULE;
@@ -107,7 +105,6 @@ public class GUI {
 	private JButton btnSaveRule;
 	private JTextField txtRuleName;
 	
-
 	private JButton btnClassQuality;
 	private JPanel panel_matrix;
 	private JTable table_matrix1;
@@ -286,7 +283,7 @@ public class GUI {
 		File project = new File(txtf_path.getText());
 		if (project.exists()) {
 
-			RecursoPartilhado rp;
+			SharedResource rp;
 			System.out.println(project.getAbsolutePath());
 				rp = CodeSmells.init(project.getAbsolutePath(), selectedRule);
 
@@ -302,19 +299,19 @@ public class GUI {
 	}
 	
 	
-	private void printCalculatedMetrics(RecursoPartilhado rp) {
+	private void printCalculatedMetrics(SharedResource rp) {
 		scrollPane(rp);
 		panel.add(scrollPane);
 		
 	}
 
-	private void scrollPane(RecursoPartilhado rp) {
+	private void scrollPane(SharedResource rp) {
 		table(rp);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 500);
 	}
 
-	private void table(RecursoPartilhado rp) {
+	private void table(SharedResource rp) {
 		Object[] columnNames = { "Nº total packages", "Nº total de classes", "Nº total de metodos",
 				"Nº total de linhas de codigo" };
 		HashMap<String, Integer> summary = (HashMap<String, Integer>) rp.statsSummary();
@@ -921,7 +918,7 @@ public class GUI {
 		 * 
 		 */
 		
-		RecursoPartilhado rp = buildRP();
+		SharedResource rp = buildRP();
 		MetricComparer mc = buildMetricComparer();
 		//TODO Alterar de forma a ir buscar o projecto jasml sempre à mesma directoria. =? importar para a base do projecto???
 
@@ -1074,8 +1071,8 @@ public class GUI {
 		return mc;
 	}
 
-	private RecursoPartilhado buildRP() {
-		RecursoPartilhado rp;
+	private SharedResource buildRP() {
+		SharedResource rp;
 		//String jasml_path = "C:\\Users\\Utilizador\\eclipse-workspace\\jasml_0.10 (1).zip_expanded";
 		rp = CodeSmells.init(jasml_path.getText(), selectedRule);
 		return rp;
