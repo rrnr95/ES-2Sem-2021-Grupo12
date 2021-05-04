@@ -125,7 +125,17 @@ public class LineCounter {
 			}
 		}
 	}
-
+	
+	/**
+	 * 			Checks if there are any method declaration on a given line, and increments if it does.
+	 * @param 	methodCount 
+	 * 			actual number of methods
+	 * @param 	m
+	 * 			method to get name
+	 * @param 	line
+	 * 			line to analyse
+	 * @return	
+	 */
 	private static int methodCount(int methodCount, Method m, String line) {
 		if (isSourceCodeLine(line)) {
 			if (!"".equals(m.getName())) {
@@ -235,8 +245,8 @@ public class LineCounter {
 
 	
 	/**
-	 * 		
-	 * @return Map with method's name and number of lines of method
+	 * 			Getter of Map with method's name and number of lines of method
+	 * @return 	Map with method's name and number of lines of method
 	 */
 	public static Map<String, Integer> getMethodNameLines() {
 		return methodNameLines;
@@ -244,8 +254,8 @@ public class LineCounter {
 	
 
 	/**
-	 * getter 
-	 * @return total of lines
+	 * 			Returns the total lines number, and resets count
+	 * @return 	total of lines
 	 */
 	public static int getTotalLinesCount() {
 		int aux = totalLinesCount;

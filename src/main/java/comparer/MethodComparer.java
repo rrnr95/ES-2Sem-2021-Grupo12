@@ -4,7 +4,21 @@ package comparer;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 
+/**
+ * 		Class used to create a pair of the equivalent methods
+ * 		@author ES-2Sem-2021-Grupo12
+ */
 public class MethodComparer {
+	
+	/**
+	 * 				Given an excel row and an excel sheet, it creates a pair of two equivalent excel rows. 
+	 *  @param		excelRow
+	 *  			an excel row
+	 *  @param		excelSheet
+	 *  			the baseline excel sheet
+	 *  @return		a MethodComparisson object, with the pair of equivalent excelRows
+	 *  
+	 */
 	public MethodComparisson createMethodComparisson(XSSFRow excelRow, XSSFSheet excelSheet_baseline) {
 		String id = excelRow.getCell(0).toString();
 		String pck = excelRow.getCell(1).toString();
@@ -40,7 +54,12 @@ public class MethodComparer {
 		return mc;
 	}
 
-	public boolean cellConverter(String b) {
+	/**
+	 * 			given a String, it returns the boolean equivalent
+	 * @param	String
+	 * @return	true or false
+	 */
+	private boolean cellConverter(String b) {
 		boolean res = false;
 		if (b.toLowerCase().equals("verdadeiro") || b.toLowerCase().equals("true")) {
 			res = true;
@@ -48,12 +67,23 @@ public class MethodComparer {
 		return res;
 	}
 
-	public String formatPackageName(String pck_baseline) {
+	/**
+	 * 			given a package name, it returns the correct format as a string
+	 * @param	pack_baseline
+	 * 			a string with the package name, as retrieved from the excelRow
+	 * @return	string with the formated package name
+	 */
+	private String formatPackageName(String pck_baseline) {
 		String[] arr = pck_baseline.split("\\.");
 		return arr[arr.length - 1];
 	}
 
-	public void populateMethodComparisson(MethodComparisson mc, XSSFRow excelRow_baseline) {
+	/**
+	 *			given an excel row, it extracts each entry and populates the MethodComparisson passed
+	 *@param	MethodComparisson object
+	 *@param	excel row 
+	 */
+	private void populateMethodComparisson(MethodComparisson mc, XSSFRow excelRow_baseline) {
 		if (excelRow_baseline.getCell(4) != null) {
 			int nom = (int) Double.parseDouble(excelRow_baseline.getCell(4).toString());
 			mc.setNOM_class_baseline(nom);
