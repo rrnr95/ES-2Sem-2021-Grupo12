@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 
 /**
- * Class with methods used to calculate number of cycles
- * @author ES-2Sem-2021-Grupo12
+ * 			Class with methods used to calculate number of cycles
+ * @author 	ES-2Sem-2021-Grupo12
  *
  */
 public class CycloMethod {
@@ -121,7 +121,11 @@ public class CycloMethod {
 		return res;
 	}
 	
-
+	/**
+	 * 			Calculate the Cyclomatic complexity of a given method
+	 * @param 	method for evaluation
+	 * @return	Cyclomatic complexity
+	 */
 	public static int cycloMethodValue(Method method) {
 		int res = 1;
 		String[] str = method.getCode().split("\r\n");
@@ -129,7 +133,6 @@ public class CycloMethod {
 			res+=lineCycloCounter(sourceCodeExtrator(s));
 		return res;
 	}
-
 
 	/**
 	 * 			Counts the number of cycles on list of Strings. Each String represents a method.
