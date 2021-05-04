@@ -10,14 +10,26 @@ import java.util.List;
 
 import gui.Rule;
 
+
+/**
+ * Class used to manage the storage of Rule objects in a binary file
+ * @author ES-2Sem-2021-Grupo12
+ *
+ */
 public class RulesManager {
 
 	
 	
 	private File stored_rules;
 	private static Rule DEFAULT_RULE = new Rule("Default", 0,10,0,10,0,10,false,0,10,0,10,false);
-	//TODO Criar default ruleFile.bin com default rule para garantir a presença de um file sempre com uma regra.
-	//TODO Criar metodos para adicionar e remover regra ao file
+
+	/**
+	 * Contructor
+	 * 
+	 * @param path
+	 * Receives the path where the binary file should be created.
+	 * If the file doesn't exist, it is created and initialized by calling initFile().
+	 */
 	
 	public RulesManager(String path) {
 		path+= "\\stored_rules.bin";
@@ -27,7 +39,10 @@ public class RulesManager {
 		
 	}
 	
-	
+	/**
+	 * Method to initialize the binary file.
+	 * The binary file is initialized with a Default Rule. 
+	 */
 	private void initFile() {
 		
 		try {
@@ -48,7 +63,12 @@ public class RulesManager {
 		}
 	}
 	
-	
+	/**
+	 * Method used to read the Rule objects in the binary file.
+	 * @return List of objects Rule, present in the binary file.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public List<Rule> readObjectsFromFile() throws IOException, ClassNotFoundException {
 
 		List<Rule> rules = new ArrayList<Rule>();
@@ -61,6 +81,13 @@ public class RulesManager {
 		fi.close();
 		return rules;
 	}
+	
+	/**
+	 * Method used to write an object Rule in the binary file.
+	 * @param Rule object to be written in the file.
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	
 	public void addRuleToFile(Rule rule) throws ClassNotFoundException, IOException {
 		 
@@ -78,10 +105,16 @@ public class RulesManager {
 			f.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Method used to remove a given rule from the binary file.
+	 * @param Rule object to be deleted from the file.
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	
 	public void deleteRuleFromFile (Rule rule) throws ClassNotFoundException, IOException {
 		int index = index(rule);
@@ -92,19 +125,26 @@ public class RulesManager {
 			FileOutputStream f = new FileOutputStream(stored_rules);
 			ObjectOutputStream o = new ObjectOutputStream(f);
 			
-			// Write object to file
+		
 			o.writeObject(rules);
 			
 			o.close();
 			f.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-
+	
+	/**
+	 * Method locates and returns the index of the given Rule object in the file.
+	 * @param Rule object to be located.
+	 * @return Index number.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	
 	private int index(Rule rule) throws IOException, ClassNotFoundException {
 		List<Rule> rules = readObjectsFromFile();
 		int index = 0;
@@ -117,13 +157,17 @@ public class RulesManager {
 		return index;
 	}
 	
+	/**
+	 * Method used to replace the existing rules in the binary file with a new set of rules.
+	 * @param Rule objects List.
+	 */
 	public void updateAllFileRules(List<Rule> rules) {
 		
 		try {
 			FileOutputStream f = new FileOutputStream(stored_rules);
 			ObjectOutputStream o = new ObjectOutputStream(f);
 			
-			// Write object to file
+			
 			o.writeObject(rules);
 			
 			o.close();

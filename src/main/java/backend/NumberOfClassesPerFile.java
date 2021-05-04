@@ -5,32 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-//TODO renomear classe FileUtils?
+
 /**
  * 			Class used to extract the number of classes from a file
  * @author 	ES-2Sem-2021-Grupo12
  *
  */
 public class NumberOfClassesPerFile {
-	/**
-	 * 	Filename
-	 */
-//	private String fileName;
-	/**
-	 * 	List of classes
-	 */
-//	private List<String> classes;
-	
-	/**
-	 * 			Constructor
-	 * @param 	file
-	 * 			filename
-	 */
-//	public NumberOfClassesPerFile(String file) {
-////		this.fileName = file;
-////		this.classes = new ArrayList<String>();
-//		getClassesFromFile(file);
-//	}
+
 	
 	/**
 	 * 			Reads the file line by line, and extract the classes found to a list.
@@ -97,21 +79,7 @@ public class NumberOfClassesPerFile {
 					 .trim();
 	}
 	
-	/**
-	 * 			Get classes
-	 * @return	List classes
-	 */
-//	public List<String> getClasses() {
-//		return classes;
-//	}
-	
-//	/**
-//	 * 			Get filename
-//	 * @return	filename
-//	 */
-//	public String getFileName() {
-//		return fileName;
-//	}
+
 	
 	/**
 	 * 			Gets a filename from a given fullpath
