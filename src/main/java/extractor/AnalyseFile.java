@@ -23,7 +23,7 @@ public class AnalyseFile extends Thread {
 	private String parentPackage;
 	private String pathToFile;
 
-	private RecursoPartilhado metodos;
+	private SharedResource metodos;
 	private Rule rule;
 
 	
@@ -39,7 +39,7 @@ public class AnalyseFile extends Thread {
 	 * @param rule
 	 * Rule
 	 */
-	public AnalyseFile(String parent, String path, RecursoPartilhado metodos, Rule rule) {
+	public AnalyseFile(String parent, String path, SharedResource metodos, Rule rule) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
 
@@ -83,11 +83,10 @@ public class AnalyseFile extends Thread {
 			MethodStats meth = createRow(innerClasses, m , nom, loc, 1, cyc, loc_method_hash);
 			
 			metodos.addMetodo(meth);
-		}
-		
-		
+		}	
 		
 	}
+	
 	/**
 	 * Creates and populates a MethodStats object 
 	 * 
