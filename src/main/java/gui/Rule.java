@@ -302,12 +302,7 @@ public class Rule implements Serializable {
 	
 	
 	
-	//~~~~~~~~~~DAQUI PARA BAIXO~~~~~~~~~~
-	//SO PARA TESTAGEM
-	
-	
-	
-	
+
 	
 	public void saveObjectToFile(String path) {
 		 
@@ -347,23 +342,24 @@ public class Rule implements Serializable {
 	}
 	
 	
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		Rule r = new Rule("rule1", 0,10,0,10,0,10,true,5,10,5,10,true);
-		ArrayList<String> innerteste = new ArrayList<String>();
-		MethodStats ms = new MethodStats(1,"default","Main",innerteste,"get()",6,11,11,11,11,"","");
-		System.out.println(r.printPrettyCondition());
-
-	
-		System.out.println("\n");
-	
-		System.out.println("Nom_class:"+ms.getNOM_class()+ " Loc_class:"+ms.getLOC_class()+" Wmc_class:"+ms.getWMC_class());
-		
-		
-		System.out.println("\n\n");
-		System.out.println(r.isGodClass(ms));
-		System.out.println(r.isLongMethod(ms));
-		
-	}
+//	public static void main(String[] args) throws ClassNotFoundException, IOException {
+//		System.out.println("AAAAAAAAAAAAAA");
+//		Rule r = new Rule("rule1", 0,10,0,10,0,10,true,5,10,5,10,true);
+//		ArrayList<String> innerteste = new ArrayList<String>();
+//		MethodStats ms = new MethodStats(1,"default","Main",innerteste,"get()",6,11,11,11,11,"","");
+//		System.out.println(r.printPrettyCondition());
+//
+//	
+//		System.out.println("\n");
+//	
+//		System.out.println("Nom_class:"+ms.getNOM_class()+ " Loc_class:"+ms.getLOC_class()+" Wmc_class:"+ms.getWMC_class());
+//		
+//		
+//		System.out.println("\n\n");
+//		System.out.println(r.isGodClass(ms));
+//		System.out.println(r.isLongMethod(ms));
+//		
+//	}
 	
 	
 	

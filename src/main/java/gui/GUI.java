@@ -765,9 +765,9 @@ public class GUI {
 	private void saveRulePressed() {
 		
 		if (! validName(txtRuleName)) {
-			JOptionPane.showMessageDialog(null,"Escolher um nome válido para a regra");
+			JOptionPane.showMessageDialog(null,"Choose a valid name for the rule");
 		}else if(!validRuleSelection()) {
-			JOptionPane.showMessageDialog(null,"Selecionar pelo menos um parâmetro");
+			JOptionPane.showMessageDialog(null,"Select at least one parameter");
 		}
 		
 		
@@ -836,7 +836,9 @@ public class GUI {
 			} catch (NumberFormatException ex) {
 				JOptionPane.showMessageDialog(null, "Apenas é possivel escolher valores numéricos \n O valor maximo deverá ser maior que o minimo");
 			}
+
 		}
+		showRulesPressed();
 	}
 
 	private Rule buildRule(String name, int NOMmin, int NOMmax, int LOCclassmin, int LOCclassmax, int WMCmin,
