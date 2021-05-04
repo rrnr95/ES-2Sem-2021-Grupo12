@@ -56,7 +56,7 @@ public class GUI {
 
 	private static JFrame frmExtractMetrics;
 	private static JTextField txtf_path;
-	private static JTextField jasml_path;
+	private static JTextField code_smells_path;
 	private JPanel panel;
 	private JButton btn_folder;
 	private JButton btnCalculateMetrics;
@@ -262,6 +262,27 @@ public class GUI {
 				JFileChooser fileChooser = new JFileChooser();
 
 				fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int option = fileChooser.showOpenDialog(frmExtractMetrics);
+
+				if(option == JFileChooser.APPROVE_OPTION) {
+					File f = fileChooser.getSelectedFile();
+					
+					if(f.exists())
+						tf.setText(f.getPath());
+					else
+						tf.setText("Invalid");
+				}		
+			}
+		});
+	}
+	
+	private static void addChooseListenerXLSX(JButton btn, final JTextField tf) {
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFileChooser fileChooser = new JFileChooser();
+
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				int option = fileChooser.showOpenDialog(frmExtractMetrics);
 
 				if(option == JFileChooser.APPROVE_OPTION) {
@@ -866,24 +887,24 @@ public class GUI {
 	}
 	
 	private void createDialog(){
-		final JDialog modelDialog = new JDialog(frmExtractMetrics, "Jasml Classification Quality", 
+		final JDialog modelDialog = new JDialog(frmExtractMetrics, "Code Smells Classification Quality", 
 		         true);
 		      modelDialog.setBounds(130, 130, 300, 200);
 		      Container dialogContainer = modelDialog.getContentPane();
 		      dialogContainer.setLayout(new BorderLayout());
-		      dialogContainer.add(new JLabel("               Please indicate your jasml directory.")
+		      dialogContainer.add(new JLabel("      Please indicate your Code Smells directory.")
 		      , BorderLayout.CENTER);
 		      JPanel panel1 = new JPanel();
 		      panel1.setLayout(new FlowLayout());
-		      JButton folderButton = new JButton("folder");
-		      addChooseListener(folderButton, jasml_path = new JTextField());
+		      JButton folderButton = new JButton("xlsx file");
+		      addChooseListenerXLSX(folderButton, code_smells_path = new JTextField());
 		      
 		      JButton okButton = new JButton("ok");
 		      okButton.addActionListener(new ActionListener() {
 		         @Override
 		         public void actionPerformed(ActionEvent e) {
 		        	 
-		        	if(jasml_path.getText().equals("Invalid") || jasml_path.getText().equals("")) 
+		        	if(code_smells_path.getText().equals("Invalid") || code_smells_path.getText().equals("")) 
 		         		 JOptionPane.showMessageDialog(null, "Please choose a valid directory.");
 		        	else {
 		        		modelDialog.setVisible(false);
@@ -909,7 +930,7 @@ public class GUI {
 		 * 
 		 */
 		
-		SharedResource rp = buildRP();
+		SharedResource rp = buildSR();
 		MetricComparer mc = buildMetricComparer();
 
 		mc.formPairs();
@@ -1074,15 +1095,15 @@ public class GUI {
 	}
 
 	private MetricComparer buildMetricComparer() {
-		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
-		String CodeSmellsCalculated = jasml_path.getText() + "\\smells.xlsx";
+		String CodeSmellsBaseline = code_smells_path.getText();
+		String CodeSmellsCalculated = txtf_path.getText()  + "\\smells.xlsx";
 		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
 		return mc;
 	}
 
-	private SharedResource buildRP() {
+	private SharedResource buildSR() {
 		SharedResource rp;
-		rp = CodeSmells.init(jasml_path.getText(), selectedRule);
+		rp = CodeSmells.init(txtf_path.getText(), selectedRule);
 		return rp;
 	}
 	
