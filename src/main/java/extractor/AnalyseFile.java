@@ -19,6 +19,7 @@ import gui.Rule;
  *
  */
 public class AnalyseFile extends Thread {
+	
 	private String parentPackage;
 	private String pathToFile;
 
@@ -26,6 +27,18 @@ public class AnalyseFile extends Thread {
 	private Rule rule;
 
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param parent
+	 * Parent package's name
+	 * @param path
+	 * Path to java file
+	 * @param metodos
+	 * Methods
+	 * @param rule
+	 * Rule
+	 */
 	public AnalyseFile(String parent, String path, RecursoPartilhado metodos, Rule rule) {
 		this.parentPackage = parent;
 		this.pathToFile = path;
@@ -35,6 +48,9 @@ public class AnalyseFile extends Thread {
 
 	}
 	
+	/**
+	 * Initialize file analysis: calculation of metrics and populates 'metodos'
+	 */
 	public void run() {
 
 		List<String> innerClasses = NumberOfClassesPerFile.getClassesFromFile(pathToFile);
@@ -52,20 +68,19 @@ public class AnalyseFile extends Thread {
 		
 		for (Method method : methodList) {
 			
-			int lineNum = metodos.getMethodStats().size();
+			int cyc = CycloMethod.cycloMethodValue(method);
 			
-			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, loc_method_hash, lineNum);
+			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, cyc, loc_method_hash);
 			
 			metodos.addMetodo(meth);
 			
 		}
 		
-		
-		
 		if (methodList.isEmpty()) {
 			Method m = new Method();
 			m.setExcelName("");
-			MethodStats meth = createRow(innerClasses, m , nom, loc, 1, loc_method_hash, 0);
+			int cyc = CycloMethod.cycloMethodValue(m);
+			MethodStats meth = createRow(innerClasses, m , nom, loc, 1, cyc, loc_method_hash);
 			
 			metodos.addMetodo(meth);
 		}
@@ -74,27 +89,34 @@ public class AnalyseFile extends Thread {
 		
 	}
 	/**
-	 * 			CREATE ROW?
+	 * Creates and populates a MethodStats object 
+	 * 
 	 * @param innerClasses
-	 * @param methodCodeList
-	 * @param methodNameList
+	 * List of inner classes' names
+	 * @param method
+	 * Method
 	 * @param nom
+	 * Number of methods
 	 * @param loc
+	 * Number of lines of code
 	 * @param wmc
+	 * Weighted method count (of the class)
+	 * @param cyc
+	 * Cyclometic complexity count (of the method)
 	 * @param loc_method_hash
-	 * @param methodName
-	 * @param lineNum
-	 * @return
+	 * Map of all methods' names and corresponding number of lines of code
+	 * @return 
+	 * MethodStats object to insert in excel file
 	 */
 	private MethodStats createRow(	List<String> innerClasses, 
 									Method method,
 									int nom, 
 									int loc, 
 									int wmc, 
-									Map<String, Integer> loc_method_hash,  
-									int lineNum) {
+									int cyc,
+									Map<String, Integer> loc_method_hash ) {
+		
 		MethodStats meth = new MethodStats();
-		meth.setMethodId(lineNum + 1);
 		meth.setPack(parentPackage);
 		meth.setCls(pathToFile.replace(".java", ""));
 		meth.setInnerClasses(innerClasses);
@@ -104,10 +126,8 @@ public class AnalyseFile extends Thread {
 			if (k.equals(method.getExcelName())) {
 				meth.setLOC_method(loc_method_hash.get(k));
 			}
-
 		}
 
-		int cyc = CycloMethod.cycloMethodValue(method);
 		meth.setCYCLO_method(cyc);
 		
 		meth.setNOM_class(nom);
@@ -116,8 +136,6 @@ public class AnalyseFile extends Thread {
 		
 		meth.setIsGodClass(String.valueOf(rule.isGodClass(meth)));
 		meth.setIsLongMethod(String.valueOf(rule.isLongMethod(meth)));
-		
-		//metodos.addMetodo(meth);
 		
 		return meth;
 	}
