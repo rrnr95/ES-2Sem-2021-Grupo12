@@ -6,21 +6,49 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/*
+ * 		Shared resource class which contains all methods' statistics of the project
+ * @author ES-2Sem-2021-Grupo12
+ *
+ */
 public class SharedResource {
+	
 	private List<MethodStats> sharedResource;
 	
+	/**
+	 * Constructor
+	 */
 	public SharedResource() {
 		this.sharedResource = new ArrayList<>();
 	}
 	
+	/**
+	 * Adds an object MethodStats to the list 'sharedResource'
+	 * 
+	 * @param meth
+	 * MethodStats
+	 */
 	public synchronized void addMetodo (MethodStats meth) {
 		sharedResource.add(meth);
 	}
 	
+	/**
+	 * Getter of 'sharedResource'
+	 * 
+	 * @return
+	 * List of MethodStats objects
+	 */
 	public List<MethodStats> getMethodStats() {
 		return sharedResource;
 	}
 	
+	/**
+	 * Creates a Map that represents a summary of the project's statistics, containing the number of packages, 
+	 * the number of classes, the number of methods and the number os lines of code of the project
+	 * 
+	 * @return
+	 * Map with the name of the statistic and the corresponding value
+	 */
 	public Map<String, Integer> statsSummary() {
 		Map<String, Integer> map = new HashMap<>();
 		
@@ -44,6 +72,12 @@ public class SharedResource {
 		return map;
 	}
 
+	/**
+	 * Getter of the project's total number of lines of code
+	 * 
+	 * @return
+	 * Total number of lines of code
+	 */
 	private int getLinesOfCode() {
 		int linesOfCode = 0;
 		for (MethodStats ms : sharedResource) {
