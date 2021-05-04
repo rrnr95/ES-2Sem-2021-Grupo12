@@ -204,8 +204,7 @@ public class GUI {
 		panel.setLayout(null);
 		txtf_path();
 		panel.add(txtf_path);
-		btn_folder = new JButton("Folder");
-		btn_folder.setBounds(250, 540, 74, 23);
+		buildBtn_folder();
 		panel.add(btn_folder);
 		btnCalculateMetrics = new JButton("Calculate Metrics");
 		btnCalculateMetrics.setBounds(770, 540, 140, 23);
@@ -240,6 +239,11 @@ public class GUI {
 			}
 		});
 		panel.add(btnClassQuality);
+	}
+
+	private void buildBtn_folder() {
+		btn_folder = new JButton("Folder");
+		btn_folder.setBounds(250, 540, 74, 23);
 	}
 
 	private void txtf_path() {
