@@ -403,10 +403,14 @@ public class GUI {
 	}
 
 	private void tableToScrollPane(Object[] header, Object[][] data) {
-		table = new JTable(data, header);
-		table.setEnabled(false);
+		buildTable(header, data);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 500);
+	}
+
+	private void buildTable(Object[] header, Object[][] data) {
+		table = new JTable(data, header);
+		table.setEnabled(false);
 	}
 	
 	
