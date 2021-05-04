@@ -47,7 +47,7 @@ public class MethodComparer {
 			String meth_baseline = excelRow_baseline.getCell(3).toString();
 			String newPck_baseline = formatPackageName(pck_baseline);
 			if (meth_baseline.equals(meth) && cls_baseline.equals(cls) && newPck_baseline.equals(pck)) {
-				populateMethodComparisson(mc, excelRow_baseline);
+				mc.populateMethodComparisson(excelRow_baseline, this);
 				break;
 			}
 		}
@@ -59,7 +59,7 @@ public class MethodComparer {
 	 * @param	String
 	 * @return	true or false
 	 */
-	private boolean cellConverter(String b) {
+	public boolean cellConverter(String b) {
 		boolean res = false;
 		if (b.toLowerCase().equals("verdadeiro") || b.toLowerCase().equals("true")) {
 			res = true;
@@ -84,33 +84,6 @@ public class MethodComparer {
 	 *@param	excel row 
 	 */
 	private void populateMethodComparisson(MethodComparisson mc, XSSFRow excelRow_baseline) {
-		if (excelRow_baseline.getCell(4) != null) {
-			int nom = (int) Double.parseDouble(excelRow_baseline.getCell(4).toString());
-			mc.setNOM_class_baseline(nom);
-		}
-		if (excelRow_baseline.getCell(5) != null) {
-			int loc = (int) Double.parseDouble(excelRow_baseline.getCell(5).toString());
-			mc.setLOC_class_baseline(loc);
-		}
-		if (excelRow_baseline.getCell(6) != null) {
-			int wmc = (int) Double.parseDouble(excelRow_baseline.getCell(6).toString());
-			mc.setWMC_class_baseline(wmc);
-		}
-		if (excelRow_baseline.getCell(7) != null) {
-			boolean is_god = cellConverter(excelRow_baseline.getCell(7).toString());
-			mc.setIs_God_Class_baseline(is_god);
-		}
-		if (excelRow_baseline.getCell(8) != null) {
-			int loc_method = (int) Double.parseDouble(excelRow_baseline.getCell(8).toString());
-			mc.setLOC_method_baseline(loc_method);
-		}
-		if (excelRow_baseline.getCell(9) != null) {
-			int cyclo = (int) Double.parseDouble(excelRow_baseline.getCell(9).toString());
-			mc.setCYCLO_method_baseline(cyclo);
-		}
-		if (excelRow_baseline.getCell(10) != null) {
-			boolean is_long = cellConverter(excelRow_baseline.getCell(10).toString());
-			mc.setIs_Long_Method_baseline(is_long);
-		}
+		mc.populateMethodComparisson(excelRow_baseline, this);
 	}
 }

@@ -15,6 +15,11 @@ import java.util.List;
 
 import extractor.MethodStats;
 
+/**
+ * 			Class that represents a rule
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class Rule implements Serializable {
 	
 	private String name;
@@ -23,7 +28,24 @@ public class Rule implements Serializable {
 	private int locMethodMin, locMethodMax, cycloMethodMin, cycloMethodMax;
 	private boolean methodRulesConjunction;
 
-	
+	/**
+	 * 		  Constructor 
+	 * @param name	
+	 * 			Rule's name	
+	 * @param nomClassMin	
+	 * 			
+	 * @param nomClassMax	
+	 * @param locClassMin	
+	 * @param locClassMax	
+	 * @param wmcClassMin	
+	 * @param wmcClassMax	
+	 * @param classRulesConjunction	
+	 * @param locMethodMin	
+	 * @param locMethodMax	
+	 * @param cycloMethodMin	
+	 * @param cycloMethodMax	
+	 * @param methodRulesConjunction	
+	 */
 	public Rule(String name, int nomClassMin, int nomClassMax, int locClassMin, int locClassMax, int wmcClassMin,
 			int wmcClassMax, boolean classRulesConjunction, int locMethodMin, int locMethodMax, int cycloMethodMin,
 			int cycloMethodMax, boolean methodRulesConjunction) {

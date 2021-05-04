@@ -1,5 +1,7 @@
 package comparer;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+
 /**
  * Class used to count lines of file and methods
  * @author ES-2Sem-2021-Grupo12
@@ -226,6 +228,43 @@ public class MethodComparisson {
 	 */
 	public boolean isIs_Long_Method_smell() {
 		return is_Long_Method_smell;
+	}
+
+	/**
+	 * given an excel row, it extracts each entry and populates the MethodComparisson passed
+	 * @param MethodComparisson  object
+	 * @param excel  row 
+	 * @param methodComparer
+	 */
+	public void populateMethodComparisson(XSSFRow excelRow_baseline, MethodComparer methodComparer) {
+		if (excelRow_baseline.getCell(4) != null) {
+			int nom = (int) Double.parseDouble(excelRow_baseline.getCell(4).toString());
+			setNOM_class_baseline(nom);
+		}
+		if (excelRow_baseline.getCell(5) != null) {
+			int loc = (int) Double.parseDouble(excelRow_baseline.getCell(5).toString());
+			setLOC_class_baseline(loc);
+		}
+		if (excelRow_baseline.getCell(6) != null) {
+			int wmc = (int) Double.parseDouble(excelRow_baseline.getCell(6).toString());
+			setWMC_class_baseline(wmc);
+		}
+		if (excelRow_baseline.getCell(7) != null) {
+			boolean is_god = methodComparer.cellConverter(excelRow_baseline.getCell(7).toString());
+			setIs_God_Class_baseline(is_god);
+		}
+		if (excelRow_baseline.getCell(8) != null) {
+			int loc_method = (int) Double.parseDouble(excelRow_baseline.getCell(8).toString());
+			setLOC_method_baseline(loc_method);
+		}
+		if (excelRow_baseline.getCell(9) != null) {
+			int cyclo = (int) Double.parseDouble(excelRow_baseline.getCell(9).toString());
+			setCYCLO_method_baseline(cyclo);
+		}
+		if (excelRow_baseline.getCell(10) != null) {
+			boolean is_long = methodComparer.cellConverter(excelRow_baseline.getCell(10).toString());
+			setIs_Long_Method_baseline(is_long);
+		}
 	}
 
 }
