@@ -160,13 +160,7 @@ public class GUI {
 		addChooseListener(btn_folder);
 		panel_matrix = new JPanel();
 		
-		panelAddRules = new JPanel();
-
-
-		
-		
-		
-		
+		panelAddRules = new JPanel();	
 		
 	}
 
