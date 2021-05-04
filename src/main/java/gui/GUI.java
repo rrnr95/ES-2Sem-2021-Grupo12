@@ -255,7 +255,6 @@ public class GUI {
 	}
 
 	
-
 	private static void addChooseListener(JButton btn, final JTextField tf) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -430,7 +429,6 @@ public class GUI {
 			guiRuleList=new JList(rules.toArray());
 			
 		} catch (ClassNotFoundException | IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -439,7 +437,6 @@ public class GUI {
 		
 		ruleDescriptionField.setBounds(10, 358, 902, 50);
 		panel.add(ruleDescriptionField);
-		//table = new JTable(info, columnNames);
 
 		scrollPane = new JScrollPane(guiRuleList);
 		scrollPane.setBounds(10, 11, 902, 343);
@@ -471,7 +468,6 @@ public class GUI {
 	
 	
 	private void addRulePressed() {
-		System.out.println("add rule pressed");
 		cleanFrame();
 		clearAddRules();
 		panel.setVisible(false);
@@ -746,7 +742,6 @@ public class GUI {
 	}
 	
 	private void saveRulePressed() {
-		System.out.println("save rule pressed");
 		
 		if (! validName(txtRuleName)) {
 			JOptionPane.showMessageDialog(null,"Escolher um nome válido para a regra");
@@ -846,13 +841,10 @@ public class GUI {
 		}
 		else {
 			try {
-				System.out.println("SELECTED RULE: " + selectedRule);
 				ruleManager.deleteRuleFromFile(selectedRule);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			showRulesPressed();
@@ -890,6 +882,7 @@ public class GUI {
 		      okButton.addActionListener(new ActionListener() {
 		         @Override
 		         public void actionPerformed(ActionEvent e) {
+		        	 
 		        	if(jasml_path.getText().equals("Invalid") || jasml_path.getText().equals("")) 
 		         		 JOptionPane.showMessageDialog(null, "Please choose a valid directory.");
 		        	else {
@@ -905,9 +898,7 @@ public class GUI {
 		      dialogContainer.add(panel1, BorderLayout.SOUTH);
 		      modelDialog.setVisible(true);
 		      modelDialog.setVisible(false);
-	          //showClassificationQualityPressed();
 
-	      //return modelDialog;
 	   }
 	
 	protected void showClassificationQualityPressed() {
@@ -920,27 +911,27 @@ public class GUI {
 		
 		SharedResource rp = buildRP();
 		MetricComparer mc = buildMetricComparer();
-		//TODO Alterar de forma a ir buscar o projecto jasml sempre à mesma directoria. =? importar para a base do projecto???
 
 		mc.formPairs();
 		
-		cleanFrame();
-		
-		panel.setVisible(false);
-		
+		cleanFrame();		
+		panel.setVisible(false);	
 		
 		panel_matrix.setBackground(Color.LIGHT_GRAY);
 		frmExtractMetrics.getContentPane().add(panel_matrix, BorderLayout.CENTER);
 		panel_matrix.setLayout(null);
 		panel_matrix.setVisible(true);
 		
+		int gc_vp = mc.getGodClassConfMatrixValues().getVP();
+		int gc_vn = mc.getGodClassConfMatrixValues().getVN();
+		int gc_fp = mc.getGodClassConfMatrixValues().getFP();
+		int gc_fn = mc.getGodClassConfMatrixValues().getFN();
+		
 		Object[][] dataMatrix1 = {
-				{mc.getGodClassConfMatrixValues().getVP(), mc.getGodClassConfMatrixValues().getFN()},
-				{mc.getGodClassConfMatrixValues().getFP(),mc.getGodClassConfMatrixValues().getVN()}
+									{gc_vp, gc_fn},
+									{gc_fp, gc_vn}
 		};
 		String[] colum = {""," "};
-		
-		
 		
 		class CenterTableCellRenderer extends DefaultTableCellRenderer { 
 			  protected  CenterTableCellRenderer() {
@@ -958,12 +949,18 @@ public class GUI {
 		table_matrix1.setBounds(76, 156, 300, 300);
 		panel_matrix.add(table_matrix1);
 		
-		
+		int lm_vp = mc.getLongMethodConfMatrixValues().getVP();
+		int lm_vn = mc.getLongMethodConfMatrixValues().getVN();
+		int lm_fp = mc.getLongMethodConfMatrixValues().getFP();
+		int lm_fn = mc.getLongMethodConfMatrixValues().getFN();
 		
 		Object[][] dataMatrix2 = {
-				{mc.getLongMethodConfMatrixValues().getVP(), mc.getLongMethodConfMatrixValues().getFN()},
-				{mc.getLongMethodConfMatrixValues().getFP(),mc.getLongMethodConfMatrixValues().getVN()}
+									{lm_vp, lm_fn},
+									{lm_fp, lm_vn}
 		};
+		
+		int correctValues = gc_vp + gc_vn + lm_vp + lm_vn;
+		int errors = gc_fp + gc_fn + lm_fp + lm_fn;
 		
 		table_matrix2 = new JTable(dataMatrix2,colum);
 		table_matrix2.setRowHeight(150);
@@ -1050,10 +1047,23 @@ public class GUI {
 		lblSideFalse2_1.setBounds(503, 306, 32, 150);
 		panel_matrix.add(lblSideFalse2_1);
 		
+		JLabel lblAcertos = new JLabel("Number of correct predictions = " + correctValues);
+		lblAcertos.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblAcertos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblAcertos.setBounds(535, 500, 300, 25);
+		panel_matrix.add(lblAcertos);
+		
+		JLabel lblErros = new JLabel("Number of wrong predictions = " + errors);
+		lblErros.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblErros.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblErros.setBounds(535, 520, 300, 25);
+		panel_matrix.add(lblErros);
+		
 		closeBtn_matrix = new JButton("Close");
 		closeBtn_matrix.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showRulesPressed();
+				panel_matrix.setVisible(false);
+				panel.setVisible(true);
 			}
 		});
 		closeBtn_matrix.setBounds(54, 528, 104, 23);
@@ -1064,7 +1074,6 @@ public class GUI {
 	}
 
 	private MetricComparer buildMetricComparer() {
-		//String jasml_path = "C:\\Users\\Utilizador\\eclipse-workspace\\jasml_0.10 (1).zip_expanded";
 		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
 		String CodeSmellsCalculated = jasml_path.getText() + "\\smells.xlsx";
 		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
@@ -1073,7 +1082,6 @@ public class GUI {
 
 	private SharedResource buildRP() {
 		SharedResource rp;
-		//String jasml_path = "C:\\Users\\Utilizador\\eclipse-workspace\\jasml_0.10 (1).zip_expanded";
 		rp = CodeSmells.init(jasml_path.getText(), selectedRule);
 		return rp;
 	}
@@ -1108,7 +1116,6 @@ public class GUI {
 	
 	private void cleanFrame() {
 		frmExtractMetrics();
-		System.out.println("LIMPAR");
 	}
 
 	private void frmExtractMetrics() {
