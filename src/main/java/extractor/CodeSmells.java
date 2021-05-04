@@ -23,8 +23,8 @@ public class CodeSmells {
 	 * @return
 	 * SharedResource
 	 */
-	public static RecursoPartilhado init(String path,Rule rule)  {
-		RecursoPartilhado metodos = new RecursoPartilhado();
+	public static SharedResource init(String path,Rule rule)  {
+		SharedResource metodos = new SharedResource();
 		analyse(path, metodos, rule);
 		WriteToXLSX.exportToExcel(path + "\\smells.xlsx", metodos);
 		return metodos;
@@ -41,7 +41,7 @@ public class CodeSmells {
 	 * @param rule
 	 * Rule
 	 */
-	private static void analyse(String path , RecursoPartilhado metodos, Rule rule ) {
+	private static void analyse(String path , SharedResource metodos, Rule rule ) {
 		HashMap<String, String> packs = FindPackages.getPackages(path);
 		
 		//iterar cada package
