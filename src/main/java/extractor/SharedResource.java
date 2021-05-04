@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class RecursoPartilhado {
-	private List<MethodStats> recursoPartilhado;
+public class SharedResource {
+	private List<MethodStats> sharedResource;
 	
-	public RecursoPartilhado() {
-		this.recursoPartilhado = new ArrayList<>();
+	public SharedResource() {
+		this.sharedResource = new ArrayList<>();
 	}
 	
 	public synchronized void addMetodo (MethodStats meth) {
-		recursoPartilhado.add(meth);
+		sharedResource.add(meth);
 	}
 	
 	public List<MethodStats> getMethodStats() {
-		return recursoPartilhado;
+		return sharedResource;
 	}
 	
 	public Map<String, Integer> statsSummary() {
@@ -27,9 +27,9 @@ public class RecursoPartilhado {
 		Set<String> packs = new HashSet<>();
 		Set<String> cls = new HashSet<>();
 		
-		int totalMethods = recursoPartilhado.size();
+		int totalMethods = sharedResource.size();
 		int linesOfCode = getLinesOfCode();
-		for (MethodStats ms : recursoPartilhado) {
+		for (MethodStats ms : sharedResource) {
 			String pck = ms.getPack();
 			packs.add(pck);
 			String cl = ms.getCls();
@@ -46,7 +46,7 @@ public class RecursoPartilhado {
 
 	private int getLinesOfCode() {
 		int linesOfCode = 0;
-		for (MethodStats ms : recursoPartilhado) {
+		for (MethodStats ms : sharedResource) {
 			int lines = ms.getLOC_method();
 			linesOfCode += lines;
 		}
