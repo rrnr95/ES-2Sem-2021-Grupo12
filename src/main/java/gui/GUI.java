@@ -471,14 +471,10 @@ public class GUI {
 		frmExtractMetrics.getContentPane().add(panelAddRules, BorderLayout.CENTER);
 		panelAddRules.setLayout(null);
 		
-		JLabel lblSelectMetrics = new JLabel("Select the desired metrics:");
-		lblSelectMetrics.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblSelectMetrics.setBounds(47, 77, 173, 16);
+		JLabel lblSelectMetrics = lblSelectMetrics();
 		panelAddRules.add(lblSelectMetrics);
 		
-		JLabel lblGodClass = new JLabel("GOD_CLASS");
-		lblGodClass.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblGodClass.setBounds(47, 35, 94, 16);
+		JLabel lblGodClass = lblGodClass();
 		panelAddRules.add(lblGodClass);
 		
 		chckbxNOM_class = new JCheckBox("NOM_class:");
@@ -526,14 +522,10 @@ public class GUI {
 		G1.add(rdbtnAND_GOD_CLASS);
 		G1.add(rdbtnOR_GOD_CLASS);
 		
-		JLabel lblLogicOperators = new JLabel("Select the desired logic operator:");
-		lblLogicOperators.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblLogicOperators.setBounds(548, 77, 202, 16);
+		JLabel lblLogicOperators = lblLogicOperators();
 		panelAddRules.add(lblLogicOperators);
 		
-		JLabel lbMin = new JLabel("Minimum");
-		lbMin.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lbMin.setBounds(266, 90, 54, 16);
+		JLabel lbMin = lbMin();
 		panelAddRules.add(lbMin);
 		
 		txtNOMmax = new JTextField();
@@ -554,9 +546,7 @@ public class GUI {
 		txtWMCmax.setBounds(344, 192, 86, 20);
 		panelAddRules.add(txtWMCmax);
 		
-		JLabel lblMax = new JLabel("Maximum");
-		lblMax.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMax.setBounds(359, 90, 54, 16);
+		JLabel lblMax = lblMax();
 		panelAddRules.add(lblMax);
 		
 		separator = new JSeparator();
@@ -564,14 +554,10 @@ public class GUI {
 		separator.setBounds(504, 77, 12, 136);
 		panelAddRules.add(separator);
 		
-		JLabel lblLongMethod = new JLabel("LONG_METHOD");
-		lblLongMethod.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblLongMethod.setBounds(47, 274, 122, 16);
+		JLabel lblLongMethod = lblLongMethod();
 		panelAddRules.add(lblLongMethod);
 		
-		JLabel lblSelectMetrics_1 = new JLabel("Select the desired metrics:");
-		lblSelectMetrics_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblSelectMetrics_1.setBounds(47, 313, 173, 16);
+		JLabel lblSelectMetrics_1 = lblSelectMetrics_1();
 		panelAddRules.add(lblSelectMetrics_1);
 		
 		chckbxLOC_method = new JCheckBox("LOC_method:");
@@ -608,19 +594,13 @@ public class GUI {
 		txtCYCLOmax.setBounds(344, 390, 86, 20);
 		panelAddRules.add(txtCYCLOmax);
 		
-		JLabel lblMin_1 = new JLabel("Minimum");
-		lblMin_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMin_1.setBounds(266, 327, 54, 16);
+		JLabel lblMin_1 = lblMin_1();
 		panelAddRules.add(lblMin_1);
 		
-		JLabel lblMax_1 = new JLabel("Maximum");
-		lblMax_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblMax_1.setBounds(359, 327, 54, 16);
+		JLabel lblMax_1 = lblMax_1();
 		panelAddRules.add(lblMax_1);
 		
-		JLabel lblLogicOperators_1 = new JLabel("Select the desired logic operator:");
-		lblLogicOperators_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblLogicOperators_1.setBounds(548, 315, 202, 16);
+		JLabel lblLogicOperators_1 = lblLogicOperators_1();
 		panelAddRules.add(lblLogicOperators_1);
 		
 		rdbtnAND_LONG_METHOD = new JRadioButton("AND", true);
@@ -668,9 +648,7 @@ public class GUI {
 		separator_horizontal_1.setBounds(47, 444, 812, 10);
 		panelAddRules.add(separator_horizontal_1);
 		
-		JLabel lblRuleName = new JLabel("Name of the Rule:");
-		lblRuleName.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblRuleName.setBounds(47, 471, 152, 23);
+		JLabel lblRuleName = lblRuleName();
 		panelAddRules.add(lblRuleName);
 		
 		txtRuleName = new JTextField();
@@ -679,6 +657,83 @@ public class GUI {
 		txtRuleName.setBounds(165, 474, 180, 20);
 		panelAddRules.add(txtRuleName);
 		
+	}
+
+	private JLabel lblSelectMetrics_1() {
+		JLabel lblSelectMetrics_1 = new JLabel("Select the desired metrics:");
+		lblSelectMetrics_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblSelectMetrics_1.setBounds(47, 313, 173, 16);
+		return lblSelectMetrics_1;
+	}
+
+	private JLabel lblSelectMetrics() {
+		JLabel lblSelectMetrics = new JLabel("Select the desired metrics:");
+		lblSelectMetrics.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblSelectMetrics.setBounds(47, 77, 173, 16);
+		return lblSelectMetrics;
+	}
+
+	private JLabel lblRuleName() {
+		JLabel lblRuleName = new JLabel("Name of the Rule:");
+		lblRuleName.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblRuleName.setBounds(47, 471, 152, 23);
+		return lblRuleName;
+	}
+
+	private JLabel lblMin_1() {
+		JLabel lblMin_1 = new JLabel("Minimum");
+		lblMin_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblMin_1.setBounds(266, 327, 54, 16);
+		return lblMin_1;
+	}
+
+	private JLabel lblMax_1() {
+		JLabel lblMax_1 = new JLabel("Maximum");
+		lblMax_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblMax_1.setBounds(359, 327, 54, 16);
+		return lblMax_1;
+	}
+
+	private JLabel lblMax() {
+		JLabel lblMax = new JLabel("Maximum");
+		lblMax.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblMax.setBounds(359, 90, 54, 16);
+		return lblMax;
+	}
+
+	private JLabel lblLongMethod() {
+		JLabel lblLongMethod = new JLabel("LONG_METHOD");
+		lblLongMethod.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblLongMethod.setBounds(47, 274, 122, 16);
+		return lblLongMethod;
+	}
+
+	private JLabel lblLogicOperators_1() {
+		JLabel lblLogicOperators_1 = new JLabel("Select the desired logic operator:");
+		lblLogicOperators_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblLogicOperators_1.setBounds(548, 315, 202, 16);
+		return lblLogicOperators_1;
+	}
+
+	private JLabel lblLogicOperators() {
+		JLabel lblLogicOperators = new JLabel("Select the desired logic operator:");
+		lblLogicOperators.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblLogicOperators.setBounds(548, 77, 202, 16);
+		return lblLogicOperators;
+	}
+
+	private JLabel lblGodClass() {
+		JLabel lblGodClass = new JLabel("GOD_CLASS");
+		lblGodClass.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblGodClass.setBounds(47, 35, 94, 16);
+		return lblGodClass;
+	}
+
+	private JLabel lbMin() {
+		JLabel lbMin = new JLabel("Minimum");
+		lbMin.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lbMin.setBounds(266, 90, 54, 16);
+		return lbMin;
 	}
 	
 	private void saveRulePressed() {
