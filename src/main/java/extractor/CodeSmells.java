@@ -7,64 +7,43 @@ import backend.FindPackages;
 import gui.Rule;
 
 /**
- * 			Application entry point. Project analyzer 
+ * 			Application entry point. Project analyser 
  * @author 	ES-2Sem-2021-Grupo12
  *
  */
 public class CodeSmells {
-//<<<<<<< HEAD
-//	private String rootPath;
-//	private static RecursoPartilhado metodos;
-//	static private List<Thread> threads;
-		
-//	public CodeSmells (String path) {
-//		this.rootPath = path;
-//		this.metodos = new RecursoPartilhado();
-////		this.threads = new ArrayList<>();
-//	}
-//=======
-//	private String rootPath;
-//	private RecursoPartilhado metodos;
-//	private List<Thread> threads;
-//	private Rule rule;
-//		
-//	public CodeSmells (String path, Rule rule) {
-//		this.rootPath = path;
-//		this.metodos = new RecursoPartilhado();
-//		this.threads = new ArrayList<>();
-//		this.rule = rule;
-//	}
-//>>>>>>> 02abe83da03a699ae36cf2e95c9a386f3a8daef3
 	
+	/**
+	 * Initialization of project analysis: creates a SharedResource and exports the data to excel file
+	 * 
+	 * @param path
+	 * Path to project's directory
+	 * @param rule
+	 * Rule
+	 * @return
+	 * SharedResource
+	 */
 	public static RecursoPartilhado init(String path,Rule rule)  {
 		RecursoPartilhado metodos = new RecursoPartilhado();
 		analyse(path, metodos, rule);
 		WriteToXLSX.exportToExcel(path + "\\smells.xlsx", metodos);
 		return metodos;
 	}
+
 	
-//<<<<<<< HEAD:src/main/java/extractor/CodeSmells.java
-//
-//	public RecursoPartilhado getRecursoPartilhado() {
-//		return metodos;
-//	}
-//	
-//
-///**
-// *	Analyzes the file on the specified path and creates the arraylist
-// * 	
-// */
-//	private void analyse() {
-//=======
 	/**
-	 *	Analyzes the file on the specified path and creates the arraylist
-	 * 	
+	 * Analyses the file on the specified path and creates the arraylist
+	 * 
+	 * @param path
+	 * Path to java file
+	 * @param metodos
+	 * SharedResource
+	 * @param rule
+	 * Rule
 	 */
 	private static void analyse(String path , RecursoPartilhado metodos, Rule rule ) {
-//>>>>>>> refactor:src/main/java/CodeSmells.java
-		//par nome-path dos packages
-//		HashMap<String, String> packs = new FindPackages(rootPath).getPackages();
 		HashMap<String, String> packs = FindPackages.getPackages(path);
+		
 		//iterar cada package
 		for (String pck : packs.keySet()) {
 			//encontrar o path para todos os ficheiros
@@ -74,20 +53,18 @@ public class CodeSmells {
 			for (String file : pathToFiles) {
 
 				AnalyseFile af = new AnalyseFile(pck, file, metodos, rule);
-
-
-				//af.start();
-
 				af.run();
 			}
 		}
 	}
 	
 	/**
-	 * 			creates a list of absolutepath of the java files found on a given directory
+	 * 			Creates a list of absolutepath of the java files found on a given directory
+	 * 
 	 * @param 	directoryPath
-	 * 			path to get files from
-	 * @return	list of absolutepath of java files on a given directory 
+	 * 	path to get files from
+	 * @return	
+	 * list of absolutepath of java files on a given directory 
 	 */
 	private static List<String> getPathToJavaFiles (String directoryPath) {
 		List<String> ficheiros = new ArrayList<>();
