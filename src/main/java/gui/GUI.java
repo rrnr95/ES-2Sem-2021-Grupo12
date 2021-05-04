@@ -1082,12 +1082,12 @@ public class GUI {
 			scrollPane.setVisible(false);
 			frmExtractMetrics.remove(scrollPane);
 		}
+		btnAddRule();
 		if (btnAddRule != null) {
-			btnAddRule.setVisible(false);
 			frmExtractMetrics.remove(btnAddRule);
 		}
+		btnConfirmRule();
 		if (btnConfirmRule != null) {
-			btnConfirmRule.setVisible(false);
 			frmExtractMetrics.remove(btnConfirmRule);
 		}
 		if (guiRuleList != null) {
@@ -1106,12 +1106,12 @@ public class GUI {
 			table_matrix2.setVisible(false);
 			frmExtractMetrics.remove(table_matrix2);
 		}
+		lblGodClass1_1();
 		if (lblGodClass1_1 != null) {
-			lblGodClass1_1.setVisible(false);
 			frmExtractMetrics.remove(lblGodClass1_1);
 		}
+		lblLongMethod1_1();
 		if (lblLongMethod1_1 != null) {
-			lblLongMethod1_1.setVisible(false);
 			frmExtractMetrics.remove(lblLongMethod1_1);
 		}
 		if (lblTopTrue1_1 != null) {
@@ -1126,20 +1126,20 @@ public class GUI {
 			lblSideTrue1_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideTrue1_1);
 		}
+		lblSideFalse1_1();
 		if (lblSideFalse1_1 != null) {
-			lblSideFalse1_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideFalse1_1);
 		}
+		lblPredicted1_1();
 		if (lblPredicted1_1 != null) {
-			lblPredicted1_1.setVisible(false);
 			frmExtractMetrics.remove(lblPredicted1_1);
 		}
 		if (lblActual1_1 != null) {
 			lblActual1_1.setVisible(false);
 			frmExtractMetrics.remove(lblActual1_1);
 		}
+		lblPredicted2_1();
 		if (lblPredicted2_1 != null) {
-			lblPredicted2_1.setVisible(false);
 			frmExtractMetrics.remove(lblPredicted2_1);
 		}
 		if (lblTopTrue2_1 != null) {
@@ -1154,8 +1154,8 @@ public class GUI {
 			lblSideTrue2_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideTrue2_1);
 		}
+		lblActual2_1();
 		if (lblActual2_1 != null) {
-			lblActual2_1.setVisible(false);
 			frmExtractMetrics.remove(lblActual2_1);
 		}
 		if (lblSideFalse2_1 != null) {
@@ -1165,6 +1165,54 @@ public class GUI {
 		if (closeBtn_matrix != null) {
 			closeBtn_matrix.setVisible(false);
 			frmExtractMetrics.remove(closeBtn_matrix);
+		}
+	}
+
+	private void btnAddRule() {
+		if (btnAddRule != null) {
+			btnAddRule.setVisible(false);
+		}
+	}
+
+	private void btnConfirmRule() {
+		if (btnConfirmRule != null) {
+			btnConfirmRule.setVisible(false);
+		}
+	}
+
+	private void lblActual2_1() {
+		if (lblActual2_1 != null) {
+			lblActual2_1.setVisible(false);
+		}
+	}
+
+	private void lblGodClass1_1() {
+		if (lblGodClass1_1 != null) {
+			lblGodClass1_1.setVisible(false);
+		}
+	}
+
+	private void lblLongMethod1_1() {
+		if (lblLongMethod1_1 != null) {
+			lblLongMethod1_1.setVisible(false);
+		}
+	}
+
+	private void lblPredicted1_1() {
+		if (lblPredicted1_1 != null) {
+			lblPredicted1_1.setVisible(false);
+		}
+	}
+
+	private void lblPredicted2_1() {
+		if (lblPredicted2_1 != null) {
+			lblPredicted2_1.setVisible(false);
+		}
+	}
+
+	private void lblSideFalse1_1() {
+		if (lblSideFalse1_1 != null) {
+			lblSideFalse1_1.setVisible(false);
 		}
 	}
 	
@@ -1180,85 +1228,199 @@ public class GUI {
 	}
 
 	private void frmClearExtractMetrics() {
+		txtNOMmin();
 		if (txtNOMmin != null) {
-			txtNOMmin.setVisible(false);
 			frmExtractMetrics.remove(txtNOMmin);
 		}
+		txtLOC_class_min();
 		if (txtLOC_class_min != null) {
-			txtLOC_class_min.setVisible(false);
 			frmExtractMetrics.remove(txtLOC_class_min);
 		}
 		if (txtWMCmin != null) {
 			txtWMCmin.setVisible(false);
 			frmExtractMetrics.remove(txtWMCmin);
 		}
+		txtNOMmax();
 		if (txtNOMmax != null) {
-			txtNOMmax.setVisible(false);
 			frmExtractMetrics.remove(txtNOMmax);
 		}
+		txtLOC_class_max();
 		if (txtLOC_class_max != null) {
-			txtLOC_class_max.setVisible(false);
 			frmExtractMetrics.remove(txtLOC_class_max);
 		}
+		txtWMCmax();
 		if (txtWMCmax != null) {
-			txtWMCmax.setVisible(false);
 			frmExtractMetrics.remove(txtWMCmax);
 		}
+		chckbxLOC_method();
 		if (chckbxLOC_method != null) {
-			chckbxLOC_method.setVisible(false);
 			frmExtractMetrics.remove(chckbxLOC_method);
 		}
+		chckbxCYCLO_method();
 		if (chckbxCYCLO_method != null) {
-			chckbxCYCLO_method.setVisible(false);
 			frmExtractMetrics.remove(chckbxCYCLO_method);
 		}
+		txtLOC_method_min();
 		if (txtLOC_method_min != null) {
-			txtLOC_method_min.setVisible(false);
 			frmExtractMetrics.remove(txtLOC_method_min);
 		}
+		txtLOC_method_max();
 		if (txtLOC_method_max != null) {
-			txtLOC_method_max.setVisible(false);
 			frmExtractMetrics.remove(txtLOC_method_max);
 		}
+		txtCYCLOmin();
 		if (txtCYCLOmin != null) {
-			txtCYCLOmin.setVisible(false);
 			frmExtractMetrics.remove(txtCYCLOmin);
 		}
+		txtCYCLOmax();
 		if (txtCYCLOmax != null) {
-			txtCYCLOmax.setVisible(false);
 			frmExtractMetrics.remove(txtCYCLOmax);
 		}
+		rdbtnAND_GOD_CLASS();
 		if (rdbtnAND_GOD_CLASS != null) {
-			rdbtnAND_GOD_CLASS.setVisible(false);
 			frmExtractMetrics.remove(rdbtnAND_GOD_CLASS);
 		}
+		rdbtnOR_GOD_CLASS();
 		if (rdbtnOR_GOD_CLASS != null) {
-			rdbtnOR_GOD_CLASS.setVisible(false);
 			frmExtractMetrics.remove(rdbtnOR_GOD_CLASS);
 		}
+		rdbtnAND_LONG_METHOD();
 		if (rdbtnAND_LONG_METHOD != null) {
-			rdbtnAND_LONG_METHOD.setVisible(false);
 			frmExtractMetrics.remove(rdbtnAND_LONG_METHOD);
 		}
+		rdbtnOR_LONG_METHOD();
 		if (rdbtnOR_LONG_METHOD != null) {
-			rdbtnOR_LONG_METHOD.setVisible(false);
 			frmExtractMetrics.remove(rdbtnOR_LONG_METHOD);
 		}
+		chckbxNOM_class();
 		if (chckbxNOM_class != null) {
-			chckbxNOM_class.setVisible(false);
 			frmExtractMetrics.remove(chckbxNOM_class);
 		}
+		chckbxLOC_class();
 		if (chckbxLOC_class != null) {
-			chckbxLOC_class.setVisible(false);
 			frmExtractMetrics.remove(chckbxLOC_class);
 		}
+		chckbxWMC_class();
 		if (chckbxWMC_class != null) {
-			chckbxWMC_class.setVisible(false);
 			frmExtractMetrics.remove(chckbxWMC_class);
 		}
+		txtRuleName();
+		if (txtRuleName != null) {
+			frmExtractMetrics.remove(txtRuleName);
+		}
+	}
+
+	private void txtWMCmax() {
+		if (txtWMCmax != null) {
+			txtWMCmax.setVisible(false);
+		}
+	}
+
+	private void txtRuleName() {
 		if (txtRuleName != null) {
 			txtRuleName.setVisible(false);
-			frmExtractMetrics.remove(txtRuleName);
+		}
+	}
+
+	private void txtNOMmin() {
+		if (txtNOMmin != null) {
+			txtNOMmin.setVisible(false);
+		}
+	}
+
+	private void txtNOMmax() {
+		if (txtNOMmax != null) {
+			txtNOMmax.setVisible(false);
+		}
+	}
+
+	private void txtLOC_method_min() {
+		if (txtLOC_method_min != null) {
+			txtLOC_method_min.setVisible(false);
+		}
+	}
+
+	private void txtLOC_method_max() {
+		if (txtLOC_method_max != null) {
+			txtLOC_method_max.setVisible(false);
+		}
+	}
+
+	private void txtLOC_class_min() {
+		if (txtLOC_class_min != null) {
+			txtLOC_class_min.setVisible(false);
+		}
+	}
+
+	private void txtLOC_class_max() {
+		if (txtLOC_class_max != null) {
+			txtLOC_class_max.setVisible(false);
+		}
+	}
+
+	private void txtCYCLOmin() {
+		if (txtCYCLOmin != null) {
+			txtCYCLOmin.setVisible(false);
+		}
+	}
+
+	private void txtCYCLOmax() {
+		if (txtCYCLOmax != null) {
+			txtCYCLOmax.setVisible(false);
+		}
+	}
+
+	private void rdbtnOR_LONG_METHOD() {
+		if (rdbtnOR_LONG_METHOD != null) {
+			rdbtnOR_LONG_METHOD.setVisible(false);
+		}
+	}
+
+	private void rdbtnOR_GOD_CLASS() {
+		if (rdbtnOR_GOD_CLASS != null) {
+			rdbtnOR_GOD_CLASS.setVisible(false);
+		}
+	}
+
+	private void rdbtnAND_LONG_METHOD() {
+		if (rdbtnAND_LONG_METHOD != null) {
+			rdbtnAND_LONG_METHOD.setVisible(false);
+		}
+	}
+
+	private void rdbtnAND_GOD_CLASS() {
+		if (rdbtnAND_GOD_CLASS != null) {
+			rdbtnAND_GOD_CLASS.setVisible(false);
+		}
+	}
+
+	private void chckbxWMC_class() {
+		if (chckbxWMC_class != null) {
+			chckbxWMC_class.setVisible(false);
+		}
+	}
+
+	private void chckbxNOM_class() {
+		if (chckbxNOM_class != null) {
+			chckbxNOM_class.setVisible(false);
+		}
+	}
+
+	private void chckbxLOC_method() {
+		if (chckbxLOC_method != null) {
+			chckbxLOC_method.setVisible(false);
+		}
+	}
+
+	private void chckbxLOC_class() {
+		if (chckbxLOC_class != null) {
+			chckbxLOC_class.setVisible(false);
+		}
+	}
+
+	private void chckbxCYCLO_method() {
+		if (chckbxCYCLO_method != null) {
+			chckbxCYCLO_method.setVisible(false);
 		}
 	}
 }
