@@ -35,7 +35,7 @@ public class WriteToXLSX {
 	/**
 	 * 			Constructor
 	 * @param 	path
-	 * 			Location(String) where the file is to be saved
+	 * 			Location(String) where the file is stored
 	 * @param 	rec
 	 * 		 	Metrics list
 	 */
@@ -74,7 +74,7 @@ public class WriteToXLSX {
 	}
 	
 	/**
-	 * 			Populate the excel file
+	 * 			Populates the excel file
 	 * 			It uses a MethodStats as a list for each row, iterates over it and writes each value to a cell
 	 * 	@param	rec
 	 * 			Shared Resource with the MethodStats list
@@ -102,7 +102,7 @@ public class WriteToXLSX {
 	
 	
 	/**
-	 * 			Resize all cells
+	 * 			Resizes all cells
 	 * 	@param	sh
 	 * 			Sheet in which the resizing is to be applied
 	 */
@@ -113,7 +113,7 @@ public class WriteToXLSX {
 	}
 	
 	/**
-	 * 			Write the XSSFWorkbook to file
+	 * 			Writes the XSSFWorkbook to file
 	 * 	@param	path
 	 *			Location for the file
 	 * 	@param	wb
