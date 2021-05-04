@@ -882,6 +882,7 @@ public class GUI {
 		 */
 		
 		RecursoPartilhado rp = buildRP();
+		MetricComparer mc = buildMetricComparer();
 		//TODO Alterar de forma a ir buscar o projecto jasml sempre à mesma directoria. =? importar para a base do projecto???
 		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
 		
@@ -889,7 +890,6 @@ public class GUI {
 		
 		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
 		String CodeSmellsCalculated = jasml_path + "\\smells.xlsx";	
-		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
 		mc.formPairs();
 		System.out.println("ShowClassPressed!!!");
 		
@@ -1033,6 +1033,14 @@ public class GUI {
 
 	}
 
+	private MetricComparer buildMetricComparer() {
+		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
+		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
+		String CodeSmellsCalculated = jasml_path + "\\smells.xlsx";
+		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
+		return mc;
+	}
+
 	private RecursoPartilhado buildRP() {
 		RecursoPartilhado rp;
 		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
@@ -1074,12 +1082,12 @@ public class GUI {
 	}
 
 	private void frmExtractMetrics() {
+		frmExtMetricsTable();
 		if (table != null) {
-			table.setVisible(false);
 			frmExtractMetrics.remove(table);
 		}
+		frmExtMetricsScrollPane();
 		if (scrollPane != null) {
-			scrollPane.setVisible(false);
 			frmExtractMetrics.remove(scrollPane);
 		}
 		btnAddRule();
@@ -1090,20 +1098,20 @@ public class GUI {
 		if (btnConfirmRule != null) {
 			frmExtractMetrics.remove(btnConfirmRule);
 		}
+		guiRuleList();
 		if (guiRuleList != null) {
-			guiRuleList.setVisible(false);
 			frmExtractMetrics.remove(btnAddRule);
 		}
+		ruleDescriptionField();
 		if (ruleDescriptionField != null) {
-			ruleDescriptionField.setVisible(false);
 			frmExtractMetrics.remove(ruleDescriptionField);
 		}
+		table_matrix1();
 		if (table_matrix1 != null) {
-			table_matrix1.setVisible(false);
 			frmExtractMetrics.remove(table_matrix1);
 		}
+		table_matrix2();
 		if (table_matrix2 != null) {
-			table_matrix2.setVisible(false);
 			frmExtractMetrics.remove(table_matrix2);
 		}
 		lblGodClass1_1();
@@ -1114,16 +1122,16 @@ public class GUI {
 		if (lblLongMethod1_1 != null) {
 			frmExtractMetrics.remove(lblLongMethod1_1);
 		}
+		lblTopTrue1_1();
 		if (lblTopTrue1_1 != null) {
-			lblTopTrue1_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopTrue1_1);
 		}
+		lblTopFalse1_1();
 		if (lblTopFalse1_1 != null) {
-			lblTopFalse1_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopFalse1_1);
 		}
+		lblSideTrue1_1();
 		if (lblSideTrue1_1 != null) {
-			lblSideTrue1_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideTrue1_1);
 		}
 		lblSideFalse1_1();
@@ -1134,37 +1142,127 @@ public class GUI {
 		if (lblPredicted1_1 != null) {
 			frmExtractMetrics.remove(lblPredicted1_1);
 		}
+		lblActual1_1();
 		if (lblActual1_1 != null) {
-			lblActual1_1.setVisible(false);
 			frmExtractMetrics.remove(lblActual1_1);
 		}
 		lblPredicted2_1();
 		if (lblPredicted2_1 != null) {
 			frmExtractMetrics.remove(lblPredicted2_1);
 		}
+		lblTopTrue2_1();
 		if (lblTopTrue2_1 != null) {
-			lblTopTrue2_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopTrue2_1);
 		}
+		lblTopFalse2_1();
 		if (lblTopFalse2_1 != null) {
-			lblTopFalse2_1.setVisible(false);
 			frmExtractMetrics.remove(lblTopFalse2_1);
 		}
+		lblSideTrue2_1();
 		if (lblSideTrue2_1 != null) {
-			lblSideTrue2_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideTrue2_1);
 		}
 		lblActual2_1();
 		if (lblActual2_1 != null) {
 			frmExtractMetrics.remove(lblActual2_1);
 		}
+		lblSideFalse2_1();
 		if (lblSideFalse2_1 != null) {
-			lblSideFalse2_1.setVisible(false);
 			frmExtractMetrics.remove(lblSideFalse2_1);
 		}
+		closeBtn_matrix();
+		if (closeBtn_matrix != null) {
+			frmExtractMetrics.remove(closeBtn_matrix);
+		}
+	}
+
+	private void table_matrix2() {
+		if (table_matrix2 != null) {
+			table_matrix2.setVisible(false);
+		}
+	}
+
+	private void table_matrix1() {
+		if (table_matrix1 != null) {
+			table_matrix1.setVisible(false);
+		}
+	}
+
+	private void frmExtMetricsTable() {
+		if (table != null) {
+			table.setVisible(false);
+		}
+	}
+
+	private void frmExtMetricsScrollPane() {
+		if (scrollPane != null) {
+			scrollPane.setVisible(false);
+		}
+	}
+
+	private void ruleDescriptionField() {
+		if (ruleDescriptionField != null) {
+			ruleDescriptionField.setVisible(false);
+		}
+	}
+
+	private void lblTopTrue2_1() {
+		if (lblTopTrue2_1 != null) {
+			lblTopTrue2_1.setVisible(false);
+		}
+	}
+
+	private void lblTopTrue1_1() {
+		if (lblTopTrue1_1 != null) {
+			lblTopTrue1_1.setVisible(false);
+		}
+	}
+
+	private void lblTopFalse2_1() {
+		if (lblTopFalse2_1 != null) {
+			lblTopFalse2_1.setVisible(false);
+		}
+	}
+
+	private void lblTopFalse1_1() {
+		if (lblTopFalse1_1 != null) {
+			lblTopFalse1_1.setVisible(false);
+		}
+	}
+
+	private void lblSideTrue2_1() {
+		if (lblSideTrue2_1 != null) {
+			lblSideTrue2_1.setVisible(false);
+		}
+	}
+
+	private void lblSideTrue1_1() {
+		if (lblSideTrue1_1 != null) {
+			lblSideTrue1_1.setVisible(false);
+		}
+	}
+
+	private void lblSideFalse2_1() {
+		if (lblSideFalse2_1 != null) {
+			lblSideFalse2_1.setVisible(false);
+		}
+	}
+
+	private void lblActual1_1() {
+		if (lblActual1_1 != null) {
+			lblActual1_1.setVisible(false);
+		}
+	}
+
+	private void guiRuleList() {
+		if (guiRuleList != null) {
+			guiRuleList.setVisible(false);
+		}
+	}
+
+	private void closeBtn_matrix() {
 		if (closeBtn_matrix != null) {
 			closeBtn_matrix.setVisible(false);
-			frmExtractMetrics.remove(closeBtn_matrix);
 		}
 	}
 
