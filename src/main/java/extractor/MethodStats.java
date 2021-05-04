@@ -27,12 +27,13 @@ public class MethodStats {
 	
 	/**
 	 * 			Constructor
+	 * 
 	 * @param 	methodId
-	 * 			MethodID
+	 * 			Method's ID
 	 * @param 	pack
-	 * 			Package
+	 * 			Package's name
 	 * @param 	cls
-	 * 			Class
+	 * 			Class's name
 	 * @param 	innerClasses
 	 * 			List of inner classes
 	 * @param 	meth
@@ -40,20 +41,36 @@ public class MethodStats {
 	 * @param 	lOC_method
 	 * 			Lines of code
 	 * @param 	cYCLO_method
-	 * 			Number of cycles
+	 * 			Cyclometic complexity count (of the method)
 	 * @param 	nOM_class
 	 * 			Number of methods
 	 * @param 	lOC_class
 	 * 			Lines of code
 	 * @param 	wMC_class
+	 * 			Weighted method count (of the class)
+	 * @param	isGodClass
+	 * 			string that represents if is god class
+	 * @param 	isLongMethod
+	 * 			string that represents if is long method
 	 * 			
 	 */
-	public MethodStats(int methodId, String pack, String cls, List<String> innerClasses, String meth, int lOC_method, int cYCLO_method, int nOM_class, int lOC_class, int wMC_class, String isGodClass, String isLongMethod) {
+	public MethodStats(int methodId, 
+						String pack, 
+						String cls, 
+						List<String> innerClasses, 
+						String meth, 
+						int lOC_method, 
+						int cYCLO_method, 
+						int nOM_class, 
+						int lOC_class, 
+						int wMC_class, 
+						String isGodClass, 
+						String isLongMethod) {
+		
 		this.methodId = methodId;
 		this.pack = pack;
 		this.cls = cls;
 		this.innerClasses = innerClasses;
-//		this.meth = meth;
 		LOC_method = lOC_method;
 		CYCLO_method = cYCLO_method;
 		NOM_class = nOM_class;
@@ -63,129 +80,258 @@ public class MethodStats {
 		this.isGodClass = isGodClass;
 	}
 	
+	
+	/**
+	 * Constructor
+	 */
 	public MethodStats() {
 		innerClasses = new ArrayList<>();
 	}
 	
+	
+	/**
+	 * Getter of 'methodId'
+	 * 
+	 * @return
+	 * Method's ID
+	 */
 	public int getMethodId() {
 		return methodId;
 	}
 	
-	
+	/**
+	 * Setter of 'methodId'
+	 * 
+	 * @param methodId
+	 * Method's ID
+	 */
 	public void setMethodId(int methodId) {
 		this.methodId = methodId;
 	}
 	
-	
+	/**
+	 * Getter of 'pack'
+	 * 
+	 * @return
+	 * Pack's name
+	 */
 	public String getPack() {
 		return pack;
 	}
 	
-	
+	/**
+	 * Setter of 'pack'
+	 * 
+	 * @param pack
+	 * Package's name
+	 */
 	public void setPack(String pack) {
 		this.pack = pack;
 	}
 	
+	/**
+	 * Getter of 'innerClasses'
+	 * 
+	 * @return
+	 * List of inner classes' names
+	 */
 	public List<String> getInnerClasses() {
 		return innerClasses;
 	}
 	
-	
+	/**
+	 * Setter of 'innerClasses'
+	 * @param inner
+	 * List of inner classes' names
+	 */
 	public void setInnerClasses(List<String> inner) {
 		this.innerClasses = inner;
 	}
 	
-	
+	/**
+	 * Getter of 'cls'
+	 * @return
+	 * Class's name
+	 */
 	public String getCls() {
 		return cls;
 	}
 	
-	
+	/**
+	 * Setter of 'cls'
+	 * 
+	 * @param cls
+	 * Class's name
+	 */
 	public void setCls(String cls) {
 		this.cls = cls;
 	}
 	
-	
+	/**
+	 * Getter of 'meth'
+	 * 
+	 * @return
+	 * Method's name
+	 */
 	public String getMeth() {
 		return meth;
 	}
 	
-	
+	/**
+	 * Setter of 'meth'
+	 * 
+	 * @param meth
+	 * Method's name
+	 */
 	public void setMeth(String meth) {
 		this.meth = meth;
 	}
 	
-	
+	/**
+	 * Getter of 'LOC_method'
+	 * 
+	 * @return
+	 * Method's number of lines of code
+	 */
 	public int getLOC_method() {
 		return LOC_method;
 	}
 	
-	
+	/**
+	 * Setter of 'LOC_method'
+	 * 
+	 * @param lOC_method
+	 * Method's number of lines of code
+	 */
 	public void setLOC_method(int lOC_method) {
 		LOC_method = lOC_method;
 	}
 	
-	
+	/**
+	 * Getter of 'CYCLO_method'
+	 * 
+	 * @return
+	 * Cyclometic complexity count (of the method)
+	 */
 	public int getCYCLO_method() {
 		return CYCLO_method;
 	}
 	
-	
+	/**
+	 * Setter of 'CYCLO_method'
+	 * 
+	 * @param cYCLO_method
+	 * Cyclometic complexity count (of the method)
+	 */
 	public void setCYCLO_method(int cYCLO_method) {
 		CYCLO_method = cYCLO_method;
 	}
 	
-	
+	/**
+	 * Getter of 'NOM_class'
+	 * 
+	 * @return
+	 * Number of methods
+	 */
 	public int getNOM_class() {
 		return NOM_class;
 	}
 	
-	
+	/**
+	 * Setter of 'NOM_class'
+	 * 
+	 * @param nOM_class
+	 * Number of methods
+	 */
 	public void setNOM_class(int nOM_class) {
 		NOM_class = nOM_class;
 	}
 	
-	
+	/**
+	 * Getter of 'LOC_class'
+	 * 
+	 * @return
+	 * Classes' lines of code
+	 */
 	public int getLOC_class() {
 		return LOC_class;
 	}
 	
-	
+	/**
+	 * Setter of 'LOC_class
+	 * 
+	 * @param lOC_class
+	 * Class's number of lines of code
+	 */
 	public void setLOC_class(int lOC_class) {
 		LOC_class = lOC_class;
 	}
 	
-	
+	/**
+	 * Gettter of 'WMC_class'
+	 * 
+	 * @return
+	 * Weighted method count (of the class)
+	 */
 	public int getWMC_class() {
 		return WMC_class;
 	}
 	
-	
+	/**
+	 * Setter of 'WMC_class'
+	 * 
+	 * @param wMC_class
+	 * Weighted method count (of the class)
+	 */
 	public void setWMC_class(int wMC_class) {
 		WMC_class = wMC_class;
 	}
 	
+	/**
+	 * Getter of 'isLongMethod'
+	 * 
+	 * @return
+	 * String that represents if is long method
+	 */
 	public String getIsLongMethod() {
 		return isLongMethod;
 	}
 	
-	
+	/**
+	 * Setter of 'isLongMethod'
+	 * 
+	 * @param isLongMethod
+	 * String that represents if is long method
+	 */
 	public void setIsLongMethod(String isLongMethod) {
 		this.isLongMethod = isLongMethod;
 	}
 	
+	/**
+	 * Getter of 'isGodClass'
+	 * 
+	 * @return
+	 * String that represents if is god class
+	 */
 	public String getIsGodClass() {
 		return isGodClass;
 	}
 	
-	
+	/**
+	 * Setter of 'isGoodClass'
+	 * 
+	 * @param isGodClass
+	 * String that represents if is long method
+	 */
 	public void setIsGodClass(String isGodClass) {
 		this.isGodClass = isGodClass;
 	}
 	
 	/**
+	 * Creates a String that represents the given list of strings, from index 1 to the end of the list
 	 * 
 	 * @param list
+	 * List of Strings
 	 * @return
 	 */
 	private String listAsString(List<String> list) {
@@ -197,21 +343,11 @@ public class MethodStats {
 		}
 	}
 	
-//	/**
-//	 * 			Gets a filename from a given fullpath
-//	 * @param 	p
-//	 * 			fullpath from a file
-//	 * @return	filename from a given fullpath
-//	 */
-//	private String fileName(String p) {
-//		String fileName = p.replace("\\", "/");
-//		String[] splitted = fileName.split("/");
-//		return splitted[splitted.length - 1];
-//	}
 	
 	/**
 	 * 			Creates a list of the field values of MethodStats object, used to iterate over, and fill each cell in a row
-	 * @return	a String list with all MethodStats's field 
+	 * @return	
+	 * String list with all MethodStats's field 
 	 */
 	public List<String> getMethodAsList() {
 		List<String> list = new ArrayList<>();
