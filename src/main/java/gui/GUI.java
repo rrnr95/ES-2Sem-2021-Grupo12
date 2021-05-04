@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,21 +36,28 @@ import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Cursor;
+
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+//import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 
 
 public class GUI {
 
 	private static JFrame frmExtractMetrics;
 	private static JTextField txtf_path;
+	private static JTextField jasml_path;
 	private JPanel panel;
 	private JButton btn_folder;
 	private JButton btnCalculateMetrics;
@@ -157,7 +165,7 @@ public class GUI {
 	
 		btnClassQuality();
 		frmExtractMetrics.getContentPane().add(panel, BorderLayout.CENTER);
-		addChooseListener(btn_folder);
+		addChooseListener(btn_folder, txtf_path);
 		panel_matrix = new JPanel();
 		
 		panelAddRules = new JPanel();	
@@ -204,6 +212,7 @@ public class GUI {
 		btnCalculateMetrics.setBounds(770, 540, 140, 23);
 		btnCalculateMetrics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				frmExtractMetrics.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				calculateMetricsPressed();
 			}
 		});
@@ -229,7 +238,8 @@ public class GUI {
 		btnClassQuality.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				showClassificationQualityPressed();
+				//showClassificationQualityPressed();
+				createDialog();
 			}
 		});
 		panel.add(btnClassQuality);
@@ -249,7 +259,7 @@ public class GUI {
 
 	
 
-	private static void addChooseListener(JButton btn) {
+	private static void addChooseListener(JButton btn, final JTextField tf) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -262,9 +272,9 @@ public class GUI {
 					File f = fileChooser.getSelectedFile();
 					
 					if(f.exists())
-						txtf_path.setText(f.getPath());
+						tf.setText(f.getPath());
 					else
-						txtf_path.setText("Invalid");
+						tf.setText("Invalid");
 				}		
 			}
 		});
@@ -288,6 +298,7 @@ public class GUI {
 			JOptionPane.showMessageDialog(null,"Diretoria Desconhecida");
 		}
 		
+		frmExtractMetrics.setCursor(Cursor.getDefaultCursor());
 	}
 	
 	
@@ -463,7 +474,6 @@ public class GUI {
 	
 	
 	private void addRulePressed() {
-		//TODO - logica para adicionar regras ao binario
 		System.out.println("add rule pressed");
 		cleanFrame();
 		clearAddRules();
@@ -866,8 +876,44 @@ public class GUI {
 	    });
 	}
 	
+	private void createDialog(){
+		final JDialog modelDialog = new JDialog(frmExtractMetrics, "Jasml Classification Quality", 
+		         true);
+		      modelDialog.setBounds(130, 130, 300, 200);
+		      Container dialogContainer = modelDialog.getContentPane();
+		      dialogContainer.setLayout(new BorderLayout());
+		      dialogContainer.add(new JLabel("               Please indicate your jasml directory.")
+		      , BorderLayout.CENTER);
+		      JPanel panel1 = new JPanel();
+		      panel1.setLayout(new FlowLayout());
+		      JButton folderButton = new JButton("folder");
+		      addChooseListener(folderButton, jasml_path = new JTextField());
+		      
+		      JButton okButton = new JButton("ok");
+		      okButton.addActionListener(new ActionListener() {
+		         @Override
+		         public void actionPerformed(ActionEvent e) {
+		        	if(jasml_path.getText().equals("Invalid") || jasml_path.getText().equals("")) 
+		         		 JOptionPane.showMessageDialog(null, "Please choose a valid directory.");
+		        	else {
+		        		modelDialog.setVisible(false);
+		        		frmExtractMetrics.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		        		showClassificationQualityPressed();
+		        	}
+		         }
+		      });
+
+		      panel1.add(folderButton);
+		      panel1.add(okButton);
+		      dialogContainer.add(panel1, BorderLayout.SOUTH);
+		      modelDialog.setVisible(true);
+		      modelDialog.setVisible(false);
+	          //showClassificationQualityPressed();
+
+	      //return modelDialog;
+	   }
+	
 	protected void showClassificationQualityPressed() {
-		
 		
 		/*
 		 * aplicar metricas com a nossa rule ao jasml
@@ -878,17 +924,8 @@ public class GUI {
 		RecursoPartilhado rp = buildRP();
 		MetricComparer mc = buildMetricComparer();
 		//TODO Alterar de forma a ir buscar o projecto jasml sempre à mesma directoria. =? importar para a base do projecto???
-		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
-		
-		
-		
-		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
-		String CodeSmellsCalculated = jasml_path + "\\smells.xlsx";	
+
 		mc.formPairs();
-		System.out.println("ShowClassPressed!!!");
-		
-		
-		
 		
 		cleanFrame();
 		
@@ -1024,21 +1061,23 @@ public class GUI {
 		});
 		closeBtn_matrix.setBounds(54, 528, 104, 23);
 		panel_matrix.add(closeBtn_matrix);
+		
+		frmExtractMetrics.setCursor(Cursor.getDefaultCursor());
 
 	}
 
 	private MetricComparer buildMetricComparer() {
-		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
+		//String jasml_path = "C:\\Users\\Utilizador\\eclipse-workspace\\jasml_0.10 (1).zip_expanded";
 		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
-		String CodeSmellsCalculated = jasml_path + "\\smells.xlsx";
+		String CodeSmellsCalculated = jasml_path.getText() + "\\smells.xlsx";
 		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
 		return mc;
 	}
 
 	private RecursoPartilhado buildRP() {
 		RecursoPartilhado rp;
-		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
-		rp = CodeSmells.init(jasml_path, selectedRule);
+		//String jasml_path = "C:\\Users\\Utilizador\\eclipse-workspace\\jasml_0.10 (1).zip_expanded";
+		rp = CodeSmells.init(jasml_path.getText(), selectedRule);
 		return rp;
 	}
 	
