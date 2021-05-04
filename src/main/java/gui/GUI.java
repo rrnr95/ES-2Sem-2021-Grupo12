@@ -881,14 +881,12 @@ public class GUI {
 		 * 
 		 */
 		
-		RecursoPartilhado rp;
-		
+		RecursoPartilhado rp = buildRP();
 		//TODO Alterar de forma a ir buscar o projecto jasml sempre à mesma directoria. =? importar para a base do projecto???
 		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
 		
 		
 		
-		rp = CodeSmells.init(jasml_path, selectedRule);		
 		String CodeSmellsBaseline = System.getProperty("user.dir") + "\\Code_Smells.xlsx";
 		String CodeSmellsCalculated = jasml_path + "\\smells.xlsx";	
 		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
@@ -1033,6 +1031,13 @@ public class GUI {
 		closeBtn_matrix.setBounds(54, 528, 104, 23);
 		panel_matrix.add(closeBtn_matrix);
 
+	}
+
+	private RecursoPartilhado buildRP() {
+		RecursoPartilhado rp;
+		String jasml_path = "C:\\Users\\renat\\eclipse-workspace\\jasml_0.10.zip_expanded";
+		rp = CodeSmells.init(jasml_path, selectedRule);
+		return rp;
 	}
 	
 	
