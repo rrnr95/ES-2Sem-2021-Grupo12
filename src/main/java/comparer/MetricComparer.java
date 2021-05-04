@@ -16,22 +16,39 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import backend.ConfusionMatrix;
 
+
+/**
+ * Class used to compare metrics of a project, using two different assessment tools
+ * @author ES-2Sem-2021-Grupo12
+ *
+ */
 public class MetricComparer {
 	private MethodComparer methodComparer = new MethodComparer();
 	private String smellsDoc;
 	private String baselineDoc;
 	private List<MethodComparisson> methodList;
 	
+	
+	/**
+	 * Class constructor
+	 */
 	public MetricComparer(String smellsDoc, String baselineDoc) {
 		this.smellsDoc = smellsDoc;
 		this.baselineDoc = baselineDoc;
 		this.methodList = new ArrayList<>();
 	}
 	
+	/**
+	 * @return	list with MethodComparisson objects
+	 */
 	public List<MethodComparisson> getMethodList() {
 		return methodList;
 	}
 	
+	/**
+	 * a method used to form method pairs, based on both given files
+	 * these pairs are inserted in a list
+	 */
 	public void formPairs() {
 		File smells = new File(smellsDoc);
 		File baseline = new File(baselineDoc);
@@ -62,14 +79,10 @@ public class MetricComparer {
 		}
 	}
 	
-	
-	
-//	private String formatedMethodName(String originalName) {
-//		return originalName.split( "\\(" )[0];
-//	}
-	
-	
-	
+	/**
+	 * using the list containing the MethodComparison, this method returns a Map containing a pair of isGodClass metrics, obtained using different files
+	 * @return	Map with metric pairs (comparisson per class)
+	 */
 	public HashMap<String, String> getGodClassDetectionQuality(){
 		
 		if(this.getMethodList().isEmpty())
@@ -88,7 +101,10 @@ public class MetricComparer {
 		return classResults;
 	}
 	
-	
+	/**
+	 * using the list containing the MethodComparison, this method returns a Map containing a pair of isLongMethod metrics, obtained using different files
+	 * @return	Map with metric pairs (comparisson per method)
+	 */
 	public HashMap<String, String> getLongMethodDetectionQuality() {
 
 		if (this.getMethodList().isEmpty())
@@ -105,6 +121,14 @@ public class MetricComparer {
 		return methodResults;
 	}
 	
+	/**
+	 * A method that returns the confusion matrix's logic
+	 * @param	predicted value (from the baseline project)
+	 * 			true or false
+	 * @param	obtained value
+	 * 			true or false
+	 * @return	String containing the comparisson result
+	 */
 	private String evaluateMetric(boolean predicted, boolean actual) {
 		
 		if(predicted) {
@@ -133,6 +157,10 @@ public class MetricComparer {
 	 *     
 	 */               
 	
+	/**
+	 * a method that returns a confusion matrix, based on the God Class assessment
+	 * @return	confusion matrix with the comparisson result
+	 */
 	public ConfusionMatrix getGodClassConfMatrixValues(){
 		
 		ConfusionMatrix matrix = new ConfusionMatrix();
@@ -157,7 +185,10 @@ public class MetricComparer {
 		return matrix;		
 	}
 	
-	
+	/**
+	 * a method that returns a confusion matrix, based on the long method assessment
+	 * @return	confusion matrix with the comparisson result
+	 */
 	public ConfusionMatrix getLongMethodConfMatrixValues(){
 		
 		ConfusionMatrix matrix = new ConfusionMatrix();
