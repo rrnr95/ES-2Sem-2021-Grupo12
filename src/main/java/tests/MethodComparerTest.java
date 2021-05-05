@@ -22,21 +22,7 @@ public class MethodComparerTest {
 	HashMap<String, String> godClassDetection_test;
 	HashMap<String, String> longClassDetection_test;
 	
-	private String evaluateMetric(boolean predicted, boolean actual) {
 
-		if (predicted) {
-			if (actual) {
-				return "VP";
-			}
-			return "FP";
-		} else {
-			if (actual) {
-				return "FN";
-			}
-			return "VN";
-		}
-
-	}
 	
 	@Before
 	public void setUp() throws Exception {
