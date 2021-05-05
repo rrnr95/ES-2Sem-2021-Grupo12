@@ -28,7 +28,7 @@ public class SharedResource {
 	 * @param meth
 	 * MethodStats
 	 */
-	public synchronized void addMetodo (MethodStats meth) {
+	public synchronized void addMethod (MethodStats meth) {
 		sharedResource.add(meth);
 	}
 	

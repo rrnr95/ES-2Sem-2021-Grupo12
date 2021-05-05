@@ -72,7 +72,7 @@ public class AnalyseFile extends Thread {
 			
 			MethodStats meth = createRow(innerClasses, method , nom, loc, wmc, cyc, loc_method_hash);
 			
-			metodos.addMetodo(meth);
+			metodos.addMethod(meth);
 			
 		}
 		
@@ -82,7 +82,7 @@ public class AnalyseFile extends Thread {
 			int cyc = CycloMethod.cycloMethodValue(m);
 			MethodStats meth = createRow(innerClasses, m , nom, loc, 1, cyc, loc_method_hash);
 			
-			metodos.addMetodo(meth);
+			metodos.addMethod(meth);
 		}	
 		
 	}

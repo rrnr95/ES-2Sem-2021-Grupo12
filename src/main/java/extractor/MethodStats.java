@@ -68,6 +68,7 @@ public class MethodStats {
 						String isLongMethod) {
 		
 		this.methodId = methodId;
+		this.meth = meth;
 		this.pack = pack;
 		this.cls = cls;
 		this.innerClasses = innerClasses;
@@ -371,5 +372,82 @@ public class MethodStats {
 		
 		return list;
 	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + CYCLO_method;
+		result = prime * result + LOC_class;
+		result = prime * result + LOC_method;
+		result = prime * result + NOM_class;
+		result = prime * result + WMC_class;
+		result = prime * result + ((cls == null) ? 0 : cls.hashCode());
+		result = prime * result + ((innerClasses == null) ? 0 : innerClasses.hashCode());
+		result = prime * result + ((isGodClass == null) ? 0 : isGodClass.hashCode());
+		result = prime * result + ((isLongMethod == null) ? 0 : isLongMethod.hashCode());
+		result = prime * result + ((meth == null) ? 0 : meth.hashCode());
+		result = prime * result + methodId;
+		result = prime * result + ((pack == null) ? 0 : pack.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MethodStats other = (MethodStats) obj;
+		if (CYCLO_method != other.CYCLO_method)
+			return false;
+		if (LOC_class != other.LOC_class)
+			return false;
+		if (LOC_method != other.LOC_method)
+			return false;
+		if (NOM_class != other.NOM_class)
+			return false;
+		if (WMC_class != other.WMC_class)
+			return false;
+		if (cls == null) {
+			if (other.cls != null)
+				return false;
+		} else if (!cls.equals(other.cls))
+			return false;
+		if (innerClasses == null) {
+			if (other.innerClasses != null)
+				return false;
+		} else if (!innerClasses.equals(other.innerClasses))
+			return false;
+		if (isGodClass == null) {
+			if (other.isGodClass != null)
+				return false;
+		} else if (!isGodClass.equals(other.isGodClass))
+			return false;
+		if (isLongMethod == null) {
+			if (other.isLongMethod != null)
+				return false;
+		} else if (!isLongMethod.equals(other.isLongMethod))
+			return false;
+		if (meth == null) {
+			if (other.meth != null)
+				return false;
+		} else if (!meth.equals(other.meth))
+			return false;
+		if (methodId != other.methodId)
+			return false;
+		if (pack == null) {
+			if (other.pack != null)
+				return false;
+		} else if (!pack.equals(other.pack))
+			return false;
+		return true;
+	}
+	
+	
 	
 }
