@@ -15,6 +15,21 @@ branch master
 
 <br>
 <hr>
+<strong>Utilização da Aplicação</strong>
+O objetivo deste software é o levantamento de code smells de um dado projeto. Como tal, ao iniciar a aplicação, o utilizador deverá indicar a raiz do projeto que deseja analisar, através do botão <strong><i>Folder</i></strong>. O botão <strong><i>Calculate Metrics</i></strong> fará o levantamento das métricas do projeto, fornecendo um resumo geral do mesmo e criando um ficheiro XLSX na raiz. O botão <strong><i>Fetch XLSX</i></strong> apresenta todas as métricas do projeto, através da leitura do ficheiro XLSX previamente criado. 
+De forma a definir as métricas usadas para os Code Smells, é possível gerir as regras através do botão <strong><i>Rules</i></strong>. A regra apenas ficará criada quando lhe for atribuida um nome não-existente e após pressionar o botão <strong><i>Add Rule</i></strong>
+<ul>
+  <li>NOM_class: numero de metodos da classe</li>
+  <li>LOC_class: linhas de código da classe</li>
+  <li>WMC_class: complexidade ciclomatica da classe</li>
+  <li>LOC_method: numero de linhas de codigo do metodo</li>
+  <li>CYCLO_method: complexidade ciclomatica do metodo</li>
+</ul>
+<br>
+o botão <strong><i>Classification Quality</i></strong> irá apresentar uma matriz de confusão, comparando as metricas recolhidas com as regras do utilizador e um ficheiro XLSX. Apresentará também as predições corretas e incorretas.
+
+<br>
+<hr>
 <strong>Para utilizar este software como Docker Image</strong>:<br>
   1) instalar VcXsrv (https://sourceforge.net/projects/vcxsrv/)<br>
   2) lançar o XLaunch<br>
