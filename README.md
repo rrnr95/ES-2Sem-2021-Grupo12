@@ -28,6 +28,7 @@ De forma a definir as métricas usadas para os Code Smells, é possível gerir a
   <li>CYCLO_method: complexidade ciclomatica do metodo</li>
 </ul>
 o botão <strong><i>Classification Quality</i></strong> irá apresentar uma matriz de confusão, comparando as metricas recolhidas com as regras do utilizador e um ficheiro XLSX, cuja localização deverá ser indicada com o botão <strong><i>xlsx file</i></strong>. Apresentará também as predições corretas e incorretas.
+<br>
 
 <br>
 <hr>
