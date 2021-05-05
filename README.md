@@ -14,7 +14,7 @@ Rui Gomes|88068|ruifogomes
 branch master
 
 
-Para utilizar este software como Docker Image:
+<strong>Para utilizar este software como Docker Image:</strong>
   1) instalar VcXsrv (https://sourceforge.net/projects/vcxsrv/)
   2) lançar o XLaunch
   3) download da imagem que contém o projeto (docker pull antoniorodrigo92/esgrupo12codesmells)
