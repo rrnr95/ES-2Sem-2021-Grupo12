@@ -31,7 +31,7 @@ import gui.Rule;
 public class ProjectTests {
 
 	//CodeSmells test
-	private final String PATH = "C:\\Users\\Utilizador\\eclipse-workspace\\TestProject";
+	private final String PATH = System.getProperty("user.dir")+"\\TestProject";
 	private final Rule rule = new Rule("ruleTest", 1, 20, 1, 20, 1, 20, false, 1, 20, 1, 20, true); 
 	private SharedResource SR;
 	private SharedResource expected_SR;
@@ -78,29 +78,29 @@ public class ProjectTests {
 		List<String> ic = new ArrayList<>();
 		ic.add("ClassInPack3");
 		expected_SR.addMethod(new MethodStats(0, "pack3",
-				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack3\\ClassInPack3", ic, "main(String[])",
+				System.getProperty("user.dir")+ "\\TestProject\\src\\pack3\\ClassInPack3", ic, "main(String[])",
 				3, 1, 1, 6, 1, "false", "false"));
 		ic = new ArrayList<>();
 		ic.add("ClassInPack2");
 		expected_SR.addMethod(new MethodStats(0, "pack2",
-				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack2\\ClassInPack2", ic,
+				System.getProperty("user.dir")+ "\\TestProject\\src\\pack2\\ClassInPack2", ic,
 				"getAttribute1()", 3, 1, 2, 13, 2, "false", "false"));
 		expected_SR.addMethod(new MethodStats(0, "pack2",
-				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack2\\ClassInPack2", ic,
+				 System.getProperty("user.dir")+ "\\TestProject\\src\\pack2\\ClassInPack2", ic,
 				"setAttribute1(int)", 3, 1, 2, 13, 2, "false", "false"));
 		ic = new ArrayList<>();
 		ic.add("ClassInPack1");
 		expected_SR.addMethod(new MethodStats(0, "pack1",
-				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack1\\ClassInPack1", ic,
+				System.getProperty("user.dir")+ "\\TestProject\\src\\pack1\\ClassInPack1", ic,
 				"getAttribute1()", 3, 1, 4, 23, 5, "true", "false"));
 		expected_SR.addMethod(new MethodStats(0, "pack1",
-				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack1\\ClassInPack1", ic,
+				System.getProperty("user.dir")+ "\\TestProject\\src\\pack1\\ClassInPack1", ic,
 				"setAttribute1(String)", 5, 2, 4, 23, 5, "true", "false"));
 		expected_SR.addMethod(new MethodStats(0, "pack1",
-				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack1\\ClassInPack1", ic,
+				 System.getProperty("user.dir")+ "\\TestProject\\src\\pack1\\ClassInPack1", ic,
 				"getAttribute2()", 3, 1, 4, 23, 5, "true", "false"));
 		expected_SR.addMethod(new MethodStats(0, "pack1",
-				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack1\\ClassInPack1", ic,
+				System.getProperty("user.dir")+ "\\TestProject\\src\\pack1\\ClassInPack1", ic,
 				"setAttribute2(String)", 3, 1, 4, 23, 5, "true", "false"));
 		
 		//CycloMethod test
