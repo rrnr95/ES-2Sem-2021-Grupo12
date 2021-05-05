@@ -12,3 +12,9 @@ Rui Gomes|88068|ruifogomes
 
 > Para efeitos de entrega do projeto, deve ser associada a tag **_CodeQualityAssessor-1.0_** ao último commit feito no
 branch master
+
+
+Para utilizar este software como Docker Image:
+  1) instalar VcXsrv (https://sourceforge.net/projects/vcxsrv/)
+  2) lançar o XLaunch
+  3) download da imagem que contém o projeto (docker pull antoniorodrigo92/esgrupo12codesmells)
