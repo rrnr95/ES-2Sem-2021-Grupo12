@@ -129,8 +129,13 @@ public class CycloMethod {
 	public static int cycloMethodValue(Method method) {
 		int res = 1;
 		String[] str = method.getCode().split("\r\n");
-		for(String s : str)
-			res+=lineCycloCounter(sourceCodeExtrator(s));
+		for (String s : str) {
+			if (s.contains("if") || s.contains("else") || s.contains("case") || s.contains("for") || s.contains("while")) {
+				res++;
+			}
+		}
+//		for(String s : str)
+//			res+=lineCycloCounter(sourceCodeExtrator(s));
 		return res;
 	}
 

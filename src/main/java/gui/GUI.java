@@ -150,7 +150,9 @@ public class GUI {
 	 */
 	public GUI() {
 
-		ruleManager = new RulesManager(System.getProperty("user.dir"));
+//		ruleManager = new RulesManager(System.getProperty("user.dir"));
+//		System.out.println(System.getProperty("user.dir"));
+		ruleManager = new RulesManager("/var/lib/regras");
 
 		initialize();
 	}
