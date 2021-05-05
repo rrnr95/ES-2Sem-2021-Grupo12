@@ -12,7 +12,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import backend.CycloMethod;
 import backend.FindPackages;
+import backend.Method;
+import backend.MethodUtils;
 import backend.NumberOfClassesPerFile;
 import comparer.MethodComparisson;
 import comparer.MetricComparer;
@@ -30,28 +33,35 @@ public class ProjectTests {
 	//CodeSmells test
 	private final String PATH = "C:\\Users\\Utilizador\\eclipse-workspace\\TestProject";
 	private final Rule rule = new Rule("ruleTest", 1, 20, 1, 20, 1, 20, false, 1, 20, 1, 20, true); 
-	SharedResource SR;
-	SharedResource expected_SR;
+	private SharedResource SR;
+	private SharedResource expected_SR;
+	
+	//CycloMethod test
+	
+	private final String FILE_1 = System.getProperty("user.dir")+"\\imported_project\\not_source\\src\\pckg\\TestForCycloMethod.java";
+	private List<Method> methods;
+	private List<Integer> methodsCycloValue;
+	private List<Integer> expected_methodsCycloValue;
+	private int valueWMC;
 	
 	//FindPackages test
 	
-	private static final String PATH1 = "C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship";
-	HashMap<String, String> packs;
-	HashMap<String, String> expected_packs;
+	private static final String PATH1 = "C:\\Users\\Diogo\\git\\BattleshipCodeCoverage";
+	private HashMap<String, String> packs;
+	private HashMap<String, String> expected_packs;
 	
 	//MethodComparer test
 	
-	MetricComparer mc_test;
-	List<MethodComparisson> testList;
-	HashMap<String, String> godClassDetection_test;
-	HashMap<String, String> longClassDetection_test;
+	private MetricComparer mc_test;
+	private List<MethodComparisson> testList;
+	private HashMap<String, String> godClassDetection_test;
+	private HashMap<String, String> longClassDetection_test;
 	
 	//NumberOfClassesPerFile test
 	
-	private final String FILE = "C:\\Users\\renat\\Documents\\GitHub_repository\\ES-2Sem-2021-Grupo12\\imported_project\\not_source\\src\\pckg2\\HelloWorld.java";
-	
-	List<String> classes;		
-	List<String> expected_classes;
+	private final String FILE_2 = System.getProperty("user.dir")+"\\imported_project\\not_source\\src\\pckg2\\HelloWorld.java";	
+	private List<String> classes;		
+	private List<String> expected_classes;
 	
 	
 	
@@ -93,7 +103,17 @@ public class ProjectTests {
 				"C:\\Users\\Utilizador\\eclipse-workspace\\TestProject\\src\\pack1\\ClassInPack1", ic,
 				"setAttribute2(String)", 3, 1, 4, 23, 5, "true", "false"));
 		
+		//CycloMethod test
 		
+		methods = MethodUtils.getMethodsFromFile(FILE_1);
+		methodsCycloValue = CycloMethod.allMethodsCycloValue(methods);
+		
+		expected_methodsCycloValue = new ArrayList<Integer>();
+		expected_methodsCycloValue.add(3);
+		expected_methodsCycloValue.add(3);
+		expected_methodsCycloValue.add(1);
+		
+		valueWMC = CycloMethod.wmcCalculator(methods);
 		
 		
 		//FindPackages test
@@ -135,12 +155,12 @@ public class ProjectTests {
 		testList.add(c);
 		
 		
-		godClassDetection_test = new HashMap();			
+				
 		godClassDetection_test.put(a.getCls(), "VP");
 		godClassDetection_test.put(b.getCls(), "VP");
 		godClassDetection_test.put(c.getCls(), "FP");
 		
-		longClassDetection_test = new HashMap();
+	
 		longClassDetection_test.put(a.getCls()+"."+a.getMeth(), "VN");
 		longClassDetection_test.put(b.getCls()+"."+b.getMeth(), "FP");
 		longClassDetection_test.put(c.getCls()+"."+c.getMeth(), "VN");
@@ -149,11 +169,13 @@ public class ProjectTests {
 		
 		//NumberOfClassesPerFile test
 		
-		classes = NumberOfClassesPerFile.getClassesFromFile(FILE);		
+		classes = NumberOfClassesPerFile.getClassesFromFile(FILE_2);		
 		expected_classes = new ArrayList<String>();
 		
 		expected_classes.add("HelloWorld");
 		expected_classes.add("Wtv");
+		
+		
 		
 		
 	}
@@ -173,6 +195,12 @@ public class ProjectTests {
 		assertEquals(expected_SR.getMethodStats().get(4), SR.getMethodStats().get(4));
 		assertEquals(expected_SR.getMethodStats().get(5), SR.getMethodStats().get(5));
 		assertEquals(expected_SR.getMethodStats().get(6), SR.getMethodStats().get(6));
+		
+		
+		//CycloMethod test
+		assertEquals(expected_methodsCycloValue, methodsCycloValue);
+		assertEquals(7, valueWMC);
+		
 		
 		//FindPackage test
 		
