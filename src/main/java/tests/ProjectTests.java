@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,11 +13,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import backend.ConfusionMatrix;
 import backend.CycloMethod;
 import backend.FindPackages;
+import backend.LineCounter;
 import backend.Method;
 import backend.MethodUtils;
 import backend.NumberOfClassesPerFile;
+import backend.RulesManager;
 import comparer.MethodComparisson;
 import comparer.MetricComparer;
 import extractor.CodeSmells;
@@ -50,6 +54,12 @@ public class ProjectTests {
 	private HashMap<String, String> packs;
 	private HashMap<String, String> expected_packs;
 	
+	//LineCounter test
+		private final String FILE_3 = System.getProperty("user.dir")+"\\imported_project\\not_source\\src\\pckg\\TestForLineCounter.java";
+		private List<Method> methods_testLineCounter;
+		private LineCounter testerLineCounter;
+		private int testerTotalLineCount;
+	
 	//MethodComparer test
 	
 	private MetricComparer mc_test;
@@ -63,7 +73,14 @@ public class ProjectTests {
 	private List<String> classes;		
 	private List<String> expected_classes;
 	
+	//ConfusionMatrix test
+	private ConfusionMatrix testConfMatrix;
 	
+	//RulesManager test
+	private final String RM_TEST_PATH = System.getProperty("user.dir")+"\\imported_project";
+	private RulesManager test_rm;
+	private Rule test_rule;
+	private List<Rule> expected_rules_list;
 	
 	
 	
@@ -116,12 +133,24 @@ public class ProjectTests {
 		valueWMC = CycloMethod.wmcCalculator(methods);
 		
 		
+		
+		
 		//FindPackages test
 		
 		packs = FindPackages.getPackages(PATH1);
 		expected_packs = new HashMap<String, String>();
-		expected_packs.put("tests", "C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship\\src\\tests");
-		expected_packs.put("battleship", "C:\\Users\\Utilizador\\eclipse-workspace\\BattleshipCodeCoverage-master\\Battleship\\src\\battleship");
+		expected_packs.put("test", "C:\\Users\\Diogo\\git\\BattleshipCodeCoverage\\Battleship\\src\\test");
+		expected_packs.put("battleship", "C:\\Users\\Diogo\\git\\BattleshipCodeCoverage\\Battleship\\src\\battleship");
+		
+		
+		
+		
+		//LineCounter test
+		methods_testLineCounter = MethodUtils.getMethodsFromFile(FILE_3);
+		testerLineCounter = new LineCounter();
+		testerLineCounter.countLines(FILE_3, methods_testLineCounter);
+		testerTotalLineCount = testerLineCounter.getTotalLinesCount();
+		
 		
 		
 		
@@ -155,12 +184,12 @@ public class ProjectTests {
 		testList.add(c);
 		
 		
-				
+		godClassDetection_test = new HashMap<String, String>();		
 		godClassDetection_test.put(a.getCls(), "VP");
 		godClassDetection_test.put(b.getCls(), "VP");
 		godClassDetection_test.put(c.getCls(), "FP");
 		
-	
+		longClassDetection_test = new HashMap<String, String>();	
 		longClassDetection_test.put(a.getCls()+"."+a.getMeth(), "VN");
 		longClassDetection_test.put(b.getCls()+"."+b.getMeth(), "FP");
 		longClassDetection_test.put(c.getCls()+"."+c.getMeth(), "VN");
@@ -169,15 +198,31 @@ public class ProjectTests {
 		
 		//NumberOfClassesPerFile test
 		
-		classes = NumberOfClassesPerFile.getClassesFromFile(FILE_2);		
-		expected_classes = new ArrayList<String>();
+		classes = NumberOfClassesPerFile.getClassesFromFile(FILE_2);	
 		
+		expected_classes = new ArrayList<String>();		
 		expected_classes.add("HelloWorld");
 		expected_classes.add("Wtv");
 		
 		
+		//ConfusionMatrix test
 		
+		testConfMatrix = new ConfusionMatrix();
+		testConfMatrix.setFN(2);
+		testConfMatrix.setFP(1);
+		testConfMatrix.setVN(2);
+		testConfMatrix.setVP(1);
 		
+		//RulesManager test
+		/**
+		 * Delete, if exists, .bin located in imported_project Dir before starting the test
+		 */
+		test_rm = new RulesManager(RM_TEST_PATH);
+		test_rule = new Rule("test rule",0, 10, 0, 10, 0, 10, false, 0, 10, 0, 10, false);
+		test_rm.addRuleToFile(test_rule);
+		expected_rules_list = new ArrayList();
+		expected_rules_list.add(RulesManager.DEFAULT_RULE);
+		expected_rules_list.add(test_rule);
 	}
 
 
@@ -206,7 +251,8 @@ public class ProjectTests {
 		
 		assertEquals(expected_packs, packs);
 		
-		
+		//LineCounter test
+		assertEquals(16, testerTotalLineCount);
 		
 		
 		//MethodComaprer test
@@ -242,6 +288,44 @@ public class ProjectTests {
 		assertEquals(expected_classes, classes);
 		
 		
+		
+		//ConfusionMatrix test
+		
+		assertEquals(2, testConfMatrix.getFN());
+		assertEquals(1, testConfMatrix.getFP());
+		assertEquals(2, testConfMatrix.getVN());
+		assertEquals(1, testConfMatrix.getVP());
+		
+		//RulesManager test
+		
+		try {
+			
+			List<Rule> aux_actual_rule_list = test_rm.readObjectsFromFile(); 
+			
+			for(int i=0; i<2; i++) {
+				assertEquals(expected_rules_list.get(i).getCycloMethodMin(), aux_actual_rule_list.get(i).getCycloMethodMin());
+				assertEquals(expected_rules_list.get(i).getCycloMethodMax(), aux_actual_rule_list.get(i).getCycloMethodMax());			
+				assertEquals(expected_rules_list.get(i).getLocClassMax(), aux_actual_rule_list.get(i).getLocClassMax());
+				assertEquals(expected_rules_list.get(i).getLocClassMin(), aux_actual_rule_list.get(i).getLocClassMin());				
+				assertEquals(expected_rules_list.get(i).getLocMethodMax(), aux_actual_rule_list.get(i).getLocMethodMax());
+				assertEquals(expected_rules_list.get(i).getLocMethodMin(), aux_actual_rule_list.get(i).getLocMethodMin());				
+				assertEquals(expected_rules_list.get(i).getName(), aux_actual_rule_list.get(i).getName());
+				assertEquals(expected_rules_list.get(i).getLocMethodMin(), aux_actual_rule_list.get(i).getLocMethodMin());				
+				assertEquals(expected_rules_list.get(i).getLocMethodMax(), aux_actual_rule_list.get(i).getLocMethodMax());
+				assertEquals(expected_rules_list.get(i).getNomClassMax(), aux_actual_rule_list.get(i).getNomClassMax());
+				assertEquals(expected_rules_list.get(i).getNomClassMin(), aux_actual_rule_list.get(i).getNomClassMin());
+				assertEquals(expected_rules_list.get(i).getWmcClassMax(), aux_actual_rule_list.get(i).getWmcClassMax());				
+				assertEquals(expected_rules_list.get(i).getWmcClassMin(), aux_actual_rule_list.get(i).getWmcClassMin());
+				assertEquals(expected_rules_list.get(i).isClassRulesConjunction(), aux_actual_rule_list.get(i).isClassRulesConjunction());				
+				assertEquals(expected_rules_list.get(i).isMethodRulesConjunction(), aux_actual_rule_list.get(i).isMethodRulesConjunction());
+			}
+			
+			
+			
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
