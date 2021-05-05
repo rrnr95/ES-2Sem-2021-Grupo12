@@ -90,7 +90,7 @@ public class ProjectTests {
 				 System.getProperty("user.dir")+ "\\TestProject\\src\\pack1\\ClassInPack1", ic,
 				"getAttribute2()", 3, 1, 4, 23, 5, "true", "false"));
 		expected_SR.addMethod(new MethodStats(0, "pack1",
-				"pack1", System.getProperty("user.dir")+ "\\TestProject\\src\\pack1\\ClassInPack1, ic,
+				System.getProperty("user.dir")+ "\\TestProject\\src\\pack1\\ClassInPack1", ic,
 				"setAttribute2(String)", 3, 1, 4, 23, 5, "true", "false"));
 		
 		
