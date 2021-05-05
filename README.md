@@ -18,4 +18,7 @@ branch master
 <strong>Para utilizar este software como Docker Image</strong>:<br>
   1) instalar VcXsrv (https://sourceforge.net/projects/vcxsrv/)<br>
   2) lançar o XLaunch<br>
-  3) download da imagem que contém o projeto (docker pull antoniorodrigo92/esgrupo12codesmells)
+  3) download da imagem que contém o projeto (docker pull antoniorodrigo92/esgrupo12codesmells)<br>
+  4) correr a imagem:<br>
+        CMD: docker run antoniorodrigo92/esgrupo12codesmells<br>
+        Docker Desktop: selecionar RUN na imagem desejada 
