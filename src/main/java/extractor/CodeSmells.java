@@ -26,7 +26,7 @@ public class CodeSmells {
 	public static SharedResource init(String path,Rule rule)  {
 		SharedResource metodos = new SharedResource();
 		analyse(path, metodos, rule);
-		WriteToXLSX.exportToExcel(path + "\\smells.xlsx", metodos);
+		WriteToXLSX.exportToExcel(path + "/smells.xlsx", metodos);
 		return metodos;
 	}
 

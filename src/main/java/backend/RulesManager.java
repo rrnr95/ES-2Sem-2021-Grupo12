@@ -32,7 +32,7 @@ public class RulesManager {
 	 */
 	
 	public RulesManager(String path) {
-		path+= "\\stored_rules.bin";
+		path+= "/stored_rules.bin";
 		stored_rules = new File(path);
 		if(!stored_rules.exists())
 			initFile();

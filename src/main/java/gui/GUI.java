@@ -352,7 +352,7 @@ public class GUI {
         	
 			try {
 				cleanFrame();
-	            File excelFile = new File(project.getAbsolutePath() + "\\smells.xlsx");
+	            File excelFile = new File(project.getAbsolutePath() + "/smells.xlsx");
 	            
 	            excelFIS = new FileInputStream(excelFile);
 	            excelBIS = new BufferedInputStream(excelFIS);
@@ -1098,7 +1098,7 @@ public class GUI {
 
 	private MetricComparer buildMetricComparer() {
 		String CodeSmellsBaseline = code_smells_path.getText();
-		String CodeSmellsCalculated = txtf_path.getText()  + "\\smells.xlsx";
+		String CodeSmellsCalculated = txtf_path.getText()  + "/smells.xlsx";
 		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
 		return mc;
 	}

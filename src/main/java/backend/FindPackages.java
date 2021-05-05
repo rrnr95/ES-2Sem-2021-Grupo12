@@ -45,7 +45,7 @@ public class FindPackages {
 		}
 		
 		//começar o teste desde o src (evitar procuras indevidas)
-		pilha.push(getFile(root + "\\src"));
+		pilha.push(getFile(root + "/src"));
 
 		while (!pilha.empty()) {
 			File f = pilha.pop();
