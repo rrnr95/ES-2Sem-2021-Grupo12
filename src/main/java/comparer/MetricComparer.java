@@ -65,7 +65,6 @@ public class MetricComparer {
 	            XSSFSheet excelSheet_baseline = excelImportToJTable_baseline.getSheetAt(0);
 	            
 				for (int row = 1; row <= excelSheet_smells.getLastRowNum(); row++) {
-					//System.out.println("formPairs: dentro do for");
 					XSSFRow excelRow = excelSheet_smells.getRow(row);
 					
 					MethodComparisson mc = methodComparer.createMethodComparisson(excelRow, excelSheet_baseline);

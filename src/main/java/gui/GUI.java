@@ -304,7 +304,6 @@ public class GUI {
 		if (project.exists()) {
 
 			SharedResource rp;
-			System.out.println(project.getAbsolutePath());
 				rp = CodeSmells.init(project.getAbsolutePath(), selectedRule);
 
 			cleanFrame();
@@ -882,7 +881,6 @@ public class GUI {
 	        	selectedRule = (Rule)guiRuleList.getSelectedValue();
 	        	currentRuleLabel.setText("Current Rule: " + selectedRule.getRuleName());
 	        	ruleDescriptionField.setText(selectedRule.printPrettyCondition());
-	            System.out.println(guiRuleList.getSelectedValue().toString());
 
 	        }
 	    });
