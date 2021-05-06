@@ -42,3 +42,4 @@ o botão <strong><i>Classification Quality</i></strong> irá apresentar uma matr
   <li> caso pretenda regras persistentes: docker run -v C:\Users:/C -v regras:/var/lib/regras antoniorodrigo92/esgrupo12codesmells </li>
   </ul>
   <br>
+  <strong><u>Nota</u>:</strong> esta imagem docker serve apenas para efeitos demonstrativos, visto carecer de testagem.
