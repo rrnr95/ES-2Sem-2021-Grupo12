@@ -21,7 +21,7 @@ public class RulesManager {
 	
 	
 	private File stored_rules;
-	private static Rule DEFAULT_RULE = new Rule("Default", 0,10,0,10,0,10,false,0,10,0,10,false);
+	public static Rule DEFAULT_RULE = new Rule("Default", 0,10,0,10,0,10,false,0,10,0,10,false);
 
 	/**
 	 * Contructor
