@@ -52,7 +52,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
-//TODO rp to sr refactor 
+
 /**
  * 			Class that represents the Graphical User Interface
  * @author 	ES-2Sem-2021-Grupo12
