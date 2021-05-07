@@ -1,0 +1,37 @@
+gui.GUI	private void btnCalculateMetrics() throws java.awt.HeadlessException	btnCalculateMetrics	B1	0/32
+gui.GUI	private void btnCalculateMetrics() throws java.awt.HeadlessException	btnFetchXLSX	B1	0/32
+tests.ProjectTests	public void setUp() throws java.lang.Exception	a	B1	0/8
+gui.GUI	protected void showClassificationQualityPressed() 	lblActual1_1	B1	0/5
+gui.GUI	protected void showClassificationQualityPressed() 	lblActual2_1	B1	0/5
+gui.GUI	private void addTableScrollPane(java.lang.Object[], java.lang.Object[][]) 	scrollPane	B1	0/4
+gui.GUI	private void initialize() 	btnClassQuality	B1	0/4
+gui.GUI	private void initialize() 	btnFetchXLSX	B1	0/4
+gui.GUI	private void initialize() 	btnRules	B1	0/4
+gui.GUI	private void initialize() 	btn_folder	B1	0/4
+gui.GUI	private void initialize() 	frmExtractMetrics	B1	0/4
+gui.GUI	private void initialize() 	panel	B1	0/4
+gui.GUI	private void initialize() 	panelAddRules	B1	0/4
+gui.GUI	private void initialize() 	panel_matrix	B1	0/4
+gui.GUI	private void initialize() 	txtf_path	B1	0/4
+gui.GUI	protected void showClassificationQualityPressed() 	lblGodClass1_1	B1	0/4
+gui.GUI	protected void showClassificationQualityPressed() 	lblLongMethod1_1	B1	0/4
+gui.GUI	protected void showClassificationQualityPressed() 	lblPredicted1_1	B1	0/4
+gui.GUI	protected void showClassificationQualityPressed() 	lblPredicted2_1	B1	0/4
+gui.GUI	protected void showClassificationQualityPressed() 	lblSideFalse1_1	B1	0/3
+gui.GUI	protected void showClassificationQualityPressed() 	lblSideFalse2_1	B1	0/3
+gui.GUI	protected void showClassificationQualityPressed() 	lblSideTrue1_1	B1	0/3
+gui.GUI	protected void showClassificationQualityPressed() 	lblSideTrue2_1	B1	0/3
+gui.GUI	protected void showClassificationQualityPressed() 	lblTopFalse1_1	B1	0/3
+gui.GUI	protected void showClassificationQualityPressed() 	lblTopFalse2_1	B1	0/3
+gui.GUI	protected void showClassificationQualityPressed() 	lblTopTrue1_1	B1	0/3
+gui.GUI	protected void showClassificationQualityPressed() 	lblTopTrue2_1	B1	0/3
+tests.ProjectTests	public void setUp() throws java.lang.Exception	b	B1	0/3
+tests.ProjectTests	public void setUp() throws java.lang.Exception	c	B1	0/3
+tests.ProjectTests	public void setUp() throws java.lang.Exception	expected_packs	B1	0/3
+gui.GUI	private void addTableScrollPane(java.lang.Object[], java.lang.Object[][]) 	table	B1	0/2
+gui.GUI	private void removeJComp(javax.swing.JComponent) 	frmExtractMetrics	B2	0/2
+gui.GUI	private void removeJComp(javax.swing.JComponent) 	jComp	B1	1/2
+gui.GUI	protected void showClassificationQualityPressed() 	lblCorrectness	B1	5/10
+gui.GUI	protected void showClassificationQualityPressed() 	lblErrors	B1	5/10
+gui.GUI	protected void showClassificationQualityPressed() 	table_matrix1	B1	6/10
+gui.GUI	protected void showClassificationQualityPressed() 	table_matrix2	B1	6/10
