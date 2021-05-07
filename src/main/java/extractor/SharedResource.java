@@ -80,9 +80,16 @@ public class SharedResource {
 	 */
 	private int getLinesOfCode() {
 		int linesOfCode = 0;
+		String prev_class = "";
+		
 		for (MethodStats ms : sharedResource) {
-			int lines = ms.getLOC_method();
-			linesOfCode += lines;
+			String curr_class = ms.getCls();
+			
+			if (!curr_class.equals(prev_class)) {
+				int lines = ms.getLOC_class();
+				linesOfCode += lines;
+				prev_class = curr_class;
+			}	
 		}
 		return linesOfCode;
 	}
