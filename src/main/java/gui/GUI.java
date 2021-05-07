@@ -30,6 +30,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -130,7 +131,7 @@ public class GUI {
 	private JLabel lblSideFalse2_1;
 	private JButton closeBtn_matrix;
 	
-	
+	private ArrayList<JComponent> metrics;
 	
 
 
@@ -556,43 +557,54 @@ public class GUI {
 		JLabel lblGodClass = lblGodClass();
 		panelAddRules.add(lblGodClass);
 		
+		metrics = new ArrayList<>();
+		
 		chckbxNOM_class = new JCheckBox("NOM_class:");
+		metrics.add(chckbxNOM_class);
 		chckbxNOM_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxNOM_class.setBounds(123, 115, 97, 23);
 		panelAddRules.add(chckbxNOM_class);
 		
 		chckbxLOC_class = new JCheckBox("LOC_class:");
+		metrics.add(chckbxLOC_class);
 		chckbxLOC_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxLOC_class.setBounds(123, 153, 97, 23);
 		panelAddRules.add(chckbxLOC_class);
 		
 		chckbxWMC_class = new JCheckBox("WMC_class:");
+		metrics.add(chckbxWMC_class);
 		chckbxWMC_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxWMC_class.setBounds(123, 190, 97, 23);
 		panelAddRules.add(chckbxWMC_class);
 		
+
 		txtNOMmin = new JTextField();
+		metrics.add(txtNOMmin);
 		txtNOMmin.setToolTipText("");
 		txtNOMmin.setBounds(248, 117, 86, 20);
 		panelAddRules.add(txtNOMmin);
 		txtNOMmin.setColumns(10);
 		
 		txtLOC_class_min = new JTextField();
+		metrics.add(txtLOC_class_min);
 		txtLOC_class_min.setBounds(248, 155, 86, 20);
 		panelAddRules.add(txtLOC_class_min);
 		txtLOC_class_min.setColumns(10);
 		
 		txtWMCmin = new JTextField();
+		metrics.add(txtWMCmin);
 		txtWMCmin.setBounds(248, 192, 86, 20);
 		panelAddRules.add(txtWMCmin);
 		txtWMCmin.setColumns(10);
 		
 		rdbtnAND_GOD_CLASS = new JRadioButton("AND", true);
+		metrics.add(rdbtnAND_GOD_CLASS);
 		rdbtnAND_GOD_CLASS.setActionCommand("AND");
 		rdbtnAND_GOD_CLASS.setBounds(600, 116, 60, 23);
 		panelAddRules.add(rdbtnAND_GOD_CLASS);
 		
 		rdbtnOR_GOD_CLASS = new JRadioButton("OR");
+		metrics.add(rdbtnOR_GOD_CLASS);
 		rdbtnOR_GOD_CLASS.setActionCommand("OR");
 		rdbtnOR_GOD_CLASS.setBounds(600, 154, 60, 23);
 		panelAddRules.add(rdbtnOR_GOD_CLASS);
@@ -608,18 +620,21 @@ public class GUI {
 		panelAddRules.add(lbMin);
 		
 		txtNOMmax = new JTextField();
+		metrics.add(txtNOMmax);
 		txtNOMmax.setToolTipText("");
 		txtNOMmax.setColumns(10);
 		txtNOMmax.setBounds(344, 117, 86, 20);
 		panelAddRules.add(txtNOMmax);
 		
 		txtLOC_class_max = new JTextField();
+		metrics.add(txtLOC_class_max);
 		txtLOC_class_max.setToolTipText("");
 		txtLOC_class_max.setColumns(10);
 		txtLOC_class_max.setBounds(344, 155, 86, 20);
 		panelAddRules.add(txtLOC_class_max);
 		
 		txtWMCmax = new JTextField();
+		metrics.add(txtWMCmax);
 		txtWMCmax.setToolTipText("");
 		txtWMCmax.setColumns(10);
 		txtWMCmax.setBounds(344, 192, 86, 20);
@@ -640,34 +655,40 @@ public class GUI {
 		panelAddRules.add(lblSelectMetrics_1);
 		
 		chckbxLOC_method = new JCheckBox("LOC_method:");
+		metrics.add(chckbxLOC_method);
 		chckbxLOC_method.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxLOC_method.setBounds(123, 352, 119, 23);
 		panelAddRules.add(chckbxLOC_method);
 		
 		chckbxCYCLO_method = new JCheckBox("CYCLO_method:");
+		metrics.add(chckbxCYCLO_method);
 		chckbxCYCLO_method.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxCYCLO_method.setBounds(123, 388, 119, 23);
 		panelAddRules.add(chckbxCYCLO_method);
 		
 		txtLOC_method_min = new JTextField();
+		metrics.add(txtLOC_method_min);
 		txtLOC_method_min.setToolTipText("");
 		txtLOC_method_min.setColumns(10);
 		txtLOC_method_min.setBounds(248, 354, 86, 20);
 		panelAddRules.add(txtLOC_method_min);
 		
 		txtLOC_method_max = new JTextField();
+		metrics.add(txtLOC_method_max);
 		txtLOC_method_max.setToolTipText("");
 		txtLOC_method_max.setColumns(10);
 		txtLOC_method_max.setBounds(344, 354, 86, 20);
 		panelAddRules.add(txtLOC_method_max);
 		
 		txtCYCLOmin = new JTextField();
+		metrics.add(txtCYCLOmin);
 		txtCYCLOmin.setToolTipText("");
 		txtCYCLOmin.setColumns(10);
 		txtCYCLOmin.setBounds(248, 390, 86, 20);
 		panelAddRules.add(txtCYCLOmin);
 		
 		txtCYCLOmax = new JTextField();
+		metrics.add(txtCYCLOmax);
 		txtCYCLOmax.setToolTipText("");
 		txtCYCLOmax.setColumns(10);
 		txtCYCLOmax.setBounds(344, 390, 86, 20);
@@ -683,11 +704,13 @@ public class GUI {
 		panelAddRules.add(lblLogicOperators_1);
 		
 		rdbtnAND_LONG_METHOD = new JRadioButton("AND", true);
+		metrics.add(rdbtnAND_LONG_METHOD);
 		rdbtnAND_LONG_METHOD.setActionCommand("AND");
 		rdbtnAND_LONG_METHOD.setBounds(600, 353, 60, 23);
 		panelAddRules.add(rdbtnAND_LONG_METHOD);
 		
 		rdbtnOR_LONG_METHOD = new JRadioButton("OR");
+		metrics.add(rdbtnOR_LONG_METHOD);
 		rdbtnOR_LONG_METHOD.setActionCommand("OR");
 		rdbtnOR_LONG_METHOD.setBounds(600, 389, 60, 23);
 		panelAddRules.add(rdbtnOR_LONG_METHOD);
@@ -731,6 +754,7 @@ public class GUI {
 		panelAddRules.add(lblRuleName);
 		
 		txtRuleName = new JTextField();
+		metrics.add(txtRuleName);
 		txtRuleName.setToolTipText("");
 		txtRuleName.setColumns(10);
 		txtRuleName.setBounds(165, 474, 180, 20);
@@ -1218,6 +1242,10 @@ public class GUI {
 		return true;
 	}
 	
+	/**
+	 * 			Checks if there is any rule selected
+	 * @return
+	 */
 	private boolean validRuleSelection() {
 		return chckbxNOM_class.isSelected() 
 				|| chckbxLOC_class.isSelected() 
@@ -1226,7 +1254,9 @@ public class GUI {
 				|| chckbxCYCLO_method.isSelected();
 	}
 	
-	
+	/**
+	 * Clean frame
+	 */
 	private void cleanFrame() {
 		frmExtractMetrics();
 	}
@@ -1235,29 +1265,29 @@ public class GUI {
 	 * Extract metrics
 	 */
 	private void frmExtractMetrics() {
-		methodToName(table);
-		methodToName(scrollPane);
-		methodToName(btnAddRule);
-		methodToName(btnConfirmRule);
-		methodToName(btnAddRule);
-		methodToName(ruleDescriptionField);
-		methodToName(table_matrix1);
-		methodToName(table_matrix2);
-		methodToName(lblGodClass1_1);
-		methodToName(lblLongMethod1_1);
-		methodToName(lblTopTrue1_1);
-		methodToName(lblTopFalse1_1);
-		methodToName(lblSideTrue1_1);
-		methodToName(lblSideFalse1_1);
-		methodToName(lblPredicted1_1);
-		methodToName(lblActual1_1);
-		methodToName(lblPredicted2_1);
-		methodToName(lblTopTrue2_1);
-		methodToName(lblTopFalse2_1);
-		methodToName(lblSideTrue2_1);
-		methodToName(lblActual2_1);
-		methodToName(lblSideFalse2_1);
-		methodToName(closeBtn_matrix);
+		removeJComp(table);
+		removeJComp(scrollPane);
+		removeJComp(btnAddRule);
+		removeJComp(btnConfirmRule);
+		removeJComp(btnAddRule);
+		removeJComp(ruleDescriptionField);
+		removeJComp(table_matrix1);
+		removeJComp(table_matrix2);
+		removeJComp(lblGodClass1_1);
+		removeJComp(lblLongMethod1_1);
+		removeJComp(lblTopTrue1_1);
+		removeJComp(lblTopFalse1_1);
+		removeJComp(lblSideTrue1_1);
+		removeJComp(lblSideFalse1_1);
+		removeJComp(lblPredicted1_1);
+		removeJComp(lblActual1_1);
+		removeJComp(lblPredicted2_1);
+		removeJComp(lblTopTrue2_1);
+		removeJComp(lblTopFalse2_1);
+		removeJComp(lblSideTrue2_1);
+		removeJComp(lblActual2_1);
+		removeJComp(lblSideFalse2_1);
+		removeJComp(closeBtn_matrix);
 	}
 	
 	//####################################################################################
@@ -1271,41 +1301,20 @@ public class GUI {
 		}
 	}
 	
-	//####################################################################################
+	/**
+	 * Clear extracted metrics
+	 */
 	private void frmClearExtractMetrics() {
-		methodToName(txtNOMmin);
-		methodToName(txtLOC_class_min);
-		methodToName(txtWMCmin);
-		methodToName(txtNOMmax);
-		methodToName(txtLOC_class_max);
-		methodToName(txtWMCmax);
-		methodToName(chckbxLOC_method);
-		methodToName(chckbxCYCLO_method);
-		methodToName(txtLOC_method_min);	
-		methodToName(txtLOC_method_max);
-		methodToName(txtCYCLOmin);
-		methodToName(txtCYCLOmax);
-		methodToName(rdbtnAND_GOD_CLASS);
-		methodToName(rdbtnOR_GOD_CLASS);
-		methodToName(rdbtnAND_LONG_METHOD);
-		methodToName(rdbtnOR_LONG_METHOD);
-		methodToName(chckbxNOM_class);
-		methodToName(chckbxLOC_class);
-		methodToName(chckbxWMC_class);
-		methodToName(txtRuleName);
-	}
-
-	private void txtRuleName() {
-		if (txtRuleName != null) {
-			txtRuleName.setVisible(false);
+		for (JComponent m : metrics) {
+			removeJComp(m);
 		}
 	}
 
 	//TODO name this
-	private void methodToName(JComponent jCheck) {
-		if (jCheck != null) {
-			jCheck.setVisible(false);
-			frmExtractMetrics.remove(jCheck);
+	private void removeJComp(JComponent jComp) {
+		if (jComp != null) {
+			jComp.setVisible(false);
+			frmExtractMetrics.remove(jComp);
 		}
 	}
 }
