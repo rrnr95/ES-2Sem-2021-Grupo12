@@ -30,6 +30,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -45,13 +46,18 @@ import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 //TODO rp to sr refactor 
-
+/**
+ * 			Class that represents the Graphical User Interface
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class GUI {
 
 	private static JFrame frmExtractMetrics;
@@ -125,8 +131,8 @@ public class GUI {
 	private JLabel lblSideFalse2_1;
 	private JButton closeBtn_matrix;
 	
-	
-	
+	private ArrayList<JComponent> ruleAdditionInterface;
+	private ArrayList<JComponent> confusionMatrixComponents;
 
 
 	/**
@@ -168,22 +174,29 @@ public class GUI {
 		panelAddRules = new JPanel();	
 		
 	}
-
+	
+	//####################################################################################
 	private void btnClassQuality() throws HeadlessException {
 		btnRules();
 		btnClassQuality.setBounds(710, 512, 200, 23);
 	}
-
+	
+	//####################################################################################
 	private void btnRules() throws HeadlessException {
 		btnFetchXLSX();
 		btnRules.setBounds(470, 540, 140, 23);
 	}
-
+	
+	//####################################################################################
 	private void btnFetchXLSX() throws HeadlessException {
 		btnCalculateMetrics();
 		btnFetchXLSX.setBounds(620, 540, 140, 23);
 	}
-
+	
+	/**
+	 * 			Button to calculate metrics
+	 * @throws 	HeadlessException
+	 */
 	private void btnCalculateMetrics() throws HeadlessException {
 		try {
 			selectedRule = ruleManager.readObjectsFromFile().get(0);
@@ -241,12 +254,18 @@ public class GUI {
 		});
 		panel.add(btnClassQuality);
 	}
-
+	
+	/**
+	 * Creates Button to select project location
+	 */
 	private void buildBtn_folder() {
 		btn_folder = new JButton("Folder");
 		btn_folder.setBounds(250, 540, 74, 23);
 	}
-
+	
+	/**
+	 * Set text folder path display characteristics
+	 */
 	private void txtf_path() {
 		txtf_path = new JTextField();
 		txtf_path.setBounds(10, 541, 232, 20);
@@ -254,7 +273,14 @@ public class GUI {
 		txtf_path.setColumns(10);
 	}
 
-	
+	/**
+	 * 			Listener of Button to select project location
+	 * 			Prompts for project path location
+	 * 			Adds the selected path to path display
+	 * @param 	btn
+	 * @param 	tf
+	 * 			Path display
+	 */
 	private static void addChooseListener(JButton btn, final JTextField tf) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -276,6 +302,14 @@ public class GUI {
 		});
 	}
 	
+	/**
+	 * 			Listener of Button of Classification Quality
+	 * 			Prompts for file path location
+	 * 			Adds the selected path to path display
+	 * @param 	btn
+	 * @param 	tf
+	 * 			File path display
+	 */
 	private static void addChooseListenerXLSX(JButton btn, final JTextField tf) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -297,7 +331,9 @@ public class GUI {
 		});
 	}
 	
-	
+	/**
+	 * 	Calculates Metrics
+	 */
 	private void calculateMetricsPressed() {
 		
 		File project = new File(txtf_path.getText());
@@ -306,7 +342,7 @@ public class GUI {
 			SharedResource rp;
 				rp = CodeSmells.init(project.getAbsolutePath(), selectedRule);
 
-			cleanFrame();
+			clearFrame();
 			printCalculatedMetrics(rp);
 			
 		} else {
@@ -317,19 +353,30 @@ public class GUI {
 		frmExtractMetrics.setCursor(Cursor.getDefaultCursor());
 	}
 	
-	
+	/**
+	 * 			Adds calculated metrics to panel
+	 * @param 	rp
+	 */
 	private void printCalculatedMetrics(SharedResource rp) {
 		scrollPane(rp);
 		panel.add(scrollPane);
 		
 	}
-
+	
+	/**
+	 * 			Create scroll panel with table, based on methods' statistics of the project
+	 * @param 	rp
+	 */
 	private void scrollPane(SharedResource rp) {
 		table(rp);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 500);
 	}
-
+	
+	/**
+	 * 			Creates the table with project info
+	 * @param 	rp
+	 */
 	private void table(SharedResource rp) {
 		Object[] columnNames = { "Nº total packages", "Nº total de classes", "Nº total de metodos",
 				"Nº total de linhas de codigo" };
@@ -340,7 +387,9 @@ public class GUI {
 		table.setEnabled(false);
 	}
 	
-	
+	/**
+	 * Shows xlsx file
+	 */
 	private void showXLSXPressed() {
 		File project = new File(txtf_path.getText());
 		     
@@ -350,7 +399,7 @@ public class GUI {
 	        XSSFWorkbook excelImportToJTable = null;
         	
 			try {
-				cleanFrame();
+				clearFrame();
 	            File excelFile = new File(project.getAbsolutePath() + "\\smells.xlsx");
 	            
 	            excelFIS = new FileInputStream(excelFile);
@@ -417,26 +466,29 @@ public class GUI {
         	JOptionPane.showMessageDialog(null,"Diretoria Desconhecida");
         }
 	}
-
+	
+	//####################################################################################
 	private void addTableScrollPane(Object[] header, Object[][] data) {
 		tableToScrollPane(header, data);
 		panel.add(scrollPane);
 	}
-
+	//####################################################################################
 	private void tableToScrollPane(Object[] header, Object[][] data) {
 		buildTable(header, data);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 500);
 	}
-
+	//####################################################################################
 	private void buildTable(Object[] header, Object[][] data) {
 		table = new JTable(data, header);
 		table.setEnabled(false);
 	}
 	
-	
+	/**
+	 * 	Show Rules
+	 */
 	private void showRulesPressed() {
-		cleanFrame();
+		clearFrame();
 		panelAddRules.setVisible(false);
 		panel_matrix.setVisible(false);
 		panel.setVisible(true);
@@ -486,9 +538,11 @@ public class GUI {
 		panel.repaint();
 	}
 	
-	
+	/**
+	 * 	Show add rules interface
+	 */
 	private void addRulePressed() {
-		cleanFrame();
+		clearFrame();
 		clearAddRules();
 		panel.setVisible(false);
 		
@@ -502,43 +556,54 @@ public class GUI {
 		JLabel lblGodClass = lblGodClass();
 		panelAddRules.add(lblGodClass);
 		
+		ruleAdditionInterface = new ArrayList<>();
+		
 		chckbxNOM_class = new JCheckBox("NOM_class:");
+		ruleAdditionInterface.add(chckbxNOM_class);
 		chckbxNOM_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxNOM_class.setBounds(123, 115, 97, 23);
 		panelAddRules.add(chckbxNOM_class);
 		
 		chckbxLOC_class = new JCheckBox("LOC_class:");
+		ruleAdditionInterface.add(chckbxLOC_class);
 		chckbxLOC_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxLOC_class.setBounds(123, 153, 97, 23);
 		panelAddRules.add(chckbxLOC_class);
 		
 		chckbxWMC_class = new JCheckBox("WMC_class:");
+		ruleAdditionInterface.add(chckbxWMC_class);
 		chckbxWMC_class.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxWMC_class.setBounds(123, 190, 97, 23);
 		panelAddRules.add(chckbxWMC_class);
 		
+
 		txtNOMmin = new JTextField();
+		ruleAdditionInterface.add(txtNOMmin);
 		txtNOMmin.setToolTipText("");
 		txtNOMmin.setBounds(248, 117, 86, 20);
 		panelAddRules.add(txtNOMmin);
 		txtNOMmin.setColumns(10);
 		
 		txtLOC_class_min = new JTextField();
+		ruleAdditionInterface.add(txtLOC_class_min);
 		txtLOC_class_min.setBounds(248, 155, 86, 20);
 		panelAddRules.add(txtLOC_class_min);
 		txtLOC_class_min.setColumns(10);
 		
 		txtWMCmin = new JTextField();
+		ruleAdditionInterface.add(txtWMCmin);
 		txtWMCmin.setBounds(248, 192, 86, 20);
 		panelAddRules.add(txtWMCmin);
 		txtWMCmin.setColumns(10);
 		
 		rdbtnAND_GOD_CLASS = new JRadioButton("AND", true);
+		ruleAdditionInterface.add(rdbtnAND_GOD_CLASS);
 		rdbtnAND_GOD_CLASS.setActionCommand("AND");
 		rdbtnAND_GOD_CLASS.setBounds(600, 116, 60, 23);
 		panelAddRules.add(rdbtnAND_GOD_CLASS);
 		
 		rdbtnOR_GOD_CLASS = new JRadioButton("OR");
+		ruleAdditionInterface.add(rdbtnOR_GOD_CLASS);
 		rdbtnOR_GOD_CLASS.setActionCommand("OR");
 		rdbtnOR_GOD_CLASS.setBounds(600, 154, 60, 23);
 		panelAddRules.add(rdbtnOR_GOD_CLASS);
@@ -554,18 +619,21 @@ public class GUI {
 		panelAddRules.add(lbMin);
 		
 		txtNOMmax = new JTextField();
+		ruleAdditionInterface.add(txtNOMmax);
 		txtNOMmax.setToolTipText("");
 		txtNOMmax.setColumns(10);
 		txtNOMmax.setBounds(344, 117, 86, 20);
 		panelAddRules.add(txtNOMmax);
 		
 		txtLOC_class_max = new JTextField();
+		ruleAdditionInterface.add(txtLOC_class_max);
 		txtLOC_class_max.setToolTipText("");
 		txtLOC_class_max.setColumns(10);
 		txtLOC_class_max.setBounds(344, 155, 86, 20);
 		panelAddRules.add(txtLOC_class_max);
 		
 		txtWMCmax = new JTextField();
+		ruleAdditionInterface.add(txtWMCmax);
 		txtWMCmax.setToolTipText("");
 		txtWMCmax.setColumns(10);
 		txtWMCmax.setBounds(344, 192, 86, 20);
@@ -586,34 +654,40 @@ public class GUI {
 		panelAddRules.add(lblSelectMetrics_1);
 		
 		chckbxLOC_method = new JCheckBox("LOC_method:");
+		ruleAdditionInterface.add(chckbxLOC_method);
 		chckbxLOC_method.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxLOC_method.setBounds(123, 352, 119, 23);
 		panelAddRules.add(chckbxLOC_method);
 		
 		chckbxCYCLO_method = new JCheckBox("CYCLO_method:");
+		ruleAdditionInterface.add(chckbxCYCLO_method);
 		chckbxCYCLO_method.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxCYCLO_method.setBounds(123, 388, 119, 23);
 		panelAddRules.add(chckbxCYCLO_method);
 		
 		txtLOC_method_min = new JTextField();
+		ruleAdditionInterface.add(txtLOC_method_min);
 		txtLOC_method_min.setToolTipText("");
 		txtLOC_method_min.setColumns(10);
 		txtLOC_method_min.setBounds(248, 354, 86, 20);
 		panelAddRules.add(txtLOC_method_min);
 		
 		txtLOC_method_max = new JTextField();
+		ruleAdditionInterface.add(txtLOC_method_max);
 		txtLOC_method_max.setToolTipText("");
 		txtLOC_method_max.setColumns(10);
 		txtLOC_method_max.setBounds(344, 354, 86, 20);
 		panelAddRules.add(txtLOC_method_max);
 		
 		txtCYCLOmin = new JTextField();
+		ruleAdditionInterface.add(txtCYCLOmin);
 		txtCYCLOmin.setToolTipText("");
 		txtCYCLOmin.setColumns(10);
 		txtCYCLOmin.setBounds(248, 390, 86, 20);
 		panelAddRules.add(txtCYCLOmin);
 		
 		txtCYCLOmax = new JTextField();
+		ruleAdditionInterface.add(txtCYCLOmax);
 		txtCYCLOmax.setToolTipText("");
 		txtCYCLOmax.setColumns(10);
 		txtCYCLOmax.setBounds(344, 390, 86, 20);
@@ -629,11 +703,13 @@ public class GUI {
 		panelAddRules.add(lblLogicOperators_1);
 		
 		rdbtnAND_LONG_METHOD = new JRadioButton("AND", true);
+		ruleAdditionInterface.add(rdbtnAND_LONG_METHOD);
 		rdbtnAND_LONG_METHOD.setActionCommand("AND");
 		rdbtnAND_LONG_METHOD.setBounds(600, 353, 60, 23);
 		panelAddRules.add(rdbtnAND_LONG_METHOD);
 		
 		rdbtnOR_LONG_METHOD = new JRadioButton("OR");
+		ruleAdditionInterface.add(rdbtnOR_LONG_METHOD);
 		rdbtnOR_LONG_METHOD.setActionCommand("OR");
 		rdbtnOR_LONG_METHOD.setBounds(600, 389, 60, 23);
 		panelAddRules.add(rdbtnOR_LONG_METHOD);
@@ -677,83 +753,85 @@ public class GUI {
 		panelAddRules.add(lblRuleName);
 		
 		txtRuleName = new JTextField();
+		ruleAdditionInterface.add(txtRuleName);
 		txtRuleName.setToolTipText("");
 		txtRuleName.setColumns(10);
 		txtRuleName.setBounds(165, 474, 180, 20);
 		panelAddRules.add(txtRuleName);
 		
 	}
-
+	
+	//####################################################################################
 	private JLabel lblSelectMetrics_1() {
 		JLabel lblSelectMetrics_1 = new JLabel("Select the desired metrics:");
 		lblSelectMetrics_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblSelectMetrics_1.setBounds(47, 313, 173, 16);
 		return lblSelectMetrics_1;
 	}
-
+	//####################################################################################
 	private JLabel lblSelectMetrics() {
 		JLabel lblSelectMetrics = new JLabel("Select the desired metrics:");
 		lblSelectMetrics.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblSelectMetrics.setBounds(47, 77, 173, 16);
 		return lblSelectMetrics;
 	}
-
+	//####################################################################################
 	private JLabel lblRuleName() {
 		JLabel lblRuleName = new JLabel("Name of the Rule:");
 		lblRuleName.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblRuleName.setBounds(47, 471, 152, 23);
 		return lblRuleName;
 	}
-
+	//####################################################################################
 	private JLabel lblMin_1() {
 		JLabel lblMin_1 = new JLabel("Minimum");
 		lblMin_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMin_1.setBounds(266, 327, 54, 16);
 		return lblMin_1;
 	}
-
+	//####################################################################################
 	private JLabel lblMax_1() {
 		JLabel lblMax_1 = new JLabel("Maximum");
 		lblMax_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMax_1.setBounds(359, 327, 54, 16);
 		return lblMax_1;
 	}
-
+	//####################################################################################
 	private JLabel lblMax() {
 		JLabel lblMax = new JLabel("Maximum");
 		lblMax.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMax.setBounds(359, 90, 54, 16);
 		return lblMax;
 	}
-
+	//####################################################################################
 	private JLabel lblLongMethod() {
 		JLabel lblLongMethod = new JLabel("LONG_METHOD");
 		lblLongMethod.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblLongMethod.setBounds(47, 274, 122, 16);
 		return lblLongMethod;
 	}
-
+	//####################################################################################
 	private JLabel lblLogicOperators_1() {
 		JLabel lblLogicOperators_1 = new JLabel("Select the desired logic operator:");
 		lblLogicOperators_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblLogicOperators_1.setBounds(548, 315, 202, 16);
 		return lblLogicOperators_1;
 	}
-
+	//####################################################################################
 	private JLabel lblLogicOperators() {
 		JLabel lblLogicOperators = new JLabel("Select the desired logic operator:");
 		lblLogicOperators.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblLogicOperators.setBounds(548, 77, 202, 16);
 		return lblLogicOperators;
 	}
-
+	//####################################################################################
 	private JLabel lblGodClass() {
 		JLabel lblGodClass = new JLabel("GOD_CLASS");
 		lblGodClass.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblGodClass.setBounds(47, 35, 94, 16);
 		return lblGodClass;
 	}
-
+	//####################################################################################
 	private JLabel lbMin() {
 		JLabel lbMin = new JLabel("Minimum");
 		lbMin.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -761,6 +839,9 @@ public class GUI {
 		return lbMin;
 	}
 	
+	/**
+	 * Checks if rule's name is unique, and if it is, saves it, and returns to home interface
+	 */
 	private void saveRulePressed() {
 		
 		if (! validName(txtRuleName)) {
@@ -839,7 +920,8 @@ public class GUI {
 		}
 		showRulesPressed();
 	}
-
+	
+	//####################################################################################
 	private Rule buildRule(String name, int NOMmin, int NOMmax, int LOCclassmin, int LOCclassmax, int WMCmin,
 			int WMCmax, boolean classConjunction, int LOCmin, int LOCmax, int CYCLOmin, int CYCLOmax,
 			boolean methodConjunction) {
@@ -848,7 +930,12 @@ public class GUI {
 				LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
 		return rule;
 	}
-
+	
+	/**
+	 * 			Checks conjunction is selected
+	 * @param 	methodConjunction
+	 * @return
+	 */
 	private boolean isMethodConjunction(boolean methodConjunction) {
 		if (G2.getSelection().getActionCommand().equals("AND")) {
 			methodConjunction = true;
@@ -857,6 +944,9 @@ public class GUI {
 		return methodConjunction;
 	}
 	
+	/**
+	 * Deletes rule
+	 */
 	private void deleteRulePressed() {
 		if (selectedRule.toString().equals("Default")) {
 			JOptionPane.showMessageDialog(null, "Não é possivel apagar esta regra");
@@ -873,6 +963,7 @@ public class GUI {
 		}
 	}
 	
+	//####################################################################################
 	private void addListListner() {
 		guiRuleList.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
@@ -886,6 +977,7 @@ public class GUI {
 	    });
 	}
 	
+	//####################################################################################
 	private void createDialog(){
 		final JDialog modelDialog = new JDialog(frmExtractMetrics, "Code Smells Classification Quality", 
 		         true);
@@ -922,6 +1014,9 @@ public class GUI {
 
 	   }
 	
+	/**
+	 * Show classification quality of the project
+	 */
 	protected void showClassificationQualityPressed() {
 		
 		/*
@@ -935,7 +1030,7 @@ public class GUI {
 
 		mc.formPairs();
 		
-		cleanFrame();		
+		clearFrame();		
 		panel.setVisible(false);	
 		
 		panel_matrix.setBackground(Color.LIGHT_GRAY);
@@ -960,8 +1055,9 @@ public class GUI {
 			  } 
 			   
 		} 
-		
+		confusionMatrixComponents = new ArrayList<JComponent>();
 		table_matrix1 = new JTable(dataMatrix1, colum);
+		confusionMatrixComponents.add(table_matrix1);
 		table_matrix1.setRowHeight(150);
 		table_matrix1.getColumn("").setCellRenderer(new CenterTableCellRenderer());
 		table_matrix1.getColumn(" ").setCellRenderer(new CenterTableCellRenderer());
@@ -984,6 +1080,7 @@ public class GUI {
 		int errors = gc_fp + gc_fn + lm_fp + lm_fn;
 		
 		table_matrix2 = new JTable(dataMatrix2,colum);
+		confusionMatrixComponents.add(table_matrix2);
 		table_matrix2.setRowHeight(150);
 		table_matrix2.getColumn("").setCellRenderer(new CenterTableCellRenderer());
 		table_matrix2.getColumn(" ").setCellRenderer(new CenterTableCellRenderer());
@@ -991,44 +1088,52 @@ public class GUI {
 		panel_matrix.add(table_matrix2);
 		
 		lblGodClass1_1 = new JLabel("GodClass");
+		confusionMatrixComponents.add(lblGodClass1_1);
 		lblGodClass1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGodClass1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblGodClass1_1.setBounds(76, 67, 300, 19);
 		panel_matrix.add(lblGodClass1_1);
 		
 		lblLongMethod1_1 = new JLabel("LongMethod");
+		confusionMatrixComponents.add(lblLongMethod1_1);
 		lblLongMethod1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLongMethod1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblLongMethod1_1.setBounds(535, 69, 300, 19);
 		panel_matrix.add(lblLongMethod1_1);
 		
 		lblTopTrue1_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblTopTrue1_1);
 		lblTopTrue1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopTrue1_1.setBounds(76, 131, 150, 14);
 		panel_matrix.add(lblTopTrue1_1);
 		
 		lblTopFalse1_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblTopFalse1_1);
 		lblTopFalse1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopFalse1_1.setBounds(226, 131, 150, 14);
 		panel_matrix.add(lblTopFalse1_1);
 		
 		lblSideTrue1_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblSideTrue1_1);
 		lblSideTrue1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideTrue1_1.setBounds(44, 156, 32, 150);
 		panel_matrix.add(lblSideTrue1_1);
 		
 		lblSideFalse1_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblSideFalse1_1);
 		lblSideFalse1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideFalse1_1.setBounds(44, 306, 32, 150);
 		panel_matrix.add(lblSideFalse1_1);
 		
 		lblPredicted1_1 = new JLabel("PREDICTED");
+		confusionMatrixComponents.add(lblPredicted1_1);
 		lblPredicted1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPredicted1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPredicted1_1.setBounds(76, 97, 300, 14);
 		panel_matrix.add(lblPredicted1_1);
 		
 		lblActual1_1 = new JLabel("<html>A<br>C<br>T<br>U<br>A<br> L</html>");
+		confusionMatrixComponents.add(lblActual1_1);
 		lblActual1_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblActual1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActual1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1036,27 +1141,32 @@ public class GUI {
 		panel_matrix.add(lblActual1_1);
 		
 		lblPredicted2_1 = new JLabel("PREDICTED");
+		confusionMatrixComponents.add(lblPredicted2_1);
 		lblPredicted2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPredicted2_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPredicted2_1.setBounds(535, 97, 300, 14);
 		panel_matrix.add(lblPredicted2_1);
 		
 		lblTopTrue2_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblTopTrue2_1);
 		lblTopTrue2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopTrue2_1.setBounds(535, 131, 150, 14);
 		panel_matrix.add(lblTopTrue2_1);
 		
 		lblTopFalse2_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblTopFalse2_1);
 		lblTopFalse2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopFalse2_1.setBounds(685, 131, 150, 14);
 		panel_matrix.add(lblTopFalse2_1);
 		
 		lblSideTrue2_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblSideTrue2_1);
 		lblSideTrue2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideTrue2_1.setBounds(503, 156, 32, 150);
 		panel_matrix.add(lblSideTrue2_1);
 		
 		lblActual2_1 = new JLabel("<html>A<br>C<br>T<br>U<br>A<br> L</html>");
+		confusionMatrixComponents.add(lblActual2_1);
 		lblActual2_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblActual2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActual2_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1064,23 +1174,27 @@ public class GUI {
 		panel_matrix.add(lblActual2_1);
 		
 		lblSideFalse2_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblSideFalse2_1);
 		lblSideFalse2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideFalse2_1.setBounds(503, 306, 32, 150);
 		panel_matrix.add(lblSideFalse2_1);
 		
 		JLabel lblCorrectness = new JLabel("Number of correct predictions = " + correctValues);
+		confusionMatrixComponents.add(lblCorrectness);
 		lblCorrectness.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblCorrectness.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCorrectness.setBounds(535, 500, 300, 25);
 		panel_matrix.add(lblCorrectness);
 		
 		JLabel lblErrors = new JLabel("Number of wrong predictions = " + errors);
+		confusionMatrixComponents.add(lblErrors);
 		lblErrors.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblErrors.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblErrors.setBounds(535, 520, 300, 25);
 		panel_matrix.add(lblErrors);
 		
 		closeBtn_matrix = new JButton("Close");
+		confusionMatrixComponents.add(closeBtn_matrix);
 		closeBtn_matrix.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel_matrix.setVisible(false);
@@ -1093,26 +1207,44 @@ public class GUI {
 		frmExtractMetrics.setCursor(Cursor.getDefaultCursor());
 
 	}
-
+	
+	/**
+	 * 			Builds MetricComparer of selected project and xlsx file
+	 * @return
+	 */
 	private MetricComparer buildMetricComparer() {
 		String CodeSmellsBaseline = code_smells_path.getText();
 		String CodeSmellsCalculated = txtf_path.getText()  + "\\smells.xlsx";
 		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
 		return mc;
 	}
-
+	
+	/**
+	 * 			Builds SharedResource which contains all methods' statistics of the project
+	 * @return
+	 */
 	private SharedResource buildSR() {
 		SharedResource rp;
 		rp = CodeSmells.init(txtf_path.getText(), selectedRule);
 		return rp;
 	}
 	
-	
+	/**
+	 * 			Checks if max is greater than min
+	 * @param 	min
+	 * @param 	max
+	 * @return
+	 */
 	private boolean validInput (int min, int max) {
 		if (max >= min) return false;
 		else throw new NumberFormatException();
 	}
 	
+	/**
+	 * 				Checks if the rule name is unique
+	 * @param 		rule name
+	 * @return		validity of chosen name
+	 */
 	private boolean validName (JTextField name) {
 		if (name.getText().equals("")) {
 			return false;
@@ -1127,6 +1259,10 @@ public class GUI {
 		return true;
 	}
 	
+	/**
+	 * 			Checks if there is any rule selected
+	 * @return
+	 */
 	private boolean validRuleSelection() {
 		return chckbxNOM_class.isSelected() 
 				|| chckbxLOC_class.isSelected() 
@@ -1135,246 +1271,25 @@ public class GUI {
 				|| chckbxCYCLO_method.isSelected();
 	}
 	
-	private void cleanFrame() {
-		frmExtractMetrics();
-	}
-
-	private void frmExtractMetrics() {
-		frmExtMetricsTable();
-		if (table != null) {
-			frmExtractMetrics.remove(table);
-		}
-		frmExtMetricsScrollPane();
-		if (scrollPane != null) {
-			frmExtractMetrics.remove(scrollPane);
-		}
-		btnAddRule();
-		if (btnAddRule != null) {
-			frmExtractMetrics.remove(btnAddRule);
-		}
-		btnConfirmRule();
-		if (btnConfirmRule != null) {
-			frmExtractMetrics.remove(btnConfirmRule);
-		}
-		guiRuleList();
-		if (guiRuleList != null) {
-			frmExtractMetrics.remove(btnAddRule);
-		}
-		ruleDescriptionField();
-		if (ruleDescriptionField != null) {
-			frmExtractMetrics.remove(ruleDescriptionField);
-		}
-		table_matrix1();
-		if (table_matrix1 != null) {
-			frmExtractMetrics.remove(table_matrix1);
-		}
-		table_matrix2();
-		if (table_matrix2 != null) {
-			frmExtractMetrics.remove(table_matrix2);
-		}
-		lblGodClass1_1();
-		if (lblGodClass1_1 != null) {
-			frmExtractMetrics.remove(lblGodClass1_1);
-		}
-		lblLongMethod1_1();
-		if (lblLongMethod1_1 != null) {
-			frmExtractMetrics.remove(lblLongMethod1_1);
-		}
-		lblTopTrue1_1();
-		if (lblTopTrue1_1 != null) {
-			frmExtractMetrics.remove(lblTopTrue1_1);
-		}
-		lblTopFalse1_1();
-		if (lblTopFalse1_1 != null) {
-			frmExtractMetrics.remove(lblTopFalse1_1);
-		}
-		lblSideTrue1_1();
-		if (lblSideTrue1_1 != null) {
-			frmExtractMetrics.remove(lblSideTrue1_1);
-		}
-		lblSideFalse1_1();
-		if (lblSideFalse1_1 != null) {
-			frmExtractMetrics.remove(lblSideFalse1_1);
-		}
-		lblPredicted1_1();
-		if (lblPredicted1_1 != null) {
-			frmExtractMetrics.remove(lblPredicted1_1);
-		}
-		lblActual1_1();
-		if (lblActual1_1 != null) {
-			frmExtractMetrics.remove(lblActual1_1);
-		}
-		lblPredicted2_1();
-		if (lblPredicted2_1 != null) {
-			frmExtractMetrics.remove(lblPredicted2_1);
-		}
-		lblTopTrue2_1();
-		if (lblTopTrue2_1 != null) {
-			frmExtractMetrics.remove(lblTopTrue2_1);
-		}
-		lblTopFalse2_1();
-		if (lblTopFalse2_1 != null) {
-			frmExtractMetrics.remove(lblTopFalse2_1);
-		}
-		lblSideTrue2_1();
-		if (lblSideTrue2_1 != null) {
-			frmExtractMetrics.remove(lblSideTrue2_1);
-		}
-		lblActual2_1();
-		if (lblActual2_1 != null) {
-			frmExtractMetrics.remove(lblActual2_1);
-		}
-		lblSideFalse2_1();
-		if (lblSideFalse2_1 != null) {
-			frmExtractMetrics.remove(lblSideFalse2_1);
-		}
-		closeBtn_matrix();
-		if (closeBtn_matrix != null) {
-			frmExtractMetrics.remove(closeBtn_matrix);
-		}
-	}
-
-	private void table_matrix2() {
-		if (table_matrix2 != null) {
-			table_matrix2.setVisible(false);
-		}
-	}
-
-	private void table_matrix1() {
-		if (table_matrix1 != null) {
-			table_matrix1.setVisible(false);
-		}
-	}
-
-	private void frmExtMetricsTable() {
-		if (table != null) {
-			table.setVisible(false);
-		}
-	}
-
-	private void frmExtMetricsScrollPane() {
-		if (scrollPane != null) {
-			scrollPane.setVisible(false);
-		}
-	}
-
-	private void ruleDescriptionField() {
-		if (ruleDescriptionField != null) {
-			ruleDescriptionField.setVisible(false);
-		}
-	}
-
-	private void lblTopTrue2_1() {
-		if (lblTopTrue2_1 != null) {
-			lblTopTrue2_1.setVisible(false);
-		}
-	}
-
-	private void lblTopTrue1_1() {
-		if (lblTopTrue1_1 != null) {
-			lblTopTrue1_1.setVisible(false);
-		}
-	}
-
-	private void lblTopFalse2_1() {
-		if (lblTopFalse2_1 != null) {
-			lblTopFalse2_1.setVisible(false);
-		}
-	}
-
-	private void lblTopFalse1_1() {
-		if (lblTopFalse1_1 != null) {
-			lblTopFalse1_1.setVisible(false);
-		}
-	}
-
-	private void lblSideTrue2_1() {
-		if (lblSideTrue2_1 != null) {
-			lblSideTrue2_1.setVisible(false);
-		}
-	}
-
-	private void lblSideTrue1_1() {
-		if (lblSideTrue1_1 != null) {
-			lblSideTrue1_1.setVisible(false);
-		}
-	}
-
-	private void lblSideFalse2_1() {
-		if (lblSideFalse2_1 != null) {
-			lblSideFalse2_1.setVisible(false);
-		}
-	}
-
-	private void lblActual1_1() {
-		if (lblActual1_1 != null) {
-			lblActual1_1.setVisible(false);
-		}
-	}
-
-	private void guiRuleList() {
-		if (guiRuleList != null) {
-			guiRuleList.setVisible(false);
-		}
-	}
-
-	private void closeBtn_matrix() {
-		if (closeBtn_matrix != null) {
-			closeBtn_matrix.setVisible(false);
-		}
-	}
-
-	private void btnAddRule() {
-		if (btnAddRule != null) {
-			btnAddRule.setVisible(false);
-		}
-	}
-
-	private void btnConfirmRule() {
-		if (btnConfirmRule != null) {
-			btnConfirmRule.setVisible(false);
-		}
-	}
-
-	private void lblActual2_1() {
-		if (lblActual2_1 != null) {
-			lblActual2_1.setVisible(false);
-		}
-	}
-
-	private void lblGodClass1_1() {
-		if (lblGodClass1_1 != null) {
-			lblGodClass1_1.setVisible(false);
-		}
-	}
-
-	private void lblLongMethod1_1() {
-		if (lblLongMethod1_1 != null) {
-			lblLongMethod1_1.setVisible(false);
-		}
-	}
-
-	private void lblPredicted1_1() {
-		if (lblPredicted1_1 != null) {
-			lblPredicted1_1.setVisible(false);
-		}
-	}
-
-	private void lblPredicted2_1() {
-		if (lblPredicted2_1 != null) {
-			lblPredicted2_1.setVisible(false);
-		}
-	}
-
-	private void lblSideFalse1_1() {
-		if (lblSideFalse1_1 != null) {
-			lblSideFalse1_1.setVisible(false);
-		}
+	
+	/**
+	 * Extract metrics
+	 */
+	private void clearFrame() {
+		removeJComp(table);
+		removeJComp(scrollPane);
+		removeJComp(btnAddRule);
+		removeJComp(btnConfirmRule);
+		removeJComp(guiRuleList);
+		removeJComp(ruleDescriptionField);
+		clearComponentsArray(confusionMatrixComponents);
 	}
 	
-	
+	/**
+	 * Clear add rule frame components
+	 */
 	private void clearAddRules() {
-		frmClearExtractMetrics();
+		clearComponentsArray(ruleAdditionInterface);
 		if (G1 != null) {
 			G1 = null;
 		}
@@ -1382,207 +1297,23 @@ public class GUI {
 			G2 = null;
 		}
 	}
-
-	private void frmClearExtractMetrics() {
-		txtNOMmin();
-		if (txtNOMmin != null) {
-			frmExtractMetrics.remove(txtNOMmin);
-		}
-		txtLOC_class_min();
-		if (txtLOC_class_min != null) {
-			frmExtractMetrics.remove(txtLOC_class_min);
-		}
-		txtWMCmin();
-		if (txtWMCmin != null) {
-			frmExtractMetrics.remove(txtWMCmin);
-		}
-		txtNOMmax();
-		if (txtNOMmax != null) {
-			frmExtractMetrics.remove(txtNOMmax);
-		}
-		txtLOC_class_max();
-		if (txtLOC_class_max != null) {
-			frmExtractMetrics.remove(txtLOC_class_max);
-		}
-		txtWMCmax();
-		if (txtWMCmax != null) {
-			frmExtractMetrics.remove(txtWMCmax);
-		}
-		chckbxLOC_method();
-		if (chckbxLOC_method != null) {
-			frmExtractMetrics.remove(chckbxLOC_method);
-		}
-		chckbxCYCLO_method();
-		if (chckbxCYCLO_method != null) {
-			frmExtractMetrics.remove(chckbxCYCLO_method);
-		}
-		txtLOC_method_min();
-		if (txtLOC_method_min != null) {
-			frmExtractMetrics.remove(txtLOC_method_min);
-		}
-		txtLOC_method_max();
-		if (txtLOC_method_max != null) {
-			frmExtractMetrics.remove(txtLOC_method_max);
-		}
-		txtCYCLOmin();
-		if (txtCYCLOmin != null) {
-			frmExtractMetrics.remove(txtCYCLOmin);
-		}
-		txtCYCLOmax();
-		if (txtCYCLOmax != null) {
-			frmExtractMetrics.remove(txtCYCLOmax);
-		}
-		rdbtnAND_GOD_CLASS();
-		if (rdbtnAND_GOD_CLASS != null) {
-			frmExtractMetrics.remove(rdbtnAND_GOD_CLASS);
-		}
-		rdbtnOR_GOD_CLASS();
-		if (rdbtnOR_GOD_CLASS != null) {
-			frmExtractMetrics.remove(rdbtnOR_GOD_CLASS);
-		}
-		rdbtnAND_LONG_METHOD();
-		if (rdbtnAND_LONG_METHOD != null) {
-			frmExtractMetrics.remove(rdbtnAND_LONG_METHOD);
-		}
-		rdbtnOR_LONG_METHOD();
-		if (rdbtnOR_LONG_METHOD != null) {
-			frmExtractMetrics.remove(rdbtnOR_LONG_METHOD);
-		}
-		chckbxNOM_class();
-		if (chckbxNOM_class != null) {
-			frmExtractMetrics.remove(chckbxNOM_class);
-		}
-		chckbxLOC_class();
-		if (chckbxLOC_class != null) {
-			frmExtractMetrics.remove(chckbxLOC_class);
-		}
-		chckbxWMC_class();
-		if (chckbxWMC_class != null) {
-			frmExtractMetrics.remove(chckbxWMC_class);
-		}
-		txtRuleName();
-		if (txtRuleName != null) {
-			frmExtractMetrics.remove(txtRuleName);
+	
+	/**
+	 * Clear extracted metrics
+	 */
+	private void clearComponentsArray(ArrayList<JComponent> array) {
+		if (ruleAdditionInterface != null) {
+			for (JComponent m : ruleAdditionInterface) {
+				removeJComp(m);
+			}
 		}
 	}
 
-	private void txtWMCmin() {
-		if (txtWMCmin != null) {
-			txtWMCmin.setVisible(false);
-		}
-	}
-
-	private void txtWMCmax() {
-		if (txtWMCmax != null) {
-			txtWMCmax.setVisible(false);
-		}
-	}
-
-	private void txtRuleName() {
-		if (txtRuleName != null) {
-			txtRuleName.setVisible(false);
-		}
-	}
-
-	private void txtNOMmin() {
-		if (txtNOMmin != null) {
-			txtNOMmin.setVisible(false);
-		}
-	}
-
-	private void txtNOMmax() {
-		if (txtNOMmax != null) {
-			txtNOMmax.setVisible(false);
-		}
-	}
-
-	private void txtLOC_method_min() {
-		if (txtLOC_method_min != null) {
-			txtLOC_method_min.setVisible(false);
-		}
-	}
-
-	private void txtLOC_method_max() {
-		if (txtLOC_method_max != null) {
-			txtLOC_method_max.setVisible(false);
-		}
-	}
-
-	private void txtLOC_class_min() {
-		if (txtLOC_class_min != null) {
-			txtLOC_class_min.setVisible(false);
-		}
-	}
-
-	private void txtLOC_class_max() {
-		if (txtLOC_class_max != null) {
-			txtLOC_class_max.setVisible(false);
-		}
-	}
-
-	private void txtCYCLOmin() {
-		if (txtCYCLOmin != null) {
-			txtCYCLOmin.setVisible(false);
-		}
-	}
-
-	private void txtCYCLOmax() {
-		if (txtCYCLOmax != null) {
-			txtCYCLOmax.setVisible(false);
-		}
-	}
-
-	private void rdbtnOR_LONG_METHOD() {
-		if (rdbtnOR_LONG_METHOD != null) {
-			rdbtnOR_LONG_METHOD.setVisible(false);
-		}
-	}
-
-	private void rdbtnOR_GOD_CLASS() {
-		if (rdbtnOR_GOD_CLASS != null) {
-			rdbtnOR_GOD_CLASS.setVisible(false);
-		}
-	}
-
-	private void rdbtnAND_LONG_METHOD() {
-		if (rdbtnAND_LONG_METHOD != null) {
-			rdbtnAND_LONG_METHOD.setVisible(false);
-		}
-	}
-
-	private void rdbtnAND_GOD_CLASS() {
-		if (rdbtnAND_GOD_CLASS != null) {
-			rdbtnAND_GOD_CLASS.setVisible(false);
-		}
-	}
-
-	private void chckbxWMC_class() {
-		if (chckbxWMC_class != null) {
-			chckbxWMC_class.setVisible(false);
-		}
-	}
-
-	private void chckbxNOM_class() {
-		if (chckbxNOM_class != null) {
-			chckbxNOM_class.setVisible(false);
-		}
-	}
-
-	private void chckbxLOC_method() {
-		if (chckbxLOC_method != null) {
-			chckbxLOC_method.setVisible(false);
-		}
-	}
-
-	private void chckbxLOC_class() {
-		if (chckbxLOC_class != null) {
-			chckbxLOC_class.setVisible(false);
-		}
-	}
-
-	private void chckbxCYCLO_method() {
-		if (chckbxCYCLO_method != null) {
-			chckbxCYCLO_method.setVisible(false);
+	
+	private void removeJComp(JComponent jComp) {
+		if (jComp != null) {
+			jComp.setVisible(false);
+			frmExtractMetrics.remove(jComp);
 		}
 	}
 }
