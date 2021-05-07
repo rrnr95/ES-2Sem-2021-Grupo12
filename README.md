@@ -32,12 +32,14 @@ o botão <strong><i>Classification Quality</i></strong> irá apresentar uma matr
 
 <br>
 <hr>
-Para utilizar este software como Docker Image:
-1) instalar VcXsrv (https://sourceforge.net/projects/vcxsrv/)
-2) lançar o XLaunch
-3) download da imagem que contém o projeto (docker pull antoniorodrigo92/esgrupo12codesmells)
-4) correr a imagem através do CMD:
-caso nao pretenda persistencia de regras: docker run -v C:\Users:/C antoniorodrigo92/esgrupo12codesmells
-caso pretenda regras persistentes: docker run -v C:\Users:/C -v regras:/var/lib/regras antoniorodrigo92/esgrupo12codesmells
-
-Nota: esta imagem docker serve apenas para efeitos demonstrativos, visto carecer de testagem.
+<strong>Para utilizar este software como Docker Image</strong>:<br>
+  1) instalar VcXsrv (https://sourceforge.net/projects/vcxsrv/)<br>
+  2) lançar o XLaunch<br>
+  3) download da imagem que contém o projeto (docker pull antoniorodrigo92/esgrupo12codesmells)<br>
+  4) correr a imagem através do CMD: 
+  <ul>
+  <li> caso nao pretenda persistencia de regras: docker run -v C:\Users:/C antoniorodrigo92/esgrupo12codesmells </li>
+  <li> caso pretenda regras persistentes: docker run -v C:\Users:/C -v regras:/var/lib/regras antoniorodrigo92/esgrupo12codesmells </li>
+  </ul>
+  <br>
+  <strong><u>Nota</u>:</strong> esta imagem docker serve apenas para efeitos demonstrativos, visto carecer de testagem.
