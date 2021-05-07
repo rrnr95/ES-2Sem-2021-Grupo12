@@ -45,13 +45,18 @@ import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 //TODO rp to sr refactor 
-
+/**
+ * 			Class that represents the Graphical User Interface
+ * @author 	ES-2Sem-2021-Grupo12
+ *
+ */
 public class GUI {
 
 	private static JFrame frmExtractMetrics;
@@ -168,22 +173,29 @@ public class GUI {
 		panelAddRules = new JPanel();	
 		
 	}
-
+	
+	//####################################################################################
 	private void btnClassQuality() throws HeadlessException {
 		btnRules();
 		btnClassQuality.setBounds(710, 512, 200, 23);
 	}
-
+	
+	//####################################################################################
 	private void btnRules() throws HeadlessException {
 		btnFetchXLSX();
 		btnRules.setBounds(470, 540, 140, 23);
 	}
-
+	
+	//####################################################################################
 	private void btnFetchXLSX() throws HeadlessException {
 		btnCalculateMetrics();
 		btnFetchXLSX.setBounds(620, 540, 140, 23);
 	}
-
+	
+	/**
+	 * 			Button to calculate metrics
+	 * @throws 	HeadlessException
+	 */
 	private void btnCalculateMetrics() throws HeadlessException {
 		try {
 			selectedRule = ruleManager.readObjectsFromFile().get(0);
@@ -241,12 +253,18 @@ public class GUI {
 		});
 		panel.add(btnClassQuality);
 	}
-
+	
+	/**
+	 * Creates Button to select project location
+	 */
 	private void buildBtn_folder() {
 		btn_folder = new JButton("Folder");
 		btn_folder.setBounds(250, 540, 74, 23);
 	}
-
+	
+	/**
+	 * Set text folder path display characteristics
+	 */
 	private void txtf_path() {
 		txtf_path = new JTextField();
 		txtf_path.setBounds(10, 541, 232, 20);
@@ -254,7 +272,14 @@ public class GUI {
 		txtf_path.setColumns(10);
 	}
 
-	
+	/**
+	 * 			Listener of Button to select project location
+	 * 			Prompts for project path location
+	 * 			Adds the selected path to path display
+	 * @param 	btn
+	 * @param 	tf
+	 * 			Path display
+	 */
 	private static void addChooseListener(JButton btn, final JTextField tf) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -276,6 +301,14 @@ public class GUI {
 		});
 	}
 	
+	/**
+	 * 			Listener of Button of Classification Quality
+	 * 			Prompts for file path location
+	 * 			Adds the selected path to path display
+	 * @param 	btn
+	 * @param 	tf
+	 * 			File path display
+	 */
 	private static void addChooseListenerXLSX(JButton btn, final JTextField tf) {
 		btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -297,7 +330,9 @@ public class GUI {
 		});
 	}
 	
-	
+	/**
+	 * 	Calculates Metrics
+	 */
 	private void calculateMetricsPressed() {
 		
 		File project = new File(txtf_path.getText());
@@ -318,19 +353,30 @@ public class GUI {
 		frmExtractMetrics.setCursor(Cursor.getDefaultCursor());
 	}
 	
-	
+	/**
+	 * 			Adds calculated metrics to panel
+	 * @param 	rp
+	 */
 	private void printCalculatedMetrics(SharedResource rp) {
 		scrollPane(rp);
 		panel.add(scrollPane);
 		
 	}
-
+	
+	/**
+	 * 			Create scroll panel with table, based on methods' statistics of the project
+	 * @param 	rp
+	 */
 	private void scrollPane(SharedResource rp) {
 		table(rp);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 500);
 	}
-
+	
+	/**
+	 * 			Creates the table with project info
+	 * @param 	rp
+	 */
 	private void table(SharedResource rp) {
 		Object[] columnNames = { "Nº total packages", "Nº total de classes", "Nº total de metodos",
 				"Nº total de linhas de codigo" };
@@ -341,7 +387,9 @@ public class GUI {
 		table.setEnabled(false);
 	}
 	
-	
+	/**
+	 * Shows xlsx file
+	 */
 	private void showXLSXPressed() {
 		File project = new File(txtf_path.getText());
 		     
@@ -418,24 +466,27 @@ public class GUI {
         	JOptionPane.showMessageDialog(null,"Diretoria Desconhecida");
         }
 	}
-
+	
+	//####################################################################################
 	private void addTableScrollPane(Object[] header, Object[][] data) {
 		tableToScrollPane(header, data);
 		panel.add(scrollPane);
 	}
-
+	//####################################################################################
 	private void tableToScrollPane(Object[] header, Object[][] data) {
 		buildTable(header, data);
 		scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 11, 902, 500);
 	}
-
+	//####################################################################################
 	private void buildTable(Object[] header, Object[][] data) {
 		table = new JTable(data, header);
 		table.setEnabled(false);
 	}
 	
-	
+	/**
+	 * 	Show Rules
+	 */
 	private void showRulesPressed() {
 		cleanFrame();
 		panelAddRules.setVisible(false);
@@ -487,7 +538,9 @@ public class GUI {
 		panel.repaint();
 	}
 	
-	
+	/**
+	 * 	Show add rules interface
+	 */
 	private void addRulePressed() {
 		cleanFrame();
 		clearAddRules();
@@ -684,77 +737,78 @@ public class GUI {
 		panelAddRules.add(txtRuleName);
 		
 	}
-
+	
+	//####################################################################################
 	private JLabel lblSelectMetrics_1() {
 		JLabel lblSelectMetrics_1 = new JLabel("Select the desired metrics:");
 		lblSelectMetrics_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblSelectMetrics_1.setBounds(47, 313, 173, 16);
 		return lblSelectMetrics_1;
 	}
-
+	//####################################################################################
 	private JLabel lblSelectMetrics() {
 		JLabel lblSelectMetrics = new JLabel("Select the desired metrics:");
 		lblSelectMetrics.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblSelectMetrics.setBounds(47, 77, 173, 16);
 		return lblSelectMetrics;
 	}
-
+	//####################################################################################
 	private JLabel lblRuleName() {
 		JLabel lblRuleName = new JLabel("Name of the Rule:");
 		lblRuleName.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblRuleName.setBounds(47, 471, 152, 23);
 		return lblRuleName;
 	}
-
+	//####################################################################################
 	private JLabel lblMin_1() {
 		JLabel lblMin_1 = new JLabel("Minimum");
 		lblMin_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMin_1.setBounds(266, 327, 54, 16);
 		return lblMin_1;
 	}
-
+	//####################################################################################
 	private JLabel lblMax_1() {
 		JLabel lblMax_1 = new JLabel("Maximum");
 		lblMax_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMax_1.setBounds(359, 327, 54, 16);
 		return lblMax_1;
 	}
-
+	//####################################################################################
 	private JLabel lblMax() {
 		JLabel lblMax = new JLabel("Maximum");
 		lblMax.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblMax.setBounds(359, 90, 54, 16);
 		return lblMax;
 	}
-
+	//####################################################################################
 	private JLabel lblLongMethod() {
 		JLabel lblLongMethod = new JLabel("LONG_METHOD");
 		lblLongMethod.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblLongMethod.setBounds(47, 274, 122, 16);
 		return lblLongMethod;
 	}
-
+	//####################################################################################
 	private JLabel lblLogicOperators_1() {
 		JLabel lblLogicOperators_1 = new JLabel("Select the desired logic operator:");
 		lblLogicOperators_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblLogicOperators_1.setBounds(548, 315, 202, 16);
 		return lblLogicOperators_1;
 	}
-
+	//####################################################################################
 	private JLabel lblLogicOperators() {
 		JLabel lblLogicOperators = new JLabel("Select the desired logic operator:");
 		lblLogicOperators.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblLogicOperators.setBounds(548, 77, 202, 16);
 		return lblLogicOperators;
 	}
-
+	//####################################################################################
 	private JLabel lblGodClass() {
 		JLabel lblGodClass = new JLabel("GOD_CLASS");
 		lblGodClass.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblGodClass.setBounds(47, 35, 94, 16);
 		return lblGodClass;
 	}
-
+	//####################################################################################
 	private JLabel lbMin() {
 		JLabel lbMin = new JLabel("Minimum");
 		lbMin.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -762,6 +816,9 @@ public class GUI {
 		return lbMin;
 	}
 	
+	/**
+	 * Checks if rule's name is unique, and if it is, saves it, and returns to home interface
+	 */
 	private void saveRulePressed() {
 		
 		if (! validName(txtRuleName)) {
@@ -840,7 +897,8 @@ public class GUI {
 		}
 		showRulesPressed();
 	}
-
+	
+	//####################################################################################
 	private Rule buildRule(String name, int NOMmin, int NOMmax, int LOCclassmin, int LOCclassmax, int WMCmin,
 			int WMCmax, boolean classConjunction, int LOCmin, int LOCmax, int CYCLOmin, int CYCLOmax,
 			boolean methodConjunction) {
@@ -849,7 +907,12 @@ public class GUI {
 				LOCmax, CYCLOmin, CYCLOmax, methodConjunction);
 		return rule;
 	}
-
+	
+	/**
+	 * 			Checks conjunction is selected
+	 * @param 	methodConjunction
+	 * @return
+	 */
 	private boolean isMethodConjunction(boolean methodConjunction) {
 		if (G2.getSelection().getActionCommand().equals("AND")) {
 			methodConjunction = true;
@@ -858,6 +921,9 @@ public class GUI {
 		return methodConjunction;
 	}
 	
+	/**
+	 * Deletes rule
+	 */
 	private void deleteRulePressed() {
 		if (selectedRule.toString().equals("Default")) {
 			JOptionPane.showMessageDialog(null, "Não é possivel apagar esta regra");
@@ -874,6 +940,7 @@ public class GUI {
 		}
 	}
 	
+	//####################################################################################
 	private void addListListner() {
 		guiRuleList.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
@@ -888,6 +955,7 @@ public class GUI {
 	    });
 	}
 	
+	//####################################################################################
 	private void createDialog(){
 		final JDialog modelDialog = new JDialog(frmExtractMetrics, "Code Smells Classification Quality", 
 		         true);
@@ -924,6 +992,9 @@ public class GUI {
 
 	   }
 	
+	/**
+	 * Show classification quality of the project
+	 */
 	protected void showClassificationQualityPressed() {
 		
 		/*
@@ -1095,26 +1166,44 @@ public class GUI {
 		frmExtractMetrics.setCursor(Cursor.getDefaultCursor());
 
 	}
-
+	
+	/**
+	 * 			Builds MetricComparer of selected project and xlsx file
+	 * @return
+	 */
 	private MetricComparer buildMetricComparer() {
 		String CodeSmellsBaseline = code_smells_path.getText();
 		String CodeSmellsCalculated = txtf_path.getText()  + "\\smells.xlsx";
 		MetricComparer mc = new MetricComparer(CodeSmellsCalculated, CodeSmellsBaseline);
 		return mc;
 	}
-
+	
+	/**
+	 * 			Builds SharedResource which contains all methods' statistics of the project
+	 * @return
+	 */
 	private SharedResource buildSR() {
 		SharedResource rp;
 		rp = CodeSmells.init(txtf_path.getText(), selectedRule);
 		return rp;
 	}
 	
-	
+	/**
+	 * 			Checks if max is greater than min
+	 * @param 	min
+	 * @param 	max
+	 * @return
+	 */
 	private boolean validInput (int min, int max) {
 		if (max >= min) return false;
 		else throw new NumberFormatException();
 	}
 	
+	/**
+	 * 				Checks if the rule name is unique
+	 * @param 		name
+	 * @return
+	 */
 	private boolean validName (JTextField name) {
 		if (name.getText().equals("")) {
 			return false;
@@ -1137,10 +1226,14 @@ public class GUI {
 				|| chckbxCYCLO_method.isSelected();
 	}
 	
+	
 	private void cleanFrame() {
 		frmExtractMetrics();
 	}
-
+	
+	/**
+	 * Extract metrics
+	 */
 	private void frmExtractMetrics() {
 		frmExtMetricsTable();
 		if (table != null) {
@@ -1375,6 +1468,7 @@ public class GUI {
 	}
 	
 	
+	//####################################################################################
 	private void clearAddRules() {
 		frmClearExtractMetrics();
 		if (G1 != null) {
@@ -1384,7 +1478,8 @@ public class GUI {
 			G2 = null;
 		}
 	}
-
+	
+	//####################################################################################
 	private void frmClearExtractMetrics() {
 		txtNOMmin();
 		if (txtNOMmin != null) {
