@@ -1235,238 +1235,30 @@ public class GUI {
 	 * Extract metrics
 	 */
 	private void frmExtractMetrics() {
-		frmExtMetricsTable();
-		if (table != null) {
-			frmExtractMetrics.remove(table);
-		}
-		frmExtMetricsScrollPane();
-		if (scrollPane != null) {
-			frmExtractMetrics.remove(scrollPane);
-		}
-		btnAddRule();
-		if (btnAddRule != null) {
-			frmExtractMetrics.remove(btnAddRule);
-		}
-		btnConfirmRule();
-		if (btnConfirmRule != null) {
-			frmExtractMetrics.remove(btnConfirmRule);
-		}
-		guiRuleList();
-		if (guiRuleList != null) {
-			frmExtractMetrics.remove(btnAddRule);
-		}
-		ruleDescriptionField();
-		if (ruleDescriptionField != null) {
-			frmExtractMetrics.remove(ruleDescriptionField);
-		}
-		table_matrix1();
-		if (table_matrix1 != null) {
-			frmExtractMetrics.remove(table_matrix1);
-		}
-		table_matrix2();
-		if (table_matrix2 != null) {
-			frmExtractMetrics.remove(table_matrix2);
-		}
-		lblGodClass1_1();
-		if (lblGodClass1_1 != null) {
-			frmExtractMetrics.remove(lblGodClass1_1);
-		}
-		lblLongMethod1_1();
-		if (lblLongMethod1_1 != null) {
-			frmExtractMetrics.remove(lblLongMethod1_1);
-		}
-		lblTopTrue1_1();
-		if (lblTopTrue1_1 != null) {
-			frmExtractMetrics.remove(lblTopTrue1_1);
-		}
-		lblTopFalse1_1();
-		if (lblTopFalse1_1 != null) {
-			frmExtractMetrics.remove(lblTopFalse1_1);
-		}
-		lblSideTrue1_1();
-		if (lblSideTrue1_1 != null) {
-			frmExtractMetrics.remove(lblSideTrue1_1);
-		}
-		lblSideFalse1_1();
-		if (lblSideFalse1_1 != null) {
-			frmExtractMetrics.remove(lblSideFalse1_1);
-		}
-		lblPredicted1_1();
-		if (lblPredicted1_1 != null) {
-			frmExtractMetrics.remove(lblPredicted1_1);
-		}
-		lblActual1_1();
-		if (lblActual1_1 != null) {
-			frmExtractMetrics.remove(lblActual1_1);
-		}
-		lblPredicted2_1();
-		if (lblPredicted2_1 != null) {
-			frmExtractMetrics.remove(lblPredicted2_1);
-		}
-		lblTopTrue2_1();
-		if (lblTopTrue2_1 != null) {
-			frmExtractMetrics.remove(lblTopTrue2_1);
-		}
-		lblTopFalse2_1();
-		if (lblTopFalse2_1 != null) {
-			frmExtractMetrics.remove(lblTopFalse2_1);
-		}
-		lblSideTrue2_1();
-		if (lblSideTrue2_1 != null) {
-			frmExtractMetrics.remove(lblSideTrue2_1);
-		}
-		lblActual2_1();
-		if (lblActual2_1 != null) {
-			frmExtractMetrics.remove(lblActual2_1);
-		}
-		lblSideFalse2_1();
-		if (lblSideFalse2_1 != null) {
-			frmExtractMetrics.remove(lblSideFalse2_1);
-		}
-		closeBtn_matrix();
-		if (closeBtn_matrix != null) {
-			frmExtractMetrics.remove(closeBtn_matrix);
-		}
+		methodToName(table);
+		methodToName(scrollPane);
+		methodToName(btnAddRule);
+		methodToName(btnConfirmRule);
+		methodToName(btnAddRule);
+		methodToName(ruleDescriptionField);
+		methodToName(table_matrix1);
+		methodToName(table_matrix2);
+		methodToName(lblGodClass1_1);
+		methodToName(lblLongMethod1_1);
+		methodToName(lblTopTrue1_1);
+		methodToName(lblTopFalse1_1);
+		methodToName(lblSideTrue1_1);
+		methodToName(lblSideFalse1_1);
+		methodToName(lblPredicted1_1);
+		methodToName(lblActual1_1);
+		methodToName(lblPredicted2_1);
+		methodToName(lblTopTrue2_1);
+		methodToName(lblTopFalse2_1);
+		methodToName(lblSideTrue2_1);
+		methodToName(lblActual2_1);
+		methodToName(lblSideFalse2_1);
+		methodToName(closeBtn_matrix);
 	}
-
-	private void table_matrix2() {
-		if (table_matrix2 != null) {
-			table_matrix2.setVisible(false);
-		}
-	}
-
-	private void table_matrix1() {
-		if (table_matrix1 != null) {
-			table_matrix1.setVisible(false);
-		}
-	}
-
-	private void frmExtMetricsTable() {
-		if (table != null) {
-			table.setVisible(false);
-		}
-	}
-
-	private void frmExtMetricsScrollPane() {
-		if (scrollPane != null) {
-			scrollPane.setVisible(false);
-		}
-	}
-
-	private void ruleDescriptionField() {
-		if (ruleDescriptionField != null) {
-			ruleDescriptionField.setVisible(false);
-		}
-	}
-
-	private void lblTopTrue2_1() {
-		if (lblTopTrue2_1 != null) {
-			lblTopTrue2_1.setVisible(false);
-		}
-	}
-
-	private void lblTopTrue1_1() {
-		if (lblTopTrue1_1 != null) {
-			lblTopTrue1_1.setVisible(false);
-		}
-	}
-
-	private void lblTopFalse2_1() {
-		if (lblTopFalse2_1 != null) {
-			lblTopFalse2_1.setVisible(false);
-		}
-	}
-
-	private void lblTopFalse1_1() {
-		if (lblTopFalse1_1 != null) {
-			lblTopFalse1_1.setVisible(false);
-		}
-	}
-
-	private void lblSideTrue2_1() {
-		if (lblSideTrue2_1 != null) {
-			lblSideTrue2_1.setVisible(false);
-		}
-	}
-
-	private void lblSideTrue1_1() {
-		if (lblSideTrue1_1 != null) {
-			lblSideTrue1_1.setVisible(false);
-		}
-	}
-
-	private void lblSideFalse2_1() {
-		if (lblSideFalse2_1 != null) {
-			lblSideFalse2_1.setVisible(false);
-		}
-	}
-
-	private void lblActual1_1() {
-		if (lblActual1_1 != null) {
-			lblActual1_1.setVisible(false);
-		}
-	}
-
-	private void guiRuleList() {
-		if (guiRuleList != null) {
-			guiRuleList.setVisible(false);
-		}
-	}
-
-	private void closeBtn_matrix() {
-		if (closeBtn_matrix != null) {
-			closeBtn_matrix.setVisible(false);
-		}
-	}
-
-	private void btnAddRule() {
-		if (btnAddRule != null) {
-			btnAddRule.setVisible(false);
-		}
-	}
-
-	private void btnConfirmRule() {
-		if (btnConfirmRule != null) {
-			btnConfirmRule.setVisible(false);
-		}
-	}
-
-	private void lblActual2_1() {
-		if (lblActual2_1 != null) {
-			lblActual2_1.setVisible(false);
-		}
-	}
-
-	private void lblGodClass1_1() {
-		if (lblGodClass1_1 != null) {
-			lblGodClass1_1.setVisible(false);
-		}
-	}
-
-	private void lblLongMethod1_1() {
-		if (lblLongMethod1_1 != null) {
-			lblLongMethod1_1.setVisible(false);
-		}
-	}
-
-	private void lblPredicted1_1() {
-		if (lblPredicted1_1 != null) {
-			lblPredicted1_1.setVisible(false);
-		}
-	}
-
-	private void lblPredicted2_1() {
-		if (lblPredicted2_1 != null) {
-			lblPredicted2_1.setVisible(false);
-		}
-	}
-
-	private void lblSideFalse1_1() {
-		if (lblSideFalse1_1 != null) {
-			lblSideFalse1_1.setVisible(false);
-		}
-	}
-	
 	
 	//####################################################################################
 	private void clearAddRules() {
@@ -1481,98 +1273,26 @@ public class GUI {
 	
 	//####################################################################################
 	private void frmClearExtractMetrics() {
-		txtNOMmin();
-		if (txtNOMmin != null) {
-			frmExtractMetrics.remove(txtNOMmin);
-		}
-		txtLOC_class_min();
-		if (txtLOC_class_min != null) {
-			frmExtractMetrics.remove(txtLOC_class_min);
-		}
-		txtWMCmin();
-		if (txtWMCmin != null) {
-			frmExtractMetrics.remove(txtWMCmin);
-		}
-		txtNOMmax();
-		if (txtNOMmax != null) {
-			frmExtractMetrics.remove(txtNOMmax);
-		}
-		txtLOC_class_max();
-		if (txtLOC_class_max != null) {
-			frmExtractMetrics.remove(txtLOC_class_max);
-		}
-		txtWMCmax();
-		if (txtWMCmax != null) {
-			frmExtractMetrics.remove(txtWMCmax);
-		}
-		chckbxLOC_method();
-		if (chckbxLOC_method != null) {
-			frmExtractMetrics.remove(chckbxLOC_method);
-		}
-		chckbxCYCLO_method();
-		if (chckbxCYCLO_method != null) {
-			frmExtractMetrics.remove(chckbxCYCLO_method);
-		}
-		txtLOC_method_min();
-		if (txtLOC_method_min != null) {
-			frmExtractMetrics.remove(txtLOC_method_min);
-		}
-		txtLOC_method_max();
-		if (txtLOC_method_max != null) {
-			frmExtractMetrics.remove(txtLOC_method_max);
-		}
-		txtCYCLOmin();
-		if (txtCYCLOmin != null) {
-			frmExtractMetrics.remove(txtCYCLOmin);
-		}
-		txtCYCLOmax();
-		if (txtCYCLOmax != null) {
-			frmExtractMetrics.remove(txtCYCLOmax);
-		}
-		rdbtnAND_GOD_CLASS();
-		if (rdbtnAND_GOD_CLASS != null) {
-			frmExtractMetrics.remove(rdbtnAND_GOD_CLASS);
-		}
-		rdbtnOR_GOD_CLASS();
-		if (rdbtnOR_GOD_CLASS != null) {
-			frmExtractMetrics.remove(rdbtnOR_GOD_CLASS);
-		}
-		rdbtnAND_LONG_METHOD();
-		if (rdbtnAND_LONG_METHOD != null) {
-			frmExtractMetrics.remove(rdbtnAND_LONG_METHOD);
-		}
-		rdbtnOR_LONG_METHOD();
-		if (rdbtnOR_LONG_METHOD != null) {
-			frmExtractMetrics.remove(rdbtnOR_LONG_METHOD);
-		}
-		chckbxNOM_class();
-		if (chckbxNOM_class != null) {
-			frmExtractMetrics.remove(chckbxNOM_class);
-		}
-		chckbxLOC_class();
-		if (chckbxLOC_class != null) {
-			frmExtractMetrics.remove(chckbxLOC_class);
-		}
-		chckbxWMC_class();
-		if (chckbxWMC_class != null) {
-			frmExtractMetrics.remove(chckbxWMC_class);
-		}
-		txtRuleName();
-		if (txtRuleName != null) {
-			frmExtractMetrics.remove(txtRuleName);
-		}
-	}
-
-	private void txtWMCmin() {
-		if (txtWMCmin != null) {
-			txtWMCmin.setVisible(false);
-		}
-	}
-
-	private void txtWMCmax() {
-		if (txtWMCmax != null) {
-			txtWMCmax.setVisible(false);
-		}
+		methodToName(txtNOMmin);
+		methodToName(txtLOC_class_min);
+		methodToName(txtWMCmin);
+		methodToName(txtNOMmax);
+		methodToName(txtLOC_class_max);
+		methodToName(txtWMCmax);
+		methodToName(chckbxLOC_method);
+		methodToName(chckbxCYCLO_method);
+		methodToName(txtLOC_method_min);	
+		methodToName(txtLOC_method_max);
+		methodToName(txtCYCLOmin);
+		methodToName(txtCYCLOmax);
+		methodToName(rdbtnAND_GOD_CLASS);
+		methodToName(rdbtnOR_GOD_CLASS);
+		methodToName(rdbtnAND_LONG_METHOD);
+		methodToName(rdbtnOR_LONG_METHOD);
+		methodToName(chckbxNOM_class);
+		methodToName(chckbxLOC_class);
+		methodToName(chckbxWMC_class);
+		methodToName(txtRuleName);
 	}
 
 	private void txtRuleName() {
@@ -1581,105 +1301,11 @@ public class GUI {
 		}
 	}
 
-	private void txtNOMmin() {
-		if (txtNOMmin != null) {
-			txtNOMmin.setVisible(false);
-		}
-	}
-
-	private void txtNOMmax() {
-		if (txtNOMmax != null) {
-			txtNOMmax.setVisible(false);
-		}
-	}
-
-	private void txtLOC_method_min() {
-		if (txtLOC_method_min != null) {
-			txtLOC_method_min.setVisible(false);
-		}
-	}
-
-	private void txtLOC_method_max() {
-		if (txtLOC_method_max != null) {
-			txtLOC_method_max.setVisible(false);
-		}
-	}
-
-	private void txtLOC_class_min() {
-		if (txtLOC_class_min != null) {
-			txtLOC_class_min.setVisible(false);
-		}
-	}
-
-	private void txtLOC_class_max() {
-		if (txtLOC_class_max != null) {
-			txtLOC_class_max.setVisible(false);
-		}
-	}
-
-	private void txtCYCLOmin() {
-		if (txtCYCLOmin != null) {
-			txtCYCLOmin.setVisible(false);
-		}
-	}
-
-	private void txtCYCLOmax() {
-		if (txtCYCLOmax != null) {
-			txtCYCLOmax.setVisible(false);
-		}
-	}
-
-	private void rdbtnOR_LONG_METHOD() {
-		if (rdbtnOR_LONG_METHOD != null) {
-			rdbtnOR_LONG_METHOD.setVisible(false);
-		}
-	}
-
-	private void rdbtnOR_GOD_CLASS() {
-		if (rdbtnOR_GOD_CLASS != null) {
-			rdbtnOR_GOD_CLASS.setVisible(false);
-		}
-	}
-
-	private void rdbtnAND_LONG_METHOD() {
-		if (rdbtnAND_LONG_METHOD != null) {
-			rdbtnAND_LONG_METHOD.setVisible(false);
-		}
-	}
-
-	private void rdbtnAND_GOD_CLASS() {
-		if (rdbtnAND_GOD_CLASS != null) {
-			rdbtnAND_GOD_CLASS.setVisible(false);
-		}
-	}
-
-	private void chckbxWMC_class() {
-		if (chckbxWMC_class != null) {
-			chckbxWMC_class.setVisible(false);
-		}
-	}
-
-	private void chckbxNOM_class() {
-		if (chckbxNOM_class != null) {
-			chckbxNOM_class.setVisible(false);
-		}
-	}
-
-	private void chckbxLOC_method() {
-		if (chckbxLOC_method != null) {
-			chckbxLOC_method.setVisible(false);
-		}
-	}
-
-	private void chckbxLOC_class() {
-		if (chckbxLOC_class != null) {
-			chckbxLOC_class.setVisible(false);
-		}
-	}
-
-	private void chckbxCYCLO_method() {
-		if (chckbxCYCLO_method != null) {
-			chckbxCYCLO_method.setVisible(false);
+	//TODO name this
+	private void methodToName(JComponent jCheck) {
+		if (jCheck != null) {
+			jCheck.setVisible(false);
+			frmExtractMetrics.remove(jCheck);
 		}
 	}
 }
