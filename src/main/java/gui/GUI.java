@@ -132,7 +132,7 @@ public class GUI {
 	private JButton closeBtn_matrix;
 	
 	private ArrayList<JComponent> metrics;
-	
+	private ArrayList<JComponent> confusionMatrixComponents;
 
 
 	/**
@@ -1057,8 +1057,9 @@ public class GUI {
 			  } 
 			   
 		} 
-		
+		confusionMatrixComponents = new ArrayList<JComponent>();
 		table_matrix1 = new JTable(dataMatrix1, colum);
+		confusionMatrixComponents.add(table_matrix1);
 		table_matrix1.setRowHeight(150);
 		table_matrix1.getColumn("").setCellRenderer(new CenterTableCellRenderer());
 		table_matrix1.getColumn(" ").setCellRenderer(new CenterTableCellRenderer());
@@ -1081,6 +1082,7 @@ public class GUI {
 		int errors = gc_fp + gc_fn + lm_fp + lm_fn;
 		
 		table_matrix2 = new JTable(dataMatrix2,colum);
+		confusionMatrixComponents.add(table_matrix2);
 		table_matrix2.setRowHeight(150);
 		table_matrix2.getColumn("").setCellRenderer(new CenterTableCellRenderer());
 		table_matrix2.getColumn(" ").setCellRenderer(new CenterTableCellRenderer());
@@ -1088,44 +1090,52 @@ public class GUI {
 		panel_matrix.add(table_matrix2);
 		
 		lblGodClass1_1 = new JLabel("GodClass");
+		confusionMatrixComponents.add(lblGodClass1_1);
 		lblGodClass1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblGodClass1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblGodClass1_1.setBounds(76, 67, 300, 19);
 		panel_matrix.add(lblGodClass1_1);
 		
 		lblLongMethod1_1 = new JLabel("LongMethod");
+		confusionMatrixComponents.add(lblLongMethod1_1);
 		lblLongMethod1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLongMethod1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblLongMethod1_1.setBounds(535, 69, 300, 19);
 		panel_matrix.add(lblLongMethod1_1);
 		
 		lblTopTrue1_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblTopTrue1_1);
 		lblTopTrue1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopTrue1_1.setBounds(76, 131, 150, 14);
 		panel_matrix.add(lblTopTrue1_1);
 		
 		lblTopFalse1_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblTopFalse1_1);
 		lblTopFalse1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopFalse1_1.setBounds(226, 131, 150, 14);
 		panel_matrix.add(lblTopFalse1_1);
 		
 		lblSideTrue1_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblSideTrue1_1);
 		lblSideTrue1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideTrue1_1.setBounds(44, 156, 32, 150);
 		panel_matrix.add(lblSideTrue1_1);
 		
 		lblSideFalse1_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblSideFalse1_1);
 		lblSideFalse1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideFalse1_1.setBounds(44, 306, 32, 150);
 		panel_matrix.add(lblSideFalse1_1);
 		
 		lblPredicted1_1 = new JLabel("PREDICTED");
+		confusionMatrixComponents.add(lblPredicted1_1);
 		lblPredicted1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPredicted1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPredicted1_1.setBounds(76, 97, 300, 14);
 		panel_matrix.add(lblPredicted1_1);
 		
 		lblActual1_1 = new JLabel("<html>A<br>C<br>T<br>U<br>A<br> L</html>");
+		confusionMatrixComponents.add(lblActual1_1);
 		lblActual1_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblActual1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActual1_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1133,27 +1143,32 @@ public class GUI {
 		panel_matrix.add(lblActual1_1);
 		
 		lblPredicted2_1 = new JLabel("PREDICTED");
+		confusionMatrixComponents.add(lblPredicted2_1);
 		lblPredicted2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPredicted2_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPredicted2_1.setBounds(535, 97, 300, 14);
 		panel_matrix.add(lblPredicted2_1);
 		
 		lblTopTrue2_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblTopTrue2_1);
 		lblTopTrue2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopTrue2_1.setBounds(535, 131, 150, 14);
 		panel_matrix.add(lblTopTrue2_1);
 		
 		lblTopFalse2_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblTopFalse2_1);
 		lblTopFalse2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTopFalse2_1.setBounds(685, 131, 150, 14);
 		panel_matrix.add(lblTopFalse2_1);
 		
 		lblSideTrue2_1 = new JLabel("True");
+		confusionMatrixComponents.add(lblSideTrue2_1);
 		lblSideTrue2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideTrue2_1.setBounds(503, 156, 32, 150);
 		panel_matrix.add(lblSideTrue2_1);
 		
 		lblActual2_1 = new JLabel("<html>A<br>C<br>T<br>U<br>A<br> L</html>");
+		confusionMatrixComponents.add(lblActual2_1);
 		lblActual2_1.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblActual2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblActual2_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -1161,23 +1176,27 @@ public class GUI {
 		panel_matrix.add(lblActual2_1);
 		
 		lblSideFalse2_1 = new JLabel("False");
+		confusionMatrixComponents.add(lblSideFalse2_1);
 		lblSideFalse2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSideFalse2_1.setBounds(503, 306, 32, 150);
 		panel_matrix.add(lblSideFalse2_1);
 		
 		JLabel lblCorrectness = new JLabel("Number of correct predictions = " + correctValues);
+		confusionMatrixComponents.add(lblCorrectness);
 		lblCorrectness.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblCorrectness.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCorrectness.setBounds(535, 500, 300, 25);
 		panel_matrix.add(lblCorrectness);
 		
 		JLabel lblErrors = new JLabel("Number of wrong predictions = " + errors);
+		confusionMatrixComponents.add(lblErrors);
 		lblErrors.setHorizontalTextPosition(SwingConstants.RIGHT);
 		lblErrors.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblErrors.setBounds(535, 520, 300, 25);
 		panel_matrix.add(lblErrors);
 		
 		closeBtn_matrix = new JButton("Close");
+		confusionMatrixComponents.add(closeBtn_matrix);
 		closeBtn_matrix.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel_matrix.setVisible(false);
@@ -1225,8 +1244,8 @@ public class GUI {
 	
 	/**
 	 * 				Checks if the rule name is unique
-	 * @param 		name
-	 * @return
+	 * @param 		rule name
+	 * @return		validity of chosen name
 	 */
 	private boolean validName (JTextField name) {
 		if (name.getText().equals("")) {
@@ -1271,23 +1290,28 @@ public class GUI {
 		removeJComp(btnConfirmRule);
 		removeJComp(btnAddRule);
 		removeJComp(ruleDescriptionField);
-		removeJComp(table_matrix1);
-		removeJComp(table_matrix2);
-		removeJComp(lblGodClass1_1);
-		removeJComp(lblLongMethod1_1);
-		removeJComp(lblTopTrue1_1);
-		removeJComp(lblTopFalse1_1);
-		removeJComp(lblSideTrue1_1);
-		removeJComp(lblSideFalse1_1);
-		removeJComp(lblPredicted1_1);
-		removeJComp(lblActual1_1);
-		removeJComp(lblPredicted2_1);
-		removeJComp(lblTopTrue2_1);
-		removeJComp(lblTopFalse2_1);
-		removeJComp(lblSideTrue2_1);
-		removeJComp(lblActual2_1);
-		removeJComp(lblSideFalse2_1);
-		removeJComp(closeBtn_matrix);
+		if (confusionMatrixComponents != null) {
+			for (JComponent jComponent : confusionMatrixComponents) {
+				removeJComp(jComponent);
+			}
+		}
+//		removeJComp(table_matrix1);
+//		removeJComp(table_matrix2);
+//		removeJComp(lblGodClass1_1);
+//		removeJComp(lblLongMethod1_1);
+//		removeJComp(lblTopTrue1_1);
+//		removeJComp(lblTopFalse1_1);
+//		removeJComp(lblSideTrue1_1);
+//		removeJComp(lblSideFalse1_1);
+//		removeJComp(lblPredicted1_1);
+//		removeJComp(lblActual1_1);
+//		removeJComp(lblPredicted2_1);
+//		removeJComp(lblTopTrue2_1);
+//		removeJComp(lblTopFalse2_1);
+//		removeJComp(lblSideTrue2_1);
+//		removeJComp(lblActual2_1);
+//		removeJComp(lblSideFalse2_1);
+//		removeJComp(closeBtn_matrix);
 	}
 	
 	//####################################################################################
@@ -1305,12 +1329,14 @@ public class GUI {
 	 * Clear extracted metrics
 	 */
 	private void frmClearExtractMetrics() {
-		for (JComponent m : metrics) {
-			removeJComp(m);
+		if (metrics != null) {
+			for (JComponent m : metrics) {
+				removeJComp(m);
+			}
 		}
 	}
 
-	//TODO name this
+	
 	private void removeJComp(JComponent jComp) {
 		if (jComp != null) {
 			jComp.setVisible(false);
